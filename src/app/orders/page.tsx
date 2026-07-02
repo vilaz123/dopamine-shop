@@ -1,0 +1,109 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { useOrderStore } from "@/stores/order-store";
+import { formatCurrency, formatDateTime } from "@/lib/utils/format";
+import { getTrackingProgress } from "@/lib/tracking/stages";
+import { ButtonLink } from "@/components/ui/Button";
+
+export default function OrdersPage() {
+  const orders = useOrderStore((state) => state.orders);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSelectedId(new URLSearchParams(window.location.search).get("order"));
+  }, []);
+
+  const selected = useMemo(() => orders.find((order) => order.id === (selectedId ?? orders[0]?.id)) ?? null, [orders, selectedId]);
+
+  if (orders.length === 0) {
+    return (
+      <section className="container-shell py-16">
+        <div className="rounded-[2.5rem] border border-dashed border-black/15 bg-[#fffaf2] p-12 text-center">
+          <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Orders</p>
+          <h1 className="font-display mt-4 text-6xl">还没有虚拟订单。</h1>
+          <p className="mt-5 text-[#7a7167]">当购买欲出现时，可以先在这里下一单。</p>
+          <ButtonLink href="/shop" className="mt-8">开始虚拟购物</ButtonLink>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="container-shell py-16">
+      <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Orders</p>
+      <h1 className="font-display mt-4 text-6xl">我的虚拟订单</h1>
+      <div className="mt-12 grid gap-10 lg:grid-cols-[360px_1fr]">
+        <aside className="space-y-4">
+          {orders.map((order) => (
+            <button key={order.id} onClick={() => setSelectedId(order.id)} className={`w-full rounded-[1.5rem] border p-5 text-left transition ${selected?.id === order.id ? "border-black bg-[#0b0b0b] text-[#f6f1e8]" : "border-black/10 bg-[#fffaf2]"}`}>
+              <p className="font-display text-2xl">{order.id}</p>
+              <p className="mt-2 text-sm opacity-70">{formatDateTime(order.createdAt)} · {formatCurrency(order.total)}</p>
+            </button>
+          ))}
+        </aside>
+        {selected && <OrderDetail order={selected} />}
+      </div>
+    </section>
+  );
+}
+
+function OrderDetail({ order }: { order: ReturnType<typeof useOrderStore.getState>["orders"][number] }) {
+  const tracking = getTrackingProgress(order.createdAt);
+  const current = [...tracking].reverse().find((stage) => stage.reached) ?? tracking[0];
+  return (
+    <div className="rounded-[2.5rem] bg-[#fffaf2] p-8">
+      <div className="flex flex-col justify-between gap-6 border-b border-black/10 pb-8 md:flex-row md:items-start">
+        <div>
+          <p className="text-sm text-[#7a7167]">订单编号</p>
+          <h2 className="font-display mt-2 text-5xl">{order.id}</h2>
+          <p className="mt-4 text-[#7a7167]">当前状态：<span className="text-black">{current.label}</span></p>
+        </div>
+        <div className="rounded-3xl bg-[#0b0b0b] p-6 text-[#f6f1e8]">
+          <p className="text-sm text-white/60">本单避免真实支出</p>
+          <p className="font-display mt-2 text-4xl">{formatCurrency(order.total)}</p>
+        </div>
+      </div>
+      <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1fr]">
+        <div>
+          <h3 className="font-display text-4xl">商品</h3>
+          <div className="mt-5 space-y-4">
+            {order.items.map((item) => (
+              <div key={`${item.slug}-${JSON.stringify(item.options)}`} className="rounded-2xl border border-black/10 p-4">
+                <div className="flex justify-between gap-4">
+                  <div>
+                    <p className="font-display text-2xl">{item.name}</p>
+                    <p className="text-sm text-[#7a7167]">{Object.values(item.options).join(" / ")} · ×{item.quantity}</p>
+                  </div>
+                  <p>{formatCurrency(item.price * item.quantity)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 rounded-2xl border border-black/10 p-5 text-sm leading-7 text-[#554c43]">
+            <p>签收人：{order.profile.name}</p>
+            <p>虚拟地址：{order.profile.address}</p>
+            <p>支付方式：{order.profile.paymentMethod}</p>
+            <p>冲动指数：{order.profile.impulseBefore}/10 · 下单后：{order.profile.moodAfter}</p>
+            {order.profile.note && <p>备注：{order.profile.note}</p>}
+          </div>
+        </div>
+        <div>
+          <h3 className="font-display text-4xl">幻想物流</h3>
+          <div className="mt-6 space-y-5">
+            {tracking.map((stage) => (
+              <div key={stage.key} className="flex gap-4">
+                <div className={`mt-1 h-4 w-4 rounded-full border ${stage.reached ? "border-black bg-black" : "border-black/20"}`} />
+                <div className="border-b border-black/10 pb-5">
+                  <p className={stage.reached ? "font-semibold" : "text-[#7a7167]"}>{stage.label}</p>
+                  <p className="mt-1 text-sm text-[#7a7167]">{stage.note}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[#9d9286]">{formatDateTime(stage.at)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

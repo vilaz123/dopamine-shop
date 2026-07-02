@@ -1,0 +1,59 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import type { Review } from "@/types/review";
+import { reviewService } from "@/lib/services";
+import { Button } from "@/components/ui/Button";
+import { Input, Textarea } from "@/components/ui/Input";
+
+export function ReviewSection({ productSlug }: { productSlug: string }) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [author, setAuthor] = useState("匿名冷静者");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [rating, setRating] = useState(5);
+
+  useEffect(() => {
+    reviewService.listByProduct(productSlug).then(setReviews);
+  }, [productSlug]);
+
+  async function submit(event: React.FormEvent) {
+    event.preventDefault();
+    if (!title.trim() || !body.trim()) return;
+    const review = await reviewService.add({ productSlug, rating, title, body, author });
+    setReviews((current) => [review, ...current]);
+    setTitle("");
+    setBody("");
+  }
+
+  return (
+    <section className="mt-20 border-t border-black/10 pt-12">
+      <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
+        <div>
+          <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Reviews</p>
+          <h2 className="font-display mt-3 text-5xl">冷静评价</h2>
+          <form onSubmit={submit} className="mt-8 space-y-4 rounded-[2rem] bg-[#fffaf2] p-6">
+            <Input value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="你的名字" />
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="评价标题" />
+            <Textarea value={body} onChange={(e) => setBody(e.target.value)} placeholder="下单后感觉如何？" rows={4} />
+            <label className="block text-sm text-[#7a7167]">满足感：{rating}/5</label>
+            <input type="range" min="1" max="5" value={rating} onChange={(e) => setRating(Number(e.target.value))} className="w-full" />
+            <Button type="submit" className="w-full">发布本地评价</Button>
+          </form>
+        </div>
+        <div className="space-y-5">
+          {reviews.length === 0 ? <p className="text-[#7a7167]">还没有评价。</p> : reviews.map((review) => (
+            <article key={review.id} className="rounded-[2rem] border border-black/10 bg-white/45 p-6">
+              <div className="flex items-center justify-between gap-4">
+                <h3 className="font-display text-3xl">{review.title}</h3>
+                <span className="text-sm text-[#8b6b2f]">{"★".repeat(review.rating)}</span>
+              </div>
+              <p className="mt-3 leading-7 text-[#554c43]">{review.body}</p>
+              <p className="mt-4 text-xs uppercase tracking-[0.25em] text-[#7a7167]">{review.author}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
