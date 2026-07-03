@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { useMemo } from "react";
 import { products } from "@/lib/data/products";
 import { recommendForUser } from "@/lib/recommend/recommend";
 import { useAssetStore } from "@/stores/asset-store";
@@ -11,11 +13,16 @@ import { Price } from "@/components/ui/Price";
 
 export function HomeFeed() {
   const history = useAssetStore((state) => state.history);
-  const cartSlugs = useCartStore((state) => state.items.map((item) => item.slug));
-  const orderSlugs = useOrderStore((state) => state.orders.flatMap((order) => order.items.map((item) => item.slug)));
-  const recommended = recommendForUser({ products, history, cartSlugs, orderSlugs, limit: 6 });
-  const hot = [...products].sort((a, b) => b.sold - a.sold).slice(0, 5);
-  const food = products.filter((product) => product.category === "food-delivery");
+  const cartItems = useCartStore((state) => state.items);
+  const orders = useOrderStore((state) => state.orders);
+  const cartSlugs = useMemo(() => cartItems.map((item) => item.slug), [cartItems]);
+  const orderSlugs = useMemo(() => orders.flatMap((order) => order.items.map((item) => item.slug)), [orders]);
+  const recommended = useMemo(
+    () => recommendForUser({ products, history, cartSlugs, orderSlugs, limit: 6 }),
+    [history, cartSlugs, orderSlugs],
+  );
+  const hot = useMemo(() => [...products].sort((a, b) => b.sold - a.sold).slice(0, 5), []);
+  const food = useMemo(() => products.filter((product) => product.category === "food-delivery"), []);
 
   return (
     <>
@@ -34,14 +41,14 @@ export function HomeFeed() {
             <p className="text-sm text-white/55">刚被虚拟下单</p>
             <div className="mt-8 space-y-6">
               {hot.map((product, index) => (
-                <a href={`/shop/${product.slug}`} key={product.slug} className="flex items-center justify-between border-b border-white/10 pb-5 last:border-0">
+                <Link href={`/shop/${product.slug}`} key={product.slug} className="flex items-center justify-between border-b border-white/10 pb-5 last:border-0">
                   <div>
                     <p className="text-xs text-[#ffd23f]">TOP {index + 1} · 已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</p>
                     <h3 className="font-display mt-1 text-3xl">{product.name}</h3>
                     <p className="text-sm text-white/50">虚拟库存仅剩 {product.stock} 件</p>
                   </div>
                   <Price value={product.price} className="font-display text-2xl text-[#ffd23f]" />
-                </a>
+                </Link>
               ))}
             </div>
           </div>
