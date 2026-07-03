@@ -9,9 +9,12 @@ export type ProductCategory =
 
 export type DeliveryFlavor = "parcel" | "rider";
 
+export type ProductOptionValue = string | { label: string; priceDelta?: number };
+
 export type ProductOption = {
   label: string;
-  values: string[];
+  values: ProductOptionValue[];
+  required?: boolean;
 };
 
 export type ProductTag = {
@@ -25,6 +28,7 @@ export type Product = {
   subtitle: string;
   category: ProductCategory;
   price: number;
+  originalPrice?: number;
   currency: "CNY";
   description: string;
   story: string;
@@ -38,7 +42,17 @@ export type Product = {
   sold: number;
   stock: number;
   rewardCoins: number;
+  rewardXp?: number;
   bundleSlugs?: string[];
   giftWrap?: boolean;
   deliveryFlavor?: DeliveryFlavor;
+  detailBullets?: string[];
 };
+
+export function optionValueLabel(value: ProductOptionValue) {
+  return typeof value === "string" ? value : value.label;
+}
+
+export function optionValueDelta(value: ProductOptionValue) {
+  return typeof value === "string" ? 0 : value.priceDelta ?? 0;
+}

@@ -4,6 +4,7 @@ export const storageKeys = {
   reviews: "dopahub.reviews.v1",
   ui: "dopahub.ui.v1",
   assets: "dopahub.assets.v1",
+  community: "dopahub.community.v1",
 };
 
 export function safeLocalStorage() {

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { categories } from "@/lib/data/categories";
 import { products } from "@/lib/data/products";
+import { withBasePath } from "@/lib/utils/path";
 import { ProductGrid } from "@/components/product/ProductGrid";
 
 export default function ShopPage() {
@@ -19,7 +20,7 @@ export default function ShopPage() {
     setCategory(nextCategory);
     setSort(nextSort);
     const params = new URLSearchParams({ category: nextCategory, sort: nextSort });
-    window.history.replaceState(null, "", `/shop/?${params.toString()}`);
+    window.history.replaceState(null, "", withBasePath(`/shop/?${params.toString()}`));
   }
 
   const sorted = useMemo(() => {

@@ -20,7 +20,7 @@ export default function CartPage() {
   const lines = items
     .map((item) => ({ item, product: products.find((product) => product.slug === item.slug) }))
     .filter((line): line is { item: typeof items[number]; product: (typeof products)[number] } => Boolean(line.product));
-  const subtotal = lines.reduce((sum, line) => sum + line.product.price * line.item.quantity + (line.item.giftWrap ? 9 : 0), 0);
+  const subtotal = lines.reduce((sum, line) => sum + (line.product.price + (line.item.optionPriceDelta ?? 0)) * line.item.quantity + (line.item.giftWrap ? 9 : 0), 0);
   const { coupon, discount } = calculateDiscount(subtotal, code);
   const total = subtotal - discount;
   const rewardCoins = lines.reduce((sum, line) => sum + line.product.rewardCoins * line.item.quantity + (line.item.giftWrap ? 5 : 0), 0);
@@ -50,7 +50,7 @@ export default function CartPage() {
                     {product.giftWrap && <label className="mt-4 flex items-center gap-2 text-sm"><input type="checkbox" checked={Boolean(item.giftWrap)} onChange={(e) => setGiftWrap(item.slug, item.options, e.target.checked)} /> 虚拟礼品包装 +¥9</label>}
                   </div>
                   <div className="text-left md:text-right">
-                    <Price value={product.price * item.quantity + (item.giftWrap ? 9 : 0)} className="font-display text-3xl" />
+                    <Price value={(product.price + (item.optionPriceDelta ?? 0)) * item.quantity + (item.giftWrap ? 9 : 0)} className="font-display text-3xl" />
                     <div className="mt-4 inline-flex items-center rounded-full border border-black/10">
                       <button className="px-4 py-2" onClick={() => setQuantity(item.slug, item.options, item.quantity - 1, item.giftWrap)}>-</button>
                       <span className="min-w-10 text-center">{item.quantity}</span>
