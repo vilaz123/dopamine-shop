@@ -63,3 +63,19 @@ textarea {
   background-image: linear-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.16) 1px, transparent 1px);
   background-size: 32px 32px;
 }
+
+.reward-flash {
+  animation: reward-flash 1.7s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes reward-flash {
+  0% { opacity: 0; transform: translateY(-14px) scale(.92); filter: blur(4px); }
+  18% { opacity: 1; transform: translateY(0) scale(1.04); filter: blur(0); }
+  78% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-10px) scale(.98); }
+}
+
+@keyframes soft-burst {
+  0% { transform: scale(.8); opacity: .8; }
+  100% { transform: scale(1.8); opacity: 0; }
+}

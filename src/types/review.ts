@@ -6,4 +6,5 @@ export type Review = {
   body: string;
   author: string;
   createdAt: string;
+  coinsEarned?: number;
 };

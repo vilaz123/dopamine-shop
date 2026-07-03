@@ -1,16 +1,18 @@
-# VoidCart / Dopamine Shop
+# Dopahub 多巴胺仓
 
-一个“假装消费”的虚拟购物网站：可以浏览商品、加入购物车、虚拟下单、阅读/发布本地评论、查看幻想物流，但不会真实付款，也不会真实发货。
+Dopahub 多巴胺仓是一个“虚拟消费代偿”网站：复刻真实电商的浏览、推荐、加购、满减、下单、物流、晒单和资产体系，但完全移除真实扣款与真实配送。
 
 ## 第一阶段特性
 
 - Next.js App Router + TypeScript + Tailwind CSS
-- 静态导出，运行时不需要服务器
-- 商品数据本地化，无外部 API
-- 购物车、订单、用户评论保存在浏览器 LocalStorage
-- 高级时尚视觉：暖白、墨黑、古金、杂志式排版
-- 商品视觉使用 CSS/SVG 风格纹章，不依赖远程图片
-- 可分享给他人：构建后的 `out/` 是纯静态站
+- 静态导出，适合 GitHub Pages
+- 商品、优惠券、勋章、物流全为本地数据
+- 购物车、订单、晒单、虚拟资产保存在浏览器 LocalStorage
+- 首页推荐信息流、虚拟爆款、虚拟外卖专区
+- 高饱和商品卡、TOP/库存/已下单标签
+- 多巴胺币、XP、等级、勋章、虚拟囤货库存
+- 一键虚拟下单，实际扣款永远 ¥0
+- 物流永远停在“派送中 / 骑手配送中”
 
 ## 本地开发
 
@@ -18,23 +20,7 @@
 npm install
 npm run dev
 ```
-  你可以在当前会话里手动运行：
 
-  ! cd /Users/vz/dopamine-shop && npm install
-
-  然后继续运行：
-
-  ! cd /Users/vz/dopamine-shop && npm run type-check
-  ! cd /Users/vz/dopamine-shop && npm run build
-  ! cd /Users/vz/dopamine-shop && npm run dev
-
-  如果安装和构建过程中报错，把输出发我，我会继续修。
-  如果顺利，访问：
-
-  http://localhost:3000
-
-  即可看到网站
-  
 访问 `http://localhost:3000`。
 
 ## 构建静态站
@@ -63,51 +49,33 @@ npm run preview
 npx serve out -l 4321
 ```
 
-## 分享给他人使用
+## GitHub Pages
 
-### 方式 1：部署到静态托管
+仓库路径部署保持：
 
-将 `out/` 上传到：
-
-- Vercel
-- Cloudflare Pages
-- Netlify
-- GitHub Pages
-- 腾讯云 COS / 阿里云 OSS / S3
-- 任意 Nginx 静态目录
-
-### 方式 2：打包发送
-
-```bash
-zip -r voidcart-out.zip out
+```text
+https://vilaz123.github.io/dopamine-shop/
 ```
 
-对方解压后用任意静态服务器打开即可。
-
-注意：订单和评论是 LocalStorage，本地存储在每个访问者自己的浏览器中，不会互相同步。
+GitHub Actions 会在 push 到 `main` 时自动构建并发布。
 
 ## 产品边界
 
-VoidCart 是虚拟购物体验工具：
+Dopahub 多巴胺仓：
 
 - 不销售真实商品
 - 不接入真实支付
 - 不提供真实配送
 - 不收集真实地址
 - 所有订单都是虚拟记录
+- 第一阶段数据只存在访问者自己的浏览器中
 
-## 后续升级路线
+## 初版备份
 
-当前 UI 已经通过 `src/lib/services/*` 预留数据服务接口。
+改版前的初版高级配色版本已复制到：
 
-后续可以增加：
+```text
+/Users/vz/dopamine-shop-original
+```
 
-1. `src/lib/services/remote/*`：远程 API 实现
-2. Next.js API Routes 或独立后端
-3. 数据库：Postgres / Supabase / Turso
-4. 用户登录：Auth.js / Supabase Auth / Clerk
-5. 后台商品管理
-6. AI 生成虚拟商品
-7. PWA 离线安装
-
-升级时尽量保持页面组件继续调用 service 接口，避免整体重写。
+该目录不会干涉当前改版项目。

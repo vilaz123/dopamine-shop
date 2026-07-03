@@ -1,8 +1,9 @@
 export const storageKeys = {
-  cart: "dopamine-shop.cart.v1",
-  orders: "dopamine-shop.orders.v1",
-  reviews: "dopamine-shop.reviews.v1",
-  ui: "dopamine-shop.ui.v1",
+  cart: "dopahub.cart.v1",
+  orders: "dopahub.orders.v1",
+  reviews: "dopahub.reviews.v1",
+  ui: "dopahub.ui.v1",
+  assets: "dopahub.assets.v1",
 };
 
 export function safeLocalStorage() {

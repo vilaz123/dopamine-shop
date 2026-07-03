@@ -1,9 +1,12 @@
 import type { ProductCategory } from "@/types/product";
 
-export const categories: Array<{ id: "all" | ProductCategory; label: string; description: string }> = [
-  { id: "all", label: "全部藏品", description: "所有只存在于想象里的购买欲。" },
-  { id: "fragrance", label: "高级香氛", description: "闻不到，但足够让钱包安静。" },
-  { id: "tech", label: "冷感数码", description: "你想升级的不是设备，是此刻的心情。" },
-  { id: "home", label: "家居器物", description: "为理想生活下单，不占据真实空间。" },
-  { id: "fashion", label: "衣橱幻象", description: "穿搭灵感已拥有，快递可以缺席。" },
+export const categories: Array<{ id: "all" | ProductCategory; label: string; description: string; accent: string }> = [
+  { id: "all", label: "全部仓位", description: "所有让大脑亮起来的虚拟好物。", accent: "#ff4d6d" },
+  { id: "beauty", label: "虚拟美妆", description: "口红、香氛、底妆，全部只扣多巴胺。", accent: "#ff4d6d" },
+  { id: "designer-toys", label: "潮玩盲盒", description: "抽中快乐，不抽走余额。", accent: "#ff8a00" },
+  { id: "clothing", label: "服饰穿搭", description: "今日穿搭灵感已拥有。", accent: "#a855f7" },
+  { id: "snacks", label: "零食囤货", description: "囤满货架，不占柜子。", accent: "#22c55e" },
+  { id: "tech", label: "数码装备", description: "参数拉满，扣款归零。", accent: "#06b6d4" },
+  { id: "light-luxury", label: "轻奢好物", description: "仪式感到位，账单不到位。", accent: "#eab308" },
+  { id: "food-delivery", label: "虚拟外卖", description: "骑手永远在路上，热量永远不落地。", accent: "#ef4444" },
 ];

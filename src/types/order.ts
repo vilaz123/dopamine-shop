@@ -1,11 +1,11 @@
 import type { CartItem } from "./cart";
+import type { DeliveryFlavor } from "./product";
 
 export type CheckoutProfile = {
-  name: string;
-  address: string;
-  paymentMethod: string;
-  impulseBefore: number;
-  moodAfter: string;
+  virtualAddress: string;
+  giftWrap: boolean;
+  couponCode?: string;
+  couponLabel?: string;
   note?: string;
 };
 
@@ -14,7 +14,10 @@ export type OrderItemSnapshot = CartItem & {
   subtitle: string;
   price: number;
   accent: string;
+  saturation: string;
   monogram: string;
+  rewardCoins: number;
+  deliveryFlavor: DeliveryFlavor;
 };
 
 export type Order = {
@@ -24,5 +27,9 @@ export type Order = {
   subtotal: number;
   discount: number;
   total: number;
+  coinsEarned: number;
+  xpEarned: number;
+  badges: string[];
+  deliveryFlavor: DeliveryFlavor;
   profile: CheckoutProfile;
 };

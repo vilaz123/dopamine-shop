@@ -7,12 +7,12 @@ import { ProductGrid } from "@/components/product/ProductGrid";
 
 export default function ShopPage() {
   const [category, setCategory] = useState("all");
-  const [sort, setSort] = useState("featured");
+  const [sort, setSort] = useState("hot");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setCategory(params.get("category") ?? "all");
-    setSort(params.get("sort") ?? "featured");
+    setSort(params.get("sort") ?? "hot");
   }, []);
 
   function updateQuery(nextCategory = category, nextSort = sort) {
@@ -27,16 +27,16 @@ export default function ShopPage() {
     return [...filtered].sort((a, b) => {
       if (sort === "price-asc") return a.price - b.price;
       if (sort === "price-desc") return b.price - a.price;
-      return 0;
+      return b.sold - a.sold;
     });
   }, [category, sort]);
 
   return (
     <section className="container-shell py-16">
       <div className="mb-12 max-w-3xl">
-        <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Shop the unreal</p>
-        <h1 className="font-display mt-4 text-6xl">虚拟商店</h1>
-        <p className="mt-5 text-lg leading-8 text-[#7a7167]">库存无限，配送永远悬而未决。请选择一个想买但可以先不买的东西。</p>
+        <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Dopahub Market</p>
+        <h1 className="font-display mt-4 text-6xl">多巴胺仓货架</h1>
+        <p className="mt-5 text-lg leading-8 text-[#7a7167]">复刻真实电商信息流：热榜、满减、新品、稀缺库存都在，但所有价格都是虚拟金额，无需真实支付。</p>
       </div>
       <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div className="flex flex-wrap gap-3">
@@ -48,7 +48,7 @@ export default function ShopPage() {
         </div>
         <div className="flex gap-3 text-sm">
           {[
-            ["featured", "精选"],
+            ["hot", "热度"],
             ["price-asc", "价格升序"],
             ["price-desc", "价格降序"],
           ].map(([id, label]) => (
