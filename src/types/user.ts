@@ -3,6 +3,7 @@ export type ShippingProfile = {
   phone: string;
   address: string;
   deliveryPreference: string;
+  deliveryCompletion: "never" | "signed";
 };
 
 export type MockUser = {

@@ -18,12 +18,13 @@ export function ProfileForm() {
   const [phone, setPhone] = useState(user?.shipping?.phone ?? user?.phone ?? "");
   const [address, setAddress] = useState(user?.shipping?.address ?? "幻想街区 8 号");
   const [deliveryPreference, setDeliveryPreference] = useState(user?.shipping?.deliveryPreference ?? preferences[0]);
+  const [deliveryCompletion, setDeliveryCompletion] = useState<"never" | "signed">(user?.shipping?.deliveryCompletion ?? "never");
 
   function submit(event: React.FormEvent) {
     event.preventDefault();
     updateProfile({
       username,
-      shipping: addShipping ? { receiverName, phone, address, deliveryPreference } : undefined,
+      shipping: addShipping ? { receiverName, phone, address, deliveryPreference, deliveryCompletion } : undefined,
     });
     router.push("/profile");
   }
@@ -43,6 +44,10 @@ export function ProfileForm() {
           <select value={deliveryPreference} onChange={(e) => setDeliveryPreference(e.target.value)} className="md:col-span-2 rounded-2xl border border-black/10 bg-white/65 px-4 py-3 text-sm">
             {preferences.map((item) => <option key={item}>{item}</option>)}
           </select>
+          <div className="md:col-span-2 grid gap-3 md:grid-cols-2">
+            <button type="button" onClick={() => setDeliveryCompletion("never")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "never" ? "border-black bg-black text-[#f6f1e8]" : "border-black/10"}`}>永不签收<br/><span className="opacity-70">维持派送中/骑手配送中</span></button>
+            <button type="button" onClick={() => setDeliveryCompletion("signed")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "signed" ? "border-black bg-black text-[#f6f1e8]" : "border-black/10"}`}>允许送达签收<br/><span className="opacity-70">增加已送达和一键签收</span></button>
+          </div>
         </div>
       )}
       <Button type="submit" className="mt-8 w-full">保存并进入账号</Button>

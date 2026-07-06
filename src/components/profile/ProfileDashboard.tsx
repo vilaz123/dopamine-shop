@@ -37,7 +37,7 @@ export function ProfileDashboard() {
           <div className="rounded-3xl bg-white/10 p-5"><p className="text-sm text-white/60">等级</p><p className="font-display text-4xl">Lv.{level.level}</p></div>
           <div className="rounded-3xl bg-white/10 p-5"><p className="text-sm text-white/60">订单</p><p className="font-display text-4xl">{orders.length}</p></div>
         </div>
-        {user.shipping && <div className="mt-8 rounded-3xl bg-white/10 p-5 text-sm leading-7 text-white/70"><p>收货人：{user.shipping.receiverName}</p><p>电话：{user.shipping.phone}</p><p>地址：{user.shipping.address}</p><p>偏好：{user.shipping.deliveryPreference}</p></div>}
+        {user.shipping && <div className="mt-8 rounded-3xl bg-white/10 p-5 text-sm leading-7 text-white/70"><p>收货人：{user.shipping.receiverName}</p><p>电话：{user.shipping.phone}</p><p>地址：{user.shipping.address}</p><p>偏好：{user.shipping.deliveryPreference}</p><p>签收模式：{user.shipping.deliveryCompletion === "signed" ? "可送达并一键签收" : "永不签收"}</p></div>}
         <ShareButton className="mt-6 w-full" type="profile" title={`${user.username} 邀你进入 Dopahub 多巴胺仓`} text={`我已经在多巴胺仓虚拟下单 ${orders.length} 次，实际支付 ¥0。`} />
         <Button variant="ghost" className="mt-3 w-full border-white/20 text-[#f6f1e8]" onClick={() => { logout(); router.push("/"); }}>退出登录</Button>
       </aside>

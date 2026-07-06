@@ -11,6 +11,7 @@ import { makeOrderId } from "@/lib/utils/id";
 import { useCartStore } from "@/stores/cart-store";
 import { useOrderStore } from "@/stores/order-store";
 import { useAssetStore } from "@/stores/asset-store";
+import { useAuthStore } from "@/stores/auth-store";
 import { useUiStore } from "@/stores/ui-store";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Input";
@@ -28,6 +29,7 @@ export default function CheckoutPage() {
   const clear = useCartStore((state) => state.clear);
   const addOrder = useOrderStore((state) => state.addOrder);
   const asset = useAssetStore();
+  const user = useAuthStore((state) => state.user);
   const setLastReward = useUiStore((state) => state.setLastReward);
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export default function CheckoutPage() {
       xpEarned,
       badges: badges.map((badge) => badge.name),
       deliveryFlavor: lines.some((line) => line.product.deliveryFlavor === "rider") ? "rider" as const : "parcel" as const,
-      profile: { virtualAddress, giftWrap, couponCode: coupon?.code, couponLabel: coupon?.label, note },
+      profile: { virtualAddress, giftWrap, deliveryCompletion: user?.shipping?.deliveryCompletion ?? "never", couponCode: coupon?.code, couponLabel: coupon?.label, note },
     };
     addOrder(order);
     clear();

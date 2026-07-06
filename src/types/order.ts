@@ -4,6 +4,8 @@ import type { DeliveryFlavor } from "./product";
 export type CheckoutProfile = {
   virtualAddress: string;
   giftWrap: boolean;
+  deliveryCompletion: "never" | "signed";
+  signedAt?: string;
   couponCode?: string;
   couponLabel?: string;
   note?: string;

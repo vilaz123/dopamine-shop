@@ -4,12 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useOrderStore } from "@/stores/order-store";
 import { formatCurrency, formatDateTime } from "@/lib/utils/format";
 import { getTrackingProgress } from "@/lib/tracking/stages";
-import { ButtonLink } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { TrackingTimeline } from "@/components/order/TrackingTimeline";
 import { OrderSuccessModal } from "@/components/order/OrderSuccessModal";
 
 export default function OrdersPage() {
   const orders = useOrderStore((state) => state.orders);
+  const signOrder = useOrderStore((state) => state.signOrder);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -48,14 +49,14 @@ export default function OrdersPage() {
             </button>
           ))}
         </aside>
-        {selected && <OrderDetail order={selected} />}
+        {selected && <OrderDetail order={selected} onSign={() => signOrder(selected.id)} />}
       </div>
     </section>
   );
 }
 
-function OrderDetail({ order }: { order: ReturnType<typeof useOrderStore.getState>["orders"][number] }) {
-  const tracking = getTrackingProgress(order.createdAt, order.deliveryFlavor);
+function OrderDetail({ order, onSign }: { order: ReturnType<typeof useOrderStore.getState>["orders"][number]; onSign: () => void }) {
+  const tracking = getTrackingProgress(order.createdAt, order.deliveryFlavor, new Date(), order.profile.deliveryCompletion ?? "never", order.profile.signedAt);
   const current = [...tracking].reverse().find((stage) => stage.reached) ?? tracking[0];
   return (
     <div className="rounded-[2.5rem] bg-[#fffaf2] p-8">
@@ -65,7 +66,7 @@ function OrderDetail({ order }: { order: ReturnType<typeof useOrderStore.getStat
       </div>
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1fr]">
         <div><h3 className="font-display text-4xl">虚拟战利品</h3><div className="mt-5 space-y-4">{order.items.map((item) => <div key={`${item.slug}-${JSON.stringify(item.options)}`} className="rounded-2xl border border-black/10 p-4"><div className="flex justify-between gap-4"><div><p className="font-display text-2xl">{item.name}</p><p className="text-sm text-[#7a7167]">{Object.values(item.options).join(" / ")} · ×{item.quantity}{item.giftWrap ? " · 礼品包装" : ""}</p></div><p>{formatCurrency(item.price * item.quantity)}</p></div></div>)}</div><div className="mt-8 rounded-2xl border border-black/10 p-5 text-sm leading-7 text-[#554c43]"><p>虚拟地址：{order.profile.virtualAddress}</p><p>优惠券：{order.profile.couponLabel ?? "未使用"}</p>{order.profile.note && <p>备注：{order.profile.note}</p>}{order.badges.length > 0 && <p>勋章：{order.badges.join("、")}</p>}</div></div>
-        <div><h3 className="font-display text-4xl">物流追踪</h3><TrackingTimeline createdAt={order.createdAt} flavor={order.deliveryFlavor} /></div>
+        <div><h3 className="font-display text-4xl">物流追踪</h3><TrackingTimeline createdAt={order.createdAt} flavor={order.deliveryFlavor} completion={order.profile.deliveryCompletion ?? "never"} signedAt={order.profile.signedAt} />{(order.profile.deliveryCompletion ?? "never") === "signed" && !order.profile.signedAt && <Button className="mt-5 w-full" onClick={onSign}>一键签收</Button>}</div>
       </div>
     </div>
   );
