@@ -8,7 +8,6 @@ import { evaluateBadges } from "@/lib/data/badges";
 import { findRelevantBundles } from "@/lib/data/bundles";
 import { formatCurrency } from "@/lib/utils/format";
 import { makeOrderId } from "@/lib/utils/id";
-import { withBasePath } from "@/lib/utils/path";
 import { useCartStore } from "@/stores/cart-store";
 import { useOrderStore } from "@/stores/order-store";
 import { useAssetStore } from "@/stores/asset-store";
@@ -69,7 +68,7 @@ export default function CheckoutPage() {
     addOrder(order);
     clear();
     setLastReward({ id: order.id, coins: coinsEarned, xp: xpEarned, badge: badges[0]?.name });
-    router.push(withBasePath(`/orders?order=${order.id}&success=1`));
+    router.push(`/orders?order=${order.id}&success=1`);
   }
 
   if (lines.length === 0) return <section className="container-shell py-16"><div className="rounded-[2.5rem] border border-dashed border-black/15 bg-[#fffaf2] p-12 text-center"><h1 className="font-display text-5xl">没有可结算的虚拟商品。</h1><ButtonLink href="/shop" className="mt-8">返回多巴胺仓</ButtonLink></div></section>;

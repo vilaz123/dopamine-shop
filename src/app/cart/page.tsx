@@ -9,6 +9,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Price } from "@/components/ui/Price";
 import { CouponPicker } from "@/components/checkout/CouponPicker";
 import { BundleHints } from "@/components/checkout/BundleHints";
+import { CartOptionEditor } from "@/components/cart/CartOptionEditor";
 import { useState } from "react";
 
 export default function CartPage() {
@@ -47,6 +48,7 @@ export default function CartPage() {
                     <Link href={`/shop/${product.slug}`} className="font-display text-4xl">{product.name}</Link>
                     <p className="mt-2 text-[#7a7167]">{product.subtitle}</p>
                     <p className="mt-2 text-sm text-[#7a7167]">{Object.entries(item.options).map(([k, v]) => `${k}: ${v}`).join(" · ")}</p>
+                    <CartOptionEditor item={item} product={product} />
                     {product.giftWrap && <label className="mt-4 flex items-center gap-2 text-sm"><input type="checkbox" checked={Boolean(item.giftWrap)} onChange={(e) => setGiftWrap(item.slug, item.options, e.target.checked)} /> 虚拟礼品包装 +¥9</label>}
                   </div>
                   <div className="text-left md:text-right">

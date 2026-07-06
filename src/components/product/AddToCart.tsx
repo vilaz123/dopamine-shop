@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Product } from "@/types/product";
 import { optionValueDelta, optionValueLabel } from "@/types/product";
-import { withBasePath } from "@/lib/utils/path";
 import { useCartStore } from "@/stores/cart-store";
 import { useUiStore } from "@/stores/ui-store";
 import { useAssetStore } from "@/stores/asset-store";
@@ -65,7 +64,7 @@ export function AddToCart({ product, sticky = false }: { product: Product; stick
       </div>
       <div className={`grid gap-3 ${sticky ? "grid-cols-2" : ""}`}>
         <Button className="w-full" onClick={() => add(true)}>加入购物车 · +{product.rewardCoins} 币</Button>
-        <Button className="w-full" variant="ghost" onClick={() => { add(false); router.push(withBasePath("/checkout")); }}>一键虚拟下单</Button>
+        <Button className="w-full" variant="ghost" onClick={() => { add(false); router.push("/checkout"); }}>一键虚拟下单</Button>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ type CartState = {
   removeItem: (slug: string, options: Record<string, string>, giftWrap?: boolean) => void;
   setQuantity: (slug: string, options: Record<string, string>, quantity: number, giftWrap?: boolean) => void;
   setGiftWrap: (slug: string, options: Record<string, string>, giftWrap: boolean) => void;
+  updateOptions: (slug: string, options: Record<string, string>, nextOptions: Record<string, string>, optionPriceDelta: number, giftWrap?: boolean) => void;
   clear: () => void;
 };
 
@@ -50,6 +51,14 @@ export const useCartStore = create<CartState>()(
       setGiftWrap: (slug, options, giftWrap) =>
         set((state) => ({
           items: state.items.map((item) => (item.slug === slug && sameOptions(item.options, options) ? { ...item, giftWrap } : item)),
+        })),
+      updateOptions: (slug, options, nextOptions, optionPriceDelta, giftWrap) =>
+        set((state) => ({
+          items: state.items.map((item) =>
+            sameLine(item, slug, options, giftWrap)
+              ? { ...item, options: nextOptions, optionPriceDelta }
+              : item,
+          ),
         })),
       clear: () => set({ items: [] }),
     }),
