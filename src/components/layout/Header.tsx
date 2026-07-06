@@ -31,9 +31,9 @@ export function Header() {
         </div>
       </div>
       {open && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <button className="absolute inset-0 bg-black/35" onClick={() => setOpen(false)} aria-label="关闭菜单遮罩" />
-          <aside className="absolute right-0 top-0 h-full w-[82%] max-w-sm bg-[#fffaf2] p-6 shadow-2xl">
+        <div className="fixed inset-0 z-[100] md:hidden">
+          <button className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={() => setOpen(false)} aria-label="关闭菜单遮罩" />
+          <aside className="absolute right-0 top-0 h-full w-[86%] max-w-sm bg-[#fffaf2] p-6 shadow-2xl ring-1 ring-black/10">
             <div className="flex items-center justify-between border-b border-black/10 pb-5">
               <p className="font-display text-3xl">菜单</p>
               <button className="rounded-full border border-black/10 p-2" onClick={() => setOpen(false)} aria-label="关闭菜单"><X size={18} /></button>
