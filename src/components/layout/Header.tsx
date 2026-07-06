@@ -12,6 +12,7 @@ export function Header() {
           <Link href="/assets" className="hover:text-black">我的资产</Link>
           <Link href="/community" className="hover:text-black">多巴胺广场</Link>
           <Link href="/orders" className="hover:text-black">我的订单</Link>
+          <Link href="/profile" className="hover:text-black">我的账号</Link>
           <Link href="/about" className="hover:text-black">产品理念</Link>
         </nav>
         <div className="flex items-center gap-3"><AssetHeaderButton /><CartButton /></div>

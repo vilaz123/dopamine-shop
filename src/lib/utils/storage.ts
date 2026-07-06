@@ -5,6 +5,9 @@ export const storageKeys = {
   ui: "dopahub.ui.v1",
   assets: "dopahub.assets.v1",
   community: "dopahub.community.v1",
+  auth: "dopahub.auth.v1",
+  accounts: "dopahub.accounts.v1",
+  shares: "dopahub.shares.v1",
 };
 
 export function safeLocalStorage() {

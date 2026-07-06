@@ -10,6 +10,7 @@ import { useOrderStore } from "@/stores/order-store";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { ButtonLink } from "@/components/ui/Button";
 import { Price } from "@/components/ui/Price";
+import { ShareButton } from "@/components/share/ShareButton";
 
 export function HomeFeed() {
   const history = useAssetStore((state) => state.history);
@@ -35,6 +36,7 @@ export function HomeFeed() {
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <ButtonLink href="/shop" variant="light">进入多巴胺仓</ButtonLink>
               <ButtonLink href="/assets" variant="ghost" className="border-white/20 text-[#f6f1e8] hover:border-white/60">查看虚拟资产</ButtonLink>
+              <ShareButton className="border border-white/20 bg-transparent text-[#f6f1e8] hover:border-white/60" type="invite" title="Dopahub 多巴胺仓" text="我发现了一个可以虚拟下单、真实不付款的网站，来试试看。" />
             </div>
           </div>
           <div className="rounded-[2.5rem] border border-white/10 bg-white/[.06] p-8 backdrop-blur">

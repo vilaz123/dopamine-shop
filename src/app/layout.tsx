@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { RewardFlash } from "@/components/asset/RewardFlash";
+import { AccountSync } from "@/components/auth/AccountSync";
 
 export const metadata: Metadata = {
   title: "Dopahub 多巴胺仓 | 虚拟下单，真实不付款",
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="zh-CN">
       <body>
         <Header />
+        <AccountSync />
         <RewardFlash />
         <CartDrawer />
         <main>{children}</main>
