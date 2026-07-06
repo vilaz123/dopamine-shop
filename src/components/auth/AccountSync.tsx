@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { saveAccountSnapshot } from "@/lib/account/account-storage";
 import { useAssetStore } from "@/stores/asset-store";
 import { useAuthStore } from "@/stores/auth-store";
@@ -13,15 +13,17 @@ export function AccountSync() {
   const orders = useOrderStore((state) => state.orders);
   const cart = useCartStore((state) => state.items);
   const shares = useShareStore((state) => state.shares);
-  const assets = useAssetStore((state) => ({
-    coins: state.coins,
-    xp: state.xp,
-    badges: state.badges,
-    coupons: state.coupons,
-    inventory: state.inventory,
-    favorites: state.favorites,
-    history: state.history,
-  }));
+  const coins = useAssetStore((state) => state.coins);
+  const xp = useAssetStore((state) => state.xp);
+  const badges = useAssetStore((state) => state.badges);
+  const coupons = useAssetStore((state) => state.coupons);
+  const inventory = useAssetStore((state) => state.inventory);
+  const favorites = useAssetStore((state) => state.favorites);
+  const history = useAssetStore((state) => state.history);
+  const assets = useMemo(
+    () => ({ coins, xp, badges, coupons, inventory, favorites, history }),
+    [coins, xp, badges, coupons, inventory, favorites, history],
+  );
 
   useEffect(() => {
     if (!user) return;
