@@ -18,7 +18,7 @@ const navItems = [
 export function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f6f1e8]/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f6f1e8] shadow-sm">
       <div className="container-shell flex h-20 items-center justify-between gap-4">
         <Link href="/" className="font-display text-2xl tracking-tight md:text-3xl">Dopahub 多巴胺仓</Link>
         <nav className="hidden items-center gap-7 text-sm text-[#554c43] md:flex">
@@ -31,9 +31,9 @@ export function Header() {
         </div>
       </div>
       {open && (
-        <div className="fixed inset-0 z-[100] md:hidden">
-          <button className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={() => setOpen(false)} aria-label="关闭菜单遮罩" />
-          <aside className="absolute right-0 top-0 h-full w-[86%] max-w-sm bg-[#fffaf2] p-6 shadow-2xl ring-1 ring-black/10">
+        <div className="fixed inset-0 z-[999] bg-[#0b0b0b] md:hidden">
+          <button className="absolute inset-y-0 left-0 right-[68vw] min-w-[calc(100vw-300px)]" onClick={() => setOpen(false)} aria-label="关闭菜单遮罩" />
+          <aside className="absolute right-0 top-0 h-full w-[68vw] min-w-[248px] max-w-[300px] bg-[#fffaf2] p-5 shadow-2xl">
             <div className="flex items-center justify-between border-b border-black/10 pb-5">
               <p className="font-display text-3xl">菜单</p>
               <button className="rounded-full border border-black/10 p-2" onClick={() => setOpen(false)} aria-label="关闭菜单"><X size={18} /></button>
