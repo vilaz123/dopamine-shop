@@ -6,6 +6,8 @@ export const coupons: Coupon[] = [
   { code: "NOSPEND", label: "不花钱纪念券：全场 76 折", kind: "percent", value: 0.24 },
   { code: "COMBO50", label: "虚拟凑单券：满 ¥999 减 ¥120", kind: "fullReduction", value: 120, threshold: 999 },
   { code: "FEAST", label: "外卖专区券：满 ¥99 减 ¥30", kind: "fullReduction", value: 30, threshold: 99 },
+  { code: "TAKEAWAYNEW", label: "外卖新人券：满 ¥20 减 ¥8", kind: "fullReduction", value: 8, threshold: 20 },
+  { code: "FREEDELIVERY", label: "外卖免配送费券：立减 ¥6 配送费", kind: "fullReduction", value: 6, threshold: 0 },
 ];
 
 export function findCoupon(code?: string) {

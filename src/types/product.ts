@@ -35,8 +35,6 @@ export type Product = {
   badge: string;
   accent: string;
   saturation: string;
-  image?: string;
-  detailImages?: string[];
   monogram: string;
   options: ProductOption[];
   relatedSlugs: string[];

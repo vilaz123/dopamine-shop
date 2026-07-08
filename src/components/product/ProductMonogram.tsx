@@ -1,17 +1,6 @@
 import type { Product } from "@/types/product";
 
 export function ProductMonogram({ product, large = false }: { product: Product; large?: boolean }) {
-  if (product.image) {
-    return (
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] luxury-shadow">
-        <img src={product.image} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10" />
-        <div className="absolute left-6 top-6 rounded-full bg-black/55 px-3 py-1 text-xs uppercase tracking-[0.28em] text-white/90 backdrop-blur">Dopahub</div>
-        <div className="absolute bottom-6 right-6 rounded-full bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-black">虚拟库存 {product.stock}</div>
-      </div>
-    );
-  }
-
   return (
     <div
       className="monogram-grid relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-[2rem] luxury-shadow"
