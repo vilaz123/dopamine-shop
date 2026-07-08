@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { X } from "lucide-react";
 import { products } from "@/lib/data/products";
+import { cartItemHref } from "@/lib/data/takeaway-shops";
 import { formatCurrency } from "@/lib/utils/format";
 import { useCartStore } from "@/stores/cart-store";
 import { useUiStore } from "@/stores/ui-store";
@@ -38,7 +39,7 @@ export function CartDrawer() {
                 <div key={`${item.slug}-${JSON.stringify(item.options)}-${item.giftWrap}`} className="border-b border-black/10 pb-5">
                   <div className="flex justify-between gap-4">
                     <div>
-                      <Link href={`/shop/${product.slug}`} onClick={() => setOpen(false)} className="font-display text-2xl">{product.name}</Link>
+                      <Link href={cartItemHref(product.slug, product.deliveryFlavor)} onClick={() => setOpen(false)} className="font-display text-2xl">{product.name}</Link>
                       <p className="mt-1 text-sm text-[#7a7167]">数量 {item.quantity} · {Object.values(item.options).join(" / ")}{item.giftWrap ? " · 礼品包装" : ""}</p>
                     </div>
                     <p className="font-display text-xl">{formatCurrency(product.price * item.quantity + (item.giftWrap ? 9 : 0))}</p>

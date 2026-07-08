@@ -24,7 +24,8 @@ export default function ShopPage() {
   }
 
   const sorted = useMemo(() => {
-    const filtered = category === "all" ? products : products.filter((product) => product.category === category);
+    const pool = products.filter((product) => product.category !== "food-delivery");
+    const filtered = category === "all" ? pool : pool.filter((product) => product.category === category);
     return [...filtered].sort((a, b) => {
       if (sort === "price-asc") return a.price - b.price;
       if (sort === "price-desc") return b.price - a.price;

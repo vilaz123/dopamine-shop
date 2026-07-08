@@ -8,5 +8,4 @@ export const categories: Array<{ id: "all" | ProductCategory; label: string; des
   { id: "snacks", label: "零食囤货", description: "囤满货架，不占柜子。", accent: "#22c55e" },
   { id: "tech", label: "数码装备", description: "参数拉满，扣款归零。", accent: "#06b6d4" },
   { id: "light-luxury", label: "轻奢好物", description: "仪式感到位，账单不到位。", accent: "#eab308" },
-  { id: "food-delivery", label: "虚拟外卖", description: "骑手永远在路上，热量永远不落地。", accent: "#ef4444" },
 ];

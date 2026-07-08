@@ -8,6 +8,7 @@ import { AssetHeaderButton } from "./AssetHeaderButton";
 
 const navItems = [
   ["/shop", "虚拟商店"],
+  ["/takeaway", "虚拟外卖"],
   ["/assets", "我的资产"],
   ["/community", "多巴胺广场"],
   ["/orders", "我的订单"],

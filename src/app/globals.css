@@ -79,3 +79,9 @@ textarea {
   0% { transform: scale(.8); opacity: .8; }
   100% { transform: scale(1.8); opacity: 0; }
 }
+
+@keyframes rider-run {
+  0% { left: 0%; }
+  50% { left: 100%; }
+  100% { left: 0%; }
+}

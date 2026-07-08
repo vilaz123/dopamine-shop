@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { products } from "@/lib/data/products";
+import { cartItemHref } from "@/lib/data/takeaway-shops";
 import { calculateDiscount } from "@/lib/data/coupons";
 import { formatCurrency } from "@/lib/utils/format";
 import { useCartStore } from "@/stores/cart-store";
@@ -45,7 +46,7 @@ export default function CartPage() {
               <article key={`${item.slug}-${JSON.stringify(item.options)}-${item.giftWrap}`} className="rounded-[2rem] border border-black/10 bg-[#fffaf2] p-6">
                 <div className="flex flex-col justify-between gap-6 md:flex-row">
                   <div>
-                    <Link href={`/shop/${product.slug}`} className="font-display text-4xl">{product.name}</Link>
+                    <Link href={cartItemHref(product.slug, product.deliveryFlavor)} className="font-display text-4xl">{product.name}</Link>
                     <p className="mt-2 text-[#7a7167]">{product.subtitle}</p>
                     <p className="mt-2 text-sm text-[#7a7167]">{Object.entries(item.options).map(([k, v]) => `${k}: ${v}`).join(" · ")}</p>
                     <CartOptionEditor item={item} product={product} />

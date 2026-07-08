@@ -64,6 +64,12 @@ function OrderDetail({ order, onSign }: { order: ReturnType<typeof useOrderStore
         <div><p className="text-sm text-[#7a7167]">订单编号</p><h2 className="font-display mt-2 text-5xl">{order.id}</h2><p className="mt-4 text-[#7a7167]">当前状态：<span className="text-black">{current.label}</span></p></div>
         <div className="rounded-3xl bg-[#0b0b0b] p-6 text-[#f6f1e8]"><p className="text-sm text-white/60">本单奖励</p><p className="font-display mt-2 text-4xl">+{order.coinsEarned} 币</p><p className="text-sm text-white/60">+{order.xpEarned} XP</p></div>
       </div>
+      {order.deliveryFlavor === "rider" && (
+        <div className="mt-8 rounded-3xl bg-[#0b0b0b] p-6 text-[#f6f1e8]">
+          <p className="font-display text-4xl">{current.label}</p>
+          <p className="mt-2 text-sm text-white/70">骑手正在幻想路线中接近你，永远差一栋楼</p>
+        </div>
+      )}
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1fr]">
         <div><h3 className="font-display text-4xl">虚拟战利品</h3><div className="mt-5 space-y-4">{order.items.map((item) => <div key={`${item.slug}-${JSON.stringify(item.options)}`} className="rounded-2xl border border-black/10 p-4"><div className="flex justify-between gap-4"><div><p className="font-display text-2xl">{item.name}</p><p className="text-sm text-[#7a7167]">{Object.values(item.options).join(" / ")} · ×{item.quantity}{item.giftWrap ? " · 礼品包装" : ""}</p></div><p>{formatCurrency(item.price * item.quantity)}</p></div></div>)}</div><div className="mt-8 rounded-2xl border border-black/10 p-5 text-sm leading-7 text-[#554c43]"><p>虚拟地址：{order.profile.virtualAddress}</p><p>优惠券：{order.profile.couponLabel ?? "未使用"}</p>{order.profile.note && <p>备注：{order.profile.note}</p>}{order.badges.length > 0 && <p>勋章：{order.badges.join("、")}</p>}</div></div>
         <div><h3 className="font-display text-4xl">物流追踪</h3><TrackingTimeline createdAt={order.createdAt} flavor={order.deliveryFlavor} completion={order.profile.deliveryCompletion ?? "never"} signedAt={order.profile.signedAt} />{(order.profile.deliveryCompletion ?? "never") === "signed" && !order.profile.signedAt && <Button className="mt-5 w-full" onClick={onSign}>一键签收</Button>}</div>

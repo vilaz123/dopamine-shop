@@ -1,6 +1,7 @@
 import type { DeliveryFlavor } from "@/types/product";
 import { getTrackingProgress } from "@/lib/tracking/stages";
 import { formatDateTime } from "@/lib/utils/format";
+import { RiderMapMock } from "./RiderMapMock";
 
 export function TrackingTimeline({ createdAt, flavor, completion = "never", signedAt }: { createdAt: string; flavor: DeliveryFlavor; completion?: "never" | "signed"; signedAt?: string }) {
   const tracking = getTrackingProgress(createdAt, flavor, new Date(), completion, signedAt);
@@ -22,13 +23,17 @@ export function TrackingTimeline({ createdAt, flavor, completion = "never", sign
           </div>
         </div>
       ))}
-      <div className="relative overflow-hidden rounded-3xl bg-[#0b0b0b] p-5 text-[#f6f1e8]">
-        <div className="absolute left-4 right-4 top-1/2 h-px bg-white/20" />
-        <div className="relative h-16">
-          <div className="absolute top-5 h-5 w-5 rounded-full bg-[#ffd23f] shadow-lg shadow-yellow-300/40 [animation:reward-flash_2.6s_linear_infinite]" />
+      {flavor === "rider" ? (
+        <RiderMapMock caption={completion === "signed" ? "配送路线可以抵达终点，等待你确认签收" : "骑手正在幻想路线中循环接近你，永远差一栋楼"} />
+      ) : (
+        <div className="relative overflow-hidden rounded-3xl bg-[#0b0b0b] p-5 text-[#f6f1e8]">
+          <div className="absolute left-4 right-4 top-1/2 h-px bg-white/20" />
+          <div className="relative h-16">
+            <div className="absolute top-5 h-5 w-5 rounded-full bg-[#ffd23f] shadow-lg shadow-yellow-300/40 [animation:reward-flash_2.6s_linear_infinite]" />
+          </div>
+          <p className="text-sm text-white/70">{completion === "signed" ? "配送路线可以抵达终点，等待你确认签收" : "快递员正在幻想路线中循环派送"}</p>
         </div>
-        <p className="text-sm text-white/70">{completion === "signed" ? "配送路线可以抵达终点，等待你确认签收" : flavor === "rider" ? "骑手正在地图上循环接近你" : "快递员正在幻想路线中循环派送"}</p>
-      </div>
+      )}
     </div>
   );
 }
