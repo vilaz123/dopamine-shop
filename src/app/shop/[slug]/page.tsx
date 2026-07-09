@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { products, getProduct } from "@/lib/data/products";
+import { products, getProduct, productImages } from "@/lib/data/products";
 import { formatCurrency } from "@/lib/utils/format";
-import { ProductMonogram } from "@/components/product/ProductMonogram";
+import { MediaGallery } from "@/components/common/MediaGallery";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { AddToCart } from "@/components/product/AddToCart";
 import { ReviewSection } from "@/components/reviews/ReviewSection";
@@ -27,11 +27,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <Link href="/shop" className="text-sm text-[#7a7167] hover:text-black">← 返回多巴胺仓</Link>
       <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
-          <ProductMonogram product={product} large />
-          <div className="absolute left-5 top-5 right-5 flex items-start justify-between gap-3">
-            <ProductTagChips tags={product.tags} />
-            <FavoriteButton slug={product.slug} />
-          </div>
+          <MediaGallery images={productImages(product)} alt={product.name} aspect="4/5">
+            <div className="absolute left-5 top-5 right-5 flex items-start justify-between gap-3">
+              <ProductTagChips tags={product.tags} />
+              <FavoriteButton slug={product.slug} />
+            </div>
+          </MediaGallery>
         </div>
         <div className="lg:pt-8">
           <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">{product.badge}</p>

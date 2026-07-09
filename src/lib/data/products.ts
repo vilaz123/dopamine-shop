@@ -4,6 +4,19 @@ function tag(kind: Product["tags"][number]["kind"], label: string) {
   return { kind, label };
 }
 
+/** Build image paths for a product: a main 4:5 shot plus N detail shots (-2, -3, …). */
+function productMedia(slug: string, detailCount: number) {
+  return {
+    image: `/products/${slug}.webp`,
+    detailImages: Array.from({ length: detailCount }, (_, i) => `/products/${slug}-${i + 2}.webp`),
+  } as Pick<Product, "image" | "detailImages">;
+}
+
+/** All gallery images for a product (main first, then details), with empties filtered out. */
+export function productImages(product: Product): string[] {
+  return [product.image, ...(product.detailImages ?? [])].filter((value): value is string => Boolean(value));
+}
+
 export const products: Product[] = [
   {
     slug: "glow-lip-kit",
@@ -26,6 +39,7 @@ export const products: Product[] = [
     rewardCoins: 28,
     bundleSlugs: ["cloud-cushion-foundation"],
     giftWrap: true,
+    ...productMedia("glow-lip-kit", 3),
   },
   {
     slug: "cloud-cushion-foundation",
@@ -48,6 +62,7 @@ export const products: Product[] = [
     rewardCoins: 24,
     bundleSlugs: ["glow-lip-kit"],
     giftWrap: true,
+    ...productMedia("cloud-cushion-foundation", 3),
   },
   {
     slug: "blindbox-space-cat",
@@ -68,6 +83,7 @@ export const products: Product[] = [
     sold: 6788,
     stock: 9,
     rewardCoins: 16,
+    ...productMedia("blindbox-space-cat", 3),
   },
   {
     slug: "neon-bunny-figure",
@@ -89,6 +105,7 @@ export const products: Product[] = [
     stock: 21,
     rewardCoins: 26,
     giftWrap: true,
+    ...productMedia("neon-bunny-figure", 3),
   },
   {
     slug: "chromatic-hoodie",
@@ -110,6 +127,7 @@ export const products: Product[] = [
     stock: 16,
     rewardCoins: 32,
     giftWrap: true,
+    ...productMedia("chromatic-hoodie", 3),
   },
   {
     slug: "moon-archive-tote",
@@ -131,6 +149,7 @@ export const products: Product[] = [
     stock: 7,
     rewardCoins: 88,
     giftWrap: true,
+    ...productMedia("moon-archive-tote", 3),
   },
   {
     slug: "rainbow-snack-crate",
@@ -152,6 +171,7 @@ export const products: Product[] = [
     stock: 32,
     rewardCoins: 20,
     bundleSlugs: ["zero-calorie-chips"],
+    ...productMedia("rainbow-snack-crate", 3),
   },
   {
     slug: "zero-calorie-chips",
@@ -173,6 +193,7 @@ export const products: Product[] = [
     stock: 48,
     rewardCoins: 12,
     bundleSlugs: ["rainbow-snack-crate"],
+    ...productMedia("zero-calorie-chips", 3),
   },
   {
     slug: "mist-headphones-pro",
@@ -195,6 +216,7 @@ export const products: Product[] = [
     rewardCoins: 70,
     bundleSlugs: ["midnight-keyboard-max"],
     giftWrap: true,
+    ...productMedia("mist-headphones-pro", 3),
   },
   {
     slug: "midnight-keyboard-max",
@@ -216,6 +238,7 @@ export const products: Product[] = [
     stock: 26,
     rewardCoins: 52,
     bundleSlugs: ["mist-headphones-pro"],
+    ...productMedia("midnight-keyboard-max", 3),
   },
   {
     slug: "noir-velvet-fragrance",
@@ -237,6 +260,7 @@ export const products: Product[] = [
     stock: 11,
     rewardCoins: 38,
     giftWrap: true,
+    ...productMedia("noir-velvet-fragrance", 3),
   },
   {
     slug: "golden-card-holder",
@@ -258,6 +282,7 @@ export const products: Product[] = [
     stock: 5,
     rewardCoins: 68,
     giftWrap: true,
+    ...productMedia("golden-card-holder", 3),
   },
   {
     slug: "midnight-fried-chicken",
@@ -280,6 +305,7 @@ export const products: Product[] = [
     rewardCoins: 18,
     bundleSlugs: ["bubble-tea-mega", "hotpot-party-set"],
     deliveryFlavor: "rider",
+    ...productMedia("midnight-fried-chicken", 2),
   },
   {
     slug: "bubble-tea-mega",
@@ -302,6 +328,7 @@ export const products: Product[] = [
     rewardCoins: 10,
     bundleSlugs: ["midnight-fried-chicken"],
     deliveryFlavor: "rider",
+    ...productMedia("bubble-tea-mega", 2),
   },
   {
     slug: "hotpot-party-set",
@@ -324,6 +351,7 @@ export const products: Product[] = [
     rewardCoins: 35,
     bundleSlugs: ["bubble-tea-mega"],
     deliveryFlavor: "rider",
+    ...productMedia("hotpot-party-set", 2),
   },
   {
     slug: "morning-coffee-double",
@@ -346,6 +374,7 @@ export const products: Product[] = [
     rewardCoins: 9,
     bundleSlugs: ["bubble-tea-mega"],
     deliveryFlavor: "rider",
+    ...productMedia("morning-coffee-double", 2),
   },
   {
     slug: "midnight-bbq-skewers",
@@ -368,6 +397,7 @@ export const products: Product[] = [
     rewardCoins: 22,
     bundleSlugs: ["midnight-fried-chicken"],
     deliveryFlavor: "rider",
+    ...productMedia("midnight-bbq-skewers", 3),
   },
   {
     slug: "dreamy-cake-box",
@@ -390,6 +420,7 @@ export const products: Product[] = [
     rewardCoins: 24,
     giftWrap: true,
     deliveryFlavor: "rider",
+    ...productMedia("dreamy-cake-box", 3),
   },
   {
     slug: "green-salad-bowl",
@@ -411,6 +442,7 @@ export const products: Product[] = [
     stock: 36,
     rewardCoins: 12,
     deliveryFlavor: "rider",
+    ...productMedia("green-salad-bowl", 3),
   },
   {
     slug: "night-supper-platter",
@@ -433,6 +465,7 @@ export const products: Product[] = [
     rewardCoins: 20,
     bundleSlugs: ["midnight-bbq-skewers"],
     deliveryFlavor: "rider",
+    ...productMedia("night-supper-platter", 3),
   },
   {
     slug: "convenience-mystery-bag",
@@ -454,6 +487,7 @@ export const products: Product[] = [
     stock: 60,
     rewardCoins: 8,
     deliveryFlavor: "rider",
+    ...productMedia("convenience-mystery-bag", 3),
   },
   {
     slug: "virtual-super-market-box",
@@ -476,6 +510,7 @@ export const products: Product[] = [
     rewardCoins: 30,
     bundleSlugs: ["convenience-mystery-bag"],
     deliveryFlavor: "rider",
+    ...productMedia("virtual-super-market-box", 3),
   },
 ];
 

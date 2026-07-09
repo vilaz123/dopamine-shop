@@ -1,6 +1,19 @@
 import type { Product } from "@/types/product";
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export function ProductMonogram({ product, large = false }: { product: Product; large?: boolean }) {
+  if (product.image) {
+    return (
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] luxury-shadow">
+        <img src={`${BASE_PATH}${product.image}`} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10" />
+        <div className="absolute left-6 top-6 text-xs uppercase tracking-[0.35em] text-white/85">Dopahub</div>
+        <div className="absolute bottom-6 right-6 text-xs uppercase tracking-[0.35em] text-white/85">虚拟库存 {product.stock}</div>
+      </div>
+    );
+  }
+
   return (
     <div
       className="monogram-grid relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-[2rem] luxury-shadow"

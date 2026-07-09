@@ -47,6 +47,8 @@ export type Product = {
   giftWrap?: boolean;
   deliveryFlavor?: DeliveryFlavor;
   detailBullets?: string[];
+  image?: string;
+  detailImages?: string[];
 };
 
 export function optionValueLabel(value: ProductOptionValue) {

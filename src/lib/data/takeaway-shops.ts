@@ -43,7 +43,17 @@ export type TakeawayShop = {
   monogram: string;
   productSlugs: string[];
   promo?: string;
+  image?: string;
+  detailImages?: string[];
 };
+
+/** Build image paths for a shop storefront: a main 4:3 shot plus N detail shots (-2, -3, …). */
+function shopMedia(slug: string, detailCount: number) {
+  return {
+    image: `/shops/${slug}.webp`,
+    detailImages: Array.from({ length: detailCount }, (_, i) => `/shops/${slug}-${i + 2}.webp`),
+  } as Pick<TakeawayShop, "image" | "detailImages">;
+}
 
 export const takeawayShops: TakeawayShop[] = [
   {
@@ -63,6 +73,7 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "DT",
     productSlugs: ["bubble-tea-mega", "morning-coffee-double"],
     promo: "今日免配送费",
+    ...shopMedia("dopamine-tea-lab", 1),
   },
   {
     slug: "midnight-fried-lab",
@@ -81,6 +92,7 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "FL",
     productSlugs: ["midnight-fried-chicken"],
     promo: "超时赔付 +20 多巴胺币",
+    ...shopMedia("midnight-fried-lab", 1),
   },
   {
     slug: "boiling-fantasy-hotpot",
@@ -99,6 +111,7 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "BF",
     productSlugs: ["hotpot-party-set", "midnight-bbq-skewers"],
     promo: "满¥200减¥40",
+    ...shopMedia("boiling-fantasy-hotpot", 2),
   },
   {
     slug: "dreamy-cake-studio",
@@ -117,6 +130,7 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "DS",
     productSlugs: ["dreamy-cake-box"],
     promo: "新人外卖券",
+    ...shopMedia("dreamy-cake-studio", 1),
   },
   {
     slug: "midnight-supper-canteen",
@@ -135,6 +149,7 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "MS",
     productSlugs: ["night-supper-platter"],
     promo: "深夜不打烊",
+    ...shopMedia("midnight-supper-canteen", 2),
   },
   {
     slug: "green-fantasy-salad",
@@ -153,6 +168,7 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "GF",
     productSlugs: ["green-salad-bowl"],
     promo: "今日免配送费",
+    ...shopMedia("green-fantasy-salad", 2),
   },
   {
     slug: "forever-convenience",
@@ -171,6 +187,7 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "FC",
     productSlugs: ["convenience-mystery-bag"],
     promo: "满¥39减¥5",
+    ...shopMedia("forever-convenience", 2),
   },
   {
     slug: "virtual-super-market",
@@ -189,11 +206,17 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "VS",
     productSlugs: ["virtual-super-market-box"],
     promo: "今日免配送费",
+    ...shopMedia("virtual-super-market", 2),
   },
 ];
 
 export function getTakeawayShop(slug: string): TakeawayShop | null {
   return takeawayShops.find((shop) => shop.slug === slug) ?? null;
+}
+
+/** All gallery images for a shop (main first, then details), with empties filtered out. */
+export function shopImages(shop: TakeawayShop): string[] {
+  return [shop.image, ...(shop.detailImages ?? [])].filter((value): value is string => Boolean(value));
 }
 
 export function getShopByProductSlug(productSlug: string): TakeawayShop | null {

@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getTakeawayShop, takeawayShops, formatMonthlySales } from "@/lib/data/takeaway-shops";
+import { getTakeawayShop, takeawayShops, formatMonthlySales, shopImages } from "@/lib/data/takeaway-shops";
 import { getProduct } from "@/lib/data/products";
-import { ShopMonogram } from "@/components/takeaway/ShopMonogram";
+import { MediaGallery } from "@/components/common/MediaGallery";
 import { TakeawayMealCard } from "@/components/takeaway/TakeawayMealCard";
 import { RiderMapMock } from "@/components/order/RiderMapMock";
 import { ReviewSection } from "@/components/reviews/ReviewSection";
@@ -23,12 +23,13 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
       <Link href="/takeaway" className="text-sm text-[#7a7167] hover:text-black">← 返回外卖</Link>
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
-          <ShopMonogram shop={shop} large />
-          {shop.promo && (
-            <div className="absolute left-5 top-5 rounded-full bg-[#ffd23f] px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-black shadow-lg">
-              {shop.promo}
-            </div>
-          )}
+          <MediaGallery images={shopImages(shop)} alt={shop.name} aspect="4/3">
+            {shop.promo && (
+              <div className="absolute left-5 top-5 rounded-full bg-[#ffd23f] px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-black shadow-lg">
+                {shop.promo}
+              </div>
+            )}
+          </MediaGallery>
         </div>
         <div className="lg:pt-6">
           <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">{shop.category}</p>

@@ -9,6 +9,8 @@ import { useAssetStore } from "@/stores/asset-store";
 import { Price } from "@/components/ui/Price";
 import { AddToCart } from "@/components/product/AddToCart";
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export function TakeawayMealCard({ product }: { product: Product }) {
   const [expanded, setExpanded] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
@@ -34,9 +36,13 @@ export function TakeawayMealCard({ product }: { product: Product }) {
       <div className="flex gap-4">
         <div
           className="flex aspect-[4/3] w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl"
-          style={{ background: `linear-gradient(135deg, ${product.saturation}, #111 78%)` }}
+          style={product.image ? undefined : { background: `linear-gradient(135deg, ${product.saturation}, #111 78%)` }}
         >
-          <span className="font-display text-3xl text-white/95">{product.monogram}</span>
+          {product.image ? (
+            <img src={`${BASE_PATH}${product.image}`} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
+          ) : (
+            <span className="font-display text-3xl text-white/95">{product.monogram}</span>
+          )}
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
           <h3 className="font-display text-2xl leading-none">{product.name}</h3>
