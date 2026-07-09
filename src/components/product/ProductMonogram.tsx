@@ -6,7 +6,7 @@ export function ProductMonogram({ product, large = false }: { product: Product; 
   if (product.image) {
     return (
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] luxury-shadow">
-        <img src={`${BASE_PATH}${product.image}`} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
+        <img src={`${BASE_PATH}${product.image}`} alt={product.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10" />
         <div className="absolute left-6 top-6 text-xs uppercase tracking-[0.35em] text-white/85">Dopahub</div>
         <div className="absolute bottom-6 right-6 text-xs uppercase tracking-[0.35em] text-white/85">虚拟库存 {product.stock}</div>
