@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import type { Review } from "@/types/review";
 import { reviewService } from "@/lib/services";
 import { useAssetStore } from "@/stores/asset-store";
+import { useAuthStore } from "@/stores/auth-store";
 import { useUiStore } from "@/stores/ui-store";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
 
 export function ReviewSection({ productSlug }: { productSlug: string }) {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [author, setAuthor] = useState("匿名仓友");
+  const user = useAuthStore((state) => state.user);
+  const [author, setAuthor] = useState(user?.username ?? "匿名仓友");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [rating, setRating] = useState(5);

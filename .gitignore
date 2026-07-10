@@ -5,3 +5,5 @@ out
 .DS_Store
 *.log
 .env*.local
+# TypeScript 增量构建缓存（构建产物，不应入库）
+tsconfig.tsbuildinfo

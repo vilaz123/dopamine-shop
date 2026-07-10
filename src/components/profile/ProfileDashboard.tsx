@@ -17,11 +17,12 @@ export function ProfileDashboard() {
   const orders = useOrderStore((state) => state.orders);
   const level = selectLevel(xp);
 
-  if (!user) {
+  if (!user || user.isAnonymous) {
     return (
       <div className="rounded-[2.5rem] bg-[#fffaf2] p-10 text-center">
         <h2 className="font-display text-5xl">还没有登录</h2>
-        <ButtonLink href="/login" className="mt-8">去登录</ButtonLink>
+        <p className="mt-4 text-[#7a7167]">注册账号后可查看资料、勋章与收货偏好，匿名浏览的进度会继承进来。</p>
+        <ButtonLink href="/login" className="mt-8">去注册 / 登录</ButtonLink>
       </div>
     );
   }
@@ -31,7 +32,7 @@ export function ProfileDashboard() {
       <aside className="rounded-[2.5rem] bg-[#0b0b0b] p-8 text-[#f6f1e8]">
         <p className="text-sm text-white/60">当前账号</p>
         <h2 className="font-display mt-3 text-6xl">{user.username}</h2>
-        <p className="mt-4 text-white/70">手机号：{user.phone}</p>
+        <p className="mt-4 text-white/70">账号：{user.email ?? user.phone ?? "—"}</p>
         <div className="mt-8 grid gap-4 md:grid-cols-3 lg:grid-cols-1">
           <div className="rounded-3xl bg-white/10 p-5"><p className="text-sm text-white/60">多巴胺币</p><p className="font-display text-4xl">{coins}</p></div>
           <div className="rounded-3xl bg-white/10 p-5"><p className="text-sm text-white/60">等级</p><p className="font-display text-4xl">Lv.{level.level}</p></div>

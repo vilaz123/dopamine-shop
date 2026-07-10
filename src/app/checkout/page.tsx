@@ -73,6 +73,19 @@ export default function CheckoutPage() {
     router.push(`/orders?order=${order.id}&success=1`);
   }
 
+  if (!user || user.isAnonymous) return (
+    <section className="container-shell py-16">
+      <div className="rounded-[2.5rem] border border-dashed border-black/15 bg-[#fffaf2] p-12 text-center">
+        <h1 className="font-display text-5xl">登录后即可虚拟下单</h1>
+        <p className="mt-5 text-lg leading-8 text-[#7a7167]">虚拟下单、获得多巴胺币与勋章需要先注册账号。你匿名浏览攒下的进度会在注册后自动继承到账号里。购物车已保留，登录回来一键结算。</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <ButtonLink href="/login">去注册 / 登录</ButtonLink>
+          <ButtonLink href="/shop" variant="ghost">继续逛逛</ButtonLink>
+        </div>
+      </div>
+    </section>
+  );
+
   if (lines.length === 0) return <section className="container-shell py-16"><div className="rounded-[2.5rem] border border-dashed border-black/15 bg-[#fffaf2] p-12 text-center"><h1 className="font-display text-5xl">没有可结算的虚拟商品。</h1><ButtonLink href="/shop" className="mt-8">返回多巴胺仓</ButtonLink></div></section>;
 
   return (

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { communityTopics } from "@/lib/data/community-posts";
 import { products } from "@/lib/data/products";
 import { formatCurrency } from "@/lib/utils/format";
 import { useAssetStore } from "@/stores/asset-store";
+import { useAuthStore } from "@/stores/auth-store";
 import { useCommunityStore } from "@/stores/community-store";
 import { useUiStore } from "@/stores/ui-store";
 import { Button } from "@/components/ui/Button";
@@ -12,19 +13,25 @@ import { Input, Textarea } from "@/components/ui/Input";
 
 export function CommunityFeed() {
   const posts = useCommunityStore((state) => state.posts);
+  const loadPosts = useCommunityStore((state) => state.loadPosts);
   const addPost = useCommunityStore((state) => state.addPost);
   const likePost = useCommunityStore((state) => state.likePost);
   const grantCoins = useAssetStore((state) => state.grantCoins);
   const setLastReward = useUiStore((state) => state.setLastReward);
+  const user = useAuthStore((state) => state.user);
   const [topic, setTopic] = useState(communityTopics[0]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [author, setAuthor] = useState("匿名仓友");
+  const [author, setAuthor] = useState(user?.username ?? "匿名仓友");
+
+  useEffect(() => {
+    void loadPosts();
+  }, [loadPosts]);
 
   function submit(event: React.FormEvent) {
     event.preventDefault();
     if (!title.trim() || !body.trim()) return;
-    addPost({ author, title, body, topic, relatedProductSlugs: [], savedAmount: 0 });
+    void addPost({ author, title, body, topic, relatedProductSlugs: [], savedAmount: 0 });
     grantCoins(30);
     setLastReward({ id: `community-${Date.now()}`, coins: 30 });
     setTitle("");
@@ -58,7 +65,7 @@ export function CommunityFeed() {
             <p className="mt-3 leading-7 text-[#554c43]">{post.body}</p>
             {post.relatedProductSlugs.length > 0 && <p className="mt-3 text-sm text-[#7a7167]">关联商品：{post.relatedProductSlugs.map((slug) => products.find((p) => p.slug === slug)?.name).filter(Boolean).join("、")}</p>}
             {post.savedAmount > 0 && <p className="mt-2 text-sm text-[#8b6b2f]">本次省下 {formatCurrency(post.savedAmount)}</p>}
-            <div className="mt-5 flex items-center justify-between text-sm text-[#7a7167]"><span>{post.author} · {new Date(post.createdAt).toLocaleDateString("zh-CN")}</span><button onClick={() => likePost(post.id)}>👍 {post.likes}</button></div>
+            <div className="mt-5 flex items-center justify-between text-sm text-[#7a7167]"><span>{post.author} · {new Date(post.createdAt).toLocaleDateString("zh-CN")}</span><button onClick={() => void likePost(post.id)}>👍 {post.likes}</button></div>
           </article>
         ))}
       </div>

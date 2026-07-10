@@ -34,6 +34,9 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: "true"
+          # Supabase 客户端（anon key 会打进静态产物，安全依赖 RLS）
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       - name: Disable Jekyll
         run: touch out/.nojekyll
