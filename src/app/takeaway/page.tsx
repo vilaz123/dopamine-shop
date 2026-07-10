@@ -89,7 +89,7 @@ export default function TakeawayPage() {
             没有符合幻想条件的店铺，换个分类或搜索词试试。
           </div>
         ) : (
-          list.map((shop) => <TakeawayShopCard key={shop.slug} shop={shop} />)
+          list.map((shop, index) => <TakeawayShopCard key={shop.slug} shop={shop} priority={index < 2} />)
         )}
       </div>
 

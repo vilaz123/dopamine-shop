@@ -2,6 +2,7 @@
 
 import { useRef, useState, type KeyboardEvent, type ReactNode, type TouchEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { thumbUrl } from "@/lib/utils/image";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -82,6 +83,8 @@ export function MediaGallery({ images, alt, aspect, children }: MediaGalleryProp
           alt={alt}
           className="h-full w-full object-cover"
           loading="eager"
+          // @ts-expect-error fetchpriority 较新，React 类型尚未收录
+          fetchpriority="high"
           decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10" />
@@ -133,7 +136,7 @@ export function MediaGallery({ images, alt, aspect, children }: MediaGalleryProp
                   selected ? "ring-2 ring-[#8b6b2f] ring-offset-2 ring-offset-[#fffaf2]" : "opacity-70 hover:opacity-100"
                 }`}
               >
-                <img src={`${BASE_PATH}${src}`} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                <img src={`${BASE_PATH}${thumbUrl(src)}`} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
               </button>
             );
           })}

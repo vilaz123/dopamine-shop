@@ -9,6 +9,7 @@ import { useUiStore } from "@/stores/ui-store";
 import { useAssetStore } from "@/stores/asset-store";
 import { Price } from "@/components/ui/Price";
 import { AddToCart } from "@/components/product/AddToCart";
+import { thumbUrl } from "@/lib/utils/image";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -42,7 +43,7 @@ export function TakeawayMealCard({ product }: { product: Product }) {
           aria-label={`查看 ${product.name} 详情`}
         >
           {product.image ? (
-            <img src={`${BASE_PATH}${product.image}`} alt={product.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+            <img src={`${BASE_PATH}${thumbUrl(product.image)}`} alt={product.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
           ) : (
             <span className="font-display text-3xl text-white/95">{product.monogram}</span>
           )}

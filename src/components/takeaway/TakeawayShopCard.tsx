@@ -11,7 +11,7 @@ import { useUiStore } from "@/stores/ui-store";
 import { useAssetStore } from "@/stores/asset-store";
 import { ShopMonogram } from "./ShopMonogram";
 
-export function TakeawayShopCard({ shop }: { shop: TakeawayShop }) {
+export function TakeawayShopCard({ shop, priority = false }: { shop: TakeawayShop; priority?: boolean }) {
   const router = useRouter();
   const addItem = useCartStore((state) => state.addItem);
   const setCartOpen = useUiStore((state) => state.setCartOpen);
@@ -38,7 +38,7 @@ export function TakeawayShopCard({ shop }: { shop: TakeawayShop }) {
   return (
     <div className="flex gap-5 rounded-[2rem] border border-black/10 bg-[#fffaf2] p-4 transition hover:border-black/30 md:p-5">
       <Link href={`/takeaway/${shop.slug}`} className="relative w-32 shrink-0 sm:w-44">
-        <ShopMonogram shop={shop} />
+        <ShopMonogram shop={shop} priority={priority} />
       </Link>
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">

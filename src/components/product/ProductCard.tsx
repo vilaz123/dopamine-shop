@@ -5,11 +5,11 @@ import { ProductMonogram } from "./ProductMonogram";
 import { ProductTagChips } from "./ProductTagChips";
 import { FavoriteButton } from "./FavoriteButton";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
   return (
     <Link href={`/shop/${product.slug}`} className="group block">
       <div className="relative">
-        <ProductMonogram product={product} />
+        <ProductMonogram product={product} priority={priority} />
         <div className="absolute left-4 top-4 right-4 flex items-start justify-between gap-3">
           <ProductTagChips tags={product.tags} />
           <FavoriteButton slug={product.slug} />
