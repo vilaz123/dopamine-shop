@@ -63,7 +63,7 @@ export const useAuthStore = create<AuthState>()(
             id,
             email: email.trim(),
             username: username?.trim() || defaultUsernameFromEmail(email),
-            avatarColor: "#ff4d6d",
+            avatarColor: "#FF3D81",
             createdAt: new Date().toISOString(),
             onboarded: false,
           };

@@ -83,8 +83,7 @@ export function MediaGallery({ images, alt, aspect, children }: MediaGalleryProp
           alt={alt}
           className="h-full w-full object-cover"
           loading="eager"
-          // @ts-expect-error fetchpriority 较新，React 类型尚未收录
-          fetchpriority="high"
+          fetchPriority="high"
           decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10" />
@@ -133,7 +132,7 @@ export function MediaGallery({ images, alt, aspect, children }: MediaGalleryProp
                 aria-label={`查看第 ${index + 1} 张图`}
                 aria-pressed={selected}
                 className={`relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-2xl transition ${
-                  selected ? "ring-2 ring-[#8b6b2f] ring-offset-2 ring-offset-[#fffaf2]" : "opacity-70 hover:opacity-100"
+                  selected ? "ring-2 ring-[#FF3D81] ring-offset-2 ring-offset-[#FFFFFF]" : "opacity-70 hover:opacity-100"
                 }`}
               >
                 <img src={`${BASE_PATH}${thumbUrl(src)}`} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />

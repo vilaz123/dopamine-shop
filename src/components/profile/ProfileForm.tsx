@@ -30,7 +30,7 @@ export function ProfileForm() {
   }
 
   return (
-    <form onSubmit={submit} className="rounded-[2.5rem] bg-[#fffaf2] p-8">
+    <form onSubmit={submit} className="rounded-[2.5rem] bg-[#FFFFFF] p-8">
       <h2 className="font-display text-5xl">设置你的仓主资料</h2>
       <div className="mt-8 space-y-4">
         <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="用户名" required />
@@ -45,8 +45,8 @@ export function ProfileForm() {
             {preferences.map((item) => <option key={item}>{item}</option>)}
           </select>
           <div className="md:col-span-2 grid gap-3 md:grid-cols-2">
-            <button type="button" onClick={() => setDeliveryCompletion("never")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "never" ? "border-black bg-black text-[#f6f1e8]" : "border-black/10"}`}>永不签收<br/><span className="opacity-70">维持派送中/骑手配送中</span></button>
-            <button type="button" onClick={() => setDeliveryCompletion("signed")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "signed" ? "border-black bg-black text-[#f6f1e8]" : "border-black/10"}`}>允许送达签收<br/><span className="opacity-70">增加已送达和一键签收</span></button>
+            <button type="button" onClick={() => setDeliveryCompletion("never")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "never" ? "border-black bg-black text-[#FFF5F8]" : "border-black/10"}`}>永不签收<br/><span className="opacity-70">维持派送中/骑手配送中</span></button>
+            <button type="button" onClick={() => setDeliveryCompletion("signed")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "signed" ? "border-black bg-black text-[#FFF5F8]" : "border-black/10"}`}>允许送达签收<br/><span className="opacity-70">增加已送达和一键签收</span></button>
           </div>
         </div>
       )}

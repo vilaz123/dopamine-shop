@@ -12,8 +12,7 @@ export function ShopMonogram({ shop, large = false, priority = false }: { shop: 
           alt={shop.name}
           className="h-full w-full object-cover"
           loading={priority ? "eager" : "lazy"}
-          // @ts-expect-error fetchpriority 较新，React 类型尚未收录
-          fetchpriority={priority ? "high" : "auto"}
+          fetchPriority={priority ? "high" : "auto"}
           decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10" />
@@ -27,7 +26,7 @@ export function ShopMonogram({ shop, large = false, priority = false }: { shop: 
     <div
       className="monogram-grid relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[2rem] luxury-shadow"
       style={{
-        background: `radial-gradient(circle at 22% 15%, rgba(255,255,255,.52), transparent 25%), radial-gradient(circle at 82% 25%, ${shop.saturation}, transparent 24%), linear-gradient(135deg, ${shop.saturation}, #111 78%)`,
+        background: `radial-gradient(circle at 22% 15%, rgba(255,255,255,.52), transparent 25%), radial-gradient(circle at 82% 25%, ${shop.saturation}, transparent 24%), linear-gradient(135deg, ${shop.saturation}, #241A4D 78%)`,
       }}
     >
       <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,.12)_0,rgba(255,255,255,.12)_1px,transparent_1px,transparent_12px)]" />

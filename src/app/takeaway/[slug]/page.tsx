@@ -20,7 +20,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
 
   return (
     <section className="container-shell py-14">
-      <Link href="/takeaway" className="text-sm text-[#7a7167] hover:text-black">← 返回外卖</Link>
+      <Link href="/takeaway" className="text-sm text-[#5A4A6A] hover:text-black">← 返回外卖</Link>
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
           <MediaGallery images={shopImages(shop)} alt={shop.name} aspect="4/3">
@@ -32,9 +32,9 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
           </MediaGallery>
         </div>
         <div className="lg:pt-6">
-          <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">{shop.category}</p>
+          <p className="text-xs uppercase tracking-[0.32em] text-[#FF3D81]">{shop.category}</p>
           <h1 className="font-display mt-4 text-6xl leading-none md:text-7xl">{shop.name}</h1>
-          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-lg text-[#554c43]">
+          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-lg text-[#3D3357]">
             <span className="font-semibold text-black">★ {shop.rating.toFixed(1)}</span>
             <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>
             <span>{shop.distanceKm}km 幻想距离</span>
@@ -46,7 +46,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
           </div>
           <div className="mt-6 flex flex-wrap gap-2">
             {shop.discounts.map((discount) => (
-              <span key={discount} className="rounded-full border border-yellow-400/50 bg-yellow-400/15 px-3 py-1 text-xs text-[#8b6b2f]">{discount}</span>
+              <span key={discount} className="rounded-full border border-yellow-400/50 bg-yellow-400/15 px-3 py-1 text-xs text-[#FF3D81]">{discount}</span>
             ))}
           </div>
           <div className="mt-8">
@@ -57,7 +57,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
 
       <section className="mt-16 border-t border-black/10 pt-12">
         <h2 className="font-display mb-8 text-5xl">本店菜单</h2>
-        <p className="mb-10 text-[#7a7167]">选规格可展开口味/辣度等选项，加入购物车后仍可在购物车里改。</p>
+        <p className="mb-10 text-[#5A4A6A]">选规格可展开口味/辣度等选项，加入购物车后仍可在购物车里改。</p>
         <div className="grid gap-6 md:grid-cols-2">
           {meals.map((product) => (
             <TakeawayMealCard key={product.slug} product={product} />

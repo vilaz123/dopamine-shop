@@ -50,7 +50,7 @@ export function AddToCart({ product, sticky = false }: { product: Product; stick
                 <button
                   key={value}
                   onClick={() => setSelected((state) => ({ ...state, [option.label]: value }))}
-                  className={`rounded-full border px-4 py-2 text-sm transition ${selected[option.label] === value ? "border-black bg-black text-[#f6f1e8]" : "border-black/10 hover:border-black/30"}`}
+                  className={`rounded-full border px-4 py-2 text-sm transition ${selected[option.label] === value ? "border-black bg-black text-[#FFF5F8]" : "border-black/10 hover:border-black/30"}`}
                 >
                   {value}{delta ? ` +¥${delta}` : ""}
                 </button>
@@ -59,7 +59,7 @@ export function AddToCart({ product, sticky = false }: { product: Product; stick
           </div>
         </div>
       ))}
-      <div className="rounded-2xl bg-[#fffaf2] p-4 text-sm text-[#7a7167]">
+      <div className="rounded-2xl bg-[#FFFFFF] p-4 text-sm text-[#5A4A6A]">
         已选：{optionText} · <Price value={finalPrice} className="font-display text-2xl text-black" />
       </div>
       <div className={`grid gap-3 ${sticky ? "grid-cols-2" : ""}`}>

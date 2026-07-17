@@ -24,7 +24,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <section className="container-shell py-14">
-      <Link href="/shop" className="text-sm text-[#7a7167] hover:text-black">← 返回多巴胺仓</Link>
+      <Link href="/shop" className="text-sm text-[#5A4A6A] hover:text-black">← 返回多巴胺仓</Link>
       <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
           <MediaGallery images={productImages(product)} alt={product.name} aspect="4/5">
@@ -35,19 +35,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </MediaGallery>
         </div>
         <div className="lg:pt-8">
-          <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">{product.badge}</p>
+          <p className="text-xs uppercase tracking-[0.32em] text-[#FF3D81]">{product.badge}</p>
           <h1 className="font-display mt-4 text-6xl leading-none md:text-7xl">{product.name}</h1>
-          <p className="mt-4 text-xl text-[#7a7167]">{product.subtitle}</p>
-          <p className="font-display mt-8 text-5xl">{formatCurrency(product.price)}<span className="ml-2 align-top text-sm font-sans text-[#7a7167]">虚拟金额，无需真实支付</span></p>
+          <p className="mt-4 text-xl text-[#5A4A6A]">{product.subtitle}</p>
+          <p className="font-display mt-8 text-5xl">{formatCurrency(product.price)}<span className="ml-2 align-top text-sm font-sans text-[#5A4A6A]">虚拟金额，无需真实支付</span></p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Badge tone="gold">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</Badge>
             <Badge tone="green">虚拟库存仅剩 {product.stock} 件</Badge>
             <Badge tone={product.deliveryFlavor === "rider" ? "hot" : "blue"}>{product.deliveryFlavor === "rider" ? "骑手配送" : "快递派送"} · 永不签收</Badge>
           </div>
-          <p className="mt-8 text-lg leading-8 text-[#554c43]">{product.description}</p>
-          <div className="mt-8 rounded-[2rem] border border-black/10 bg-[#fffaf2] p-6">
-            <p className="text-sm uppercase tracking-[0.28em] text-[#8b6b2f]">Product Story</p>
-            <p className="mt-4 leading-7 text-[#554c43]">{product.story}</p>
+          <p className="mt-8 text-lg leading-8 text-[#3D3357]">{product.description}</p>
+          <div className="mt-8 rounded-[2rem] border border-black/10 bg-[#FFFFFF] p-6">
+            <p className="text-sm uppercase tracking-[0.28em] text-[#FF3D81]">Product Story</p>
+            <p className="mt-4 leading-7 text-[#3D3357]">{product.story}</p>
           </div>
           <div className="mt-8">
             <AddToCart product={product} />
@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {related.length > 0 && (
         <section className="mt-20 border-t border-black/10 pt-12">
           <h2 className="font-display mb-4 text-5xl">凑单与相关推荐</h2>
-          <p className="mb-10 text-[#7a7167]">继续加购可获得更多多巴胺币，但仍然不会真实扣款。</p>
+          <p className="mb-10 text-[#5A4A6A]">继续加购可获得更多多巴胺币，但仍然不会真实扣款。</p>
           <ProductGrid products={related} />
         </section>
       )}

@@ -15,10 +15,10 @@ export function TrackingTimeline({ createdAt, flavor, completion = "never", sign
           </div>
           <div className="flex-1 border-b border-black/10 pb-5">
             <div className="flex items-center justify-between gap-4">
-              <p className={stage.reached ? "font-semibold" : "text-[#7a7167]"}>{stage.label}{stage.terminal ? " · 终态" : ""}</p>
+              <p className={stage.reached ? "font-semibold" : "text-[#5A4A6A]"}>{stage.label}{stage.terminal ? " · 终态" : ""}</p>
               {stage.terminal && <span className="rounded-full bg-[#ef4444] px-3 py-1 text-xs text-white">{completion === "signed" ? (signedAt ? "已签收" : "待签收") : "永不签收"}</span>}
             </div>
-            <p className="mt-1 text-sm text-[#7a7167]">{stage.note}</p>
+            <p className="mt-1 text-sm text-[#5A4A6A]">{stage.note}</p>
             <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[#9d9286]">{formatDateTime(stage.at)}</p>
           </div>
         </div>
@@ -26,7 +26,7 @@ export function TrackingTimeline({ createdAt, flavor, completion = "never", sign
       {flavor === "rider" ? (
         <RiderMapMock caption={completion === "signed" ? "配送路线可以抵达终点，等待你确认签收" : "骑手正在幻想路线中循环接近你，永远差一栋楼"} />
       ) : (
-        <div className="relative overflow-hidden rounded-3xl bg-[#0b0b0b] p-5 text-[#f6f1e8]">
+        <div className="relative overflow-hidden rounded-3xl bg-[#241A4D] p-5 text-[#FFF5F8]">
           <div className="absolute left-4 right-4 top-1/2 h-px bg-white/20" />
           <div className="relative h-16">
             <div className="absolute top-5 h-5 w-5 rounded-full bg-[#ffd23f] shadow-lg shadow-yellow-300/40 [animation:reward-flash_2.6s_linear_infinite]" />

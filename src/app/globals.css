@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
+/* 多巴胺配色：不使用黑色。Tailwind 的 black 工具类（bg-black / text-black /
+   border-black / from-black 等及其透明度变体）全部重映射为深紫 #241A4D，
+   一处定义全局生效，避免散落各处的纯黑。 */
+@theme {
+  --color-black: #241A4D;
+}
+
 :root {
-  --bone: #f6f1e8;
-  --paper: #fffaf2;
-  --ink: #0b0b0b;
-  --muted: #7a7167;
-  --line: #ded2c0;
-  --gilt: #b5975a;
-  --charcoal: #151515;
+  --bone: #FFF5F8;
+  --paper: #FFFFFF;
+  --ink: #241A4D;
+  --muted: #5A4A6A;
+  --line: #E8DEF5;
+  --gilt: #6C5CE7;
+  --charcoal: #241A4D;
 }
 
 * {
@@ -61,7 +68,7 @@ textarea {
 }
 
 .luxury-shadow {
-  box-shadow: 0 24px 70px rgb(20 15 10 / 0.12);
+  box-shadow: 0 24px 70px rgb(36 26 77 / 0.16);
 }
 
 .monogram-grid {

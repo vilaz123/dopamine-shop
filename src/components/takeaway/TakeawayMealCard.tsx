@@ -34,12 +34,12 @@ export function TakeawayMealCard({ product }: { product: Product }) {
   }
 
   return (
-    <div className="rounded-[1.5rem] border border-black/10 bg-[#fffaf2] p-5">
+    <div className="rounded-[1.5rem] border border-black/10 bg-[#FFFFFF] p-5">
       <div className="flex gap-4">
         <Link
           href={`/shop/${product.slug}`}
           className="flex aspect-[4/3] w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl"
-          style={product.image ? undefined : { background: `linear-gradient(135deg, ${product.saturation}, #111 78%)` }}
+          style={product.image ? undefined : { background: `linear-gradient(135deg, ${product.saturation}, #241A4D 78%)` }}
           aria-label={`查看 ${product.name} 详情`}
         >
           {product.image ? (
@@ -49,16 +49,16 @@ export function TakeawayMealCard({ product }: { product: Product }) {
           )}
         </Link>
         <div className="flex min-w-0 flex-1 flex-col">
-          <Link href={`/shop/${product.slug}`} className="font-display text-2xl leading-none hover:text-[#8b6b2f]">{product.name}</Link>
-          <p className="mt-1 text-sm text-[#7a7167]">{product.subtitle}</p>
-          <p className="mt-1 text-xs text-[#9a3b2f]">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</p>
+          <Link href={`/shop/${product.slug}`} className="font-display text-2xl leading-none hover:text-[#FF3D81]">{product.name}</Link>
+          <p className="mt-1 text-sm text-[#5A4A6A]">{product.subtitle}</p>
+          <p className="mt-1 text-xs text-[#FF3D81]">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</p>
           <div className="mt-2 flex items-center justify-between gap-3">
             <Price value={product.price} className="font-display text-2xl" />
             <div className="flex flex-wrap gap-2">
               <Link href={`/shop/${product.slug}`} className="rounded-full border border-black/15 px-4 py-2 text-sm transition hover:border-black/40">查看详情</Link>
               <button onClick={() => setExpanded((value) => !value)} className="rounded-full border border-black/15 px-4 py-2 text-sm transition hover:border-black/40">{expanded ? "收起规格" : "选规格"}</button>
               {!expanded && (
-                <button onClick={quickAdd} className="rounded-full bg-[#0b0b0b] px-5 py-2 text-sm font-semibold text-[#f6f1e8] transition hover:bg-[#2a2118]">加入购物车</button>
+                <button onClick={quickAdd} className="rounded-full bg-[#241A4D] px-5 py-2 text-sm font-semibold text-[#FFF5F8] transition hover:bg-[#3A2A6E]">加入购物车</button>
               )}
             </div>
           </div>

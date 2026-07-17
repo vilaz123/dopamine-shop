@@ -62,7 +62,7 @@ async function ensureProfile(supabaseUser: User) {
     id: supabaseUser.id,
     email: supabaseUser.email ?? null,
     username: (supabaseUser.user_metadata?.username as string | undefined) ?? "仓友",
-    avatar_color: "#ff4d6d",
+    avatar_color: "#FF3D81",
   }, { onConflict: "id" });
 }
 
@@ -120,7 +120,7 @@ async function loadCloudState(supabaseUser: User) {
         email: (profile?.email as string | null) ?? supabaseUser.email ?? undefined,
         phone: (profile?.phone as string | null) ?? undefined,
         username: (profile?.username as string | null) ?? `仓友${(supabaseUser.email ?? "x").slice(-4)}`,
-        avatarColor: (profile?.avatar_color as string | null) ?? "#ff4d6d",
+        avatarColor: (profile?.avatar_color as string | null) ?? "#FF3D81",
         shipping: (profile?.shipping as ShippingProfile | null) ?? undefined,
         createdAt: (profile?.created_at as string | null) ?? new Date().toISOString(),
         onboarded: Boolean(profile?.onboarded ?? false),

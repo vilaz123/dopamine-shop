@@ -38,26 +38,26 @@ export function ReviewSection({ productSlug }: { productSlug: string }) {
     <section className="mt-20 border-t border-black/10 pt-12">
       <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
         <div>
-          <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Showcase</p>
+          <p className="text-xs uppercase tracking-[0.32em] text-[#FF3D81]">Showcase</p>
           <h2 className="font-display mt-3 text-5xl">晒单评论</h2>
-          <form onSubmit={submit} className="mt-8 space-y-4 rounded-[2rem] bg-[#fffaf2] p-6">
+          <form onSubmit={submit} className="mt-8 space-y-4 rounded-[2rem] bg-[#FFFFFF] p-6">
             <Input value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="你的名字" />
             <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="晒单标题" />
             <Textarea value={body} onChange={(e) => setBody(e.target.value)} placeholder="追评、吐槽、五星好评都可以。" rows={4} />
-            <label className="block text-sm text-[#7a7167]">满足感：{rating}/5</label>
+            <label className="block text-sm text-[#5A4A6A]">满足感：{rating}/5</label>
             <input type="range" min="1" max="5" value={rating} onChange={(e) => setRating(Number(e.target.value))} className="w-full" />
             <Button type="submit" className="w-full">发布晒单领取 +20 多巴胺币</Button>
           </form>
         </div>
         <div className="space-y-5">
-          {reviews.length === 0 ? <p className="text-[#7a7167]">还没有晒单。</p> : reviews.map((review) => (
+          {reviews.length === 0 ? <p className="text-[#5A4A6A]">还没有晒单。</p> : reviews.map((review) => (
             <article key={review.id} className="rounded-[2rem] border border-black/10 bg-white/45 p-6">
               <div className="flex items-center justify-between gap-4">
                 <h3 className="font-display text-3xl">{review.title}</h3>
-                <span className="text-sm text-[#8b6b2f]">{"★".repeat(review.rating)}</span>
+                <span className="text-sm text-[#FF3D81]">{"★".repeat(review.rating)}</span>
               </div>
-              <p className="mt-3 leading-7 text-[#554c43]">{review.body}</p>
-              <p className="mt-4 text-xs uppercase tracking-[0.25em] text-[#7a7167]">{review.author} · +{review.coinsEarned ?? 20} 币</p>
+              <p className="mt-3 leading-7 text-[#3D3357]">{review.body}</p>
+              <p className="mt-4 text-xs uppercase tracking-[0.25em] text-[#5A4A6A]">{review.author} · +{review.coinsEarned ?? 20} 币</p>
             </article>
           ))}
         </div>

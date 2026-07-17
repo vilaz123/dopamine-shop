@@ -31,24 +31,24 @@ export default function CartPage() {
 
   return (
     <section className="container-shell py-16">
-      <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Cart</p>
+      <p className="text-xs uppercase tracking-[0.32em] text-[#FF3D81]">Cart</p>
       <h1 className="font-display mt-4 text-6xl">虚拟购物车</h1>
       {lines.length === 0 ? (
-        <div className="mt-12 rounded-[2.5rem] border border-dashed border-black/15 bg-[#fffaf2] p-12 text-center">
+        <div className="mt-12 rounded-[2.5rem] border border-dashed border-black/15 bg-[#FFFFFF] p-12 text-center">
           <p className="font-display text-4xl">你的购物车是空的。</p>
-          <p className="mt-4 text-[#7a7167]">多巴胺仓还没开始装货。</p>
+          <p className="mt-4 text-[#5A4A6A]">多巴胺仓还没开始装货。</p>
           <ButtonLink href="/shop" className="mt-8">开始虚拟购物</ButtonLink>
         </div>
       ) : (
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_390px]">
           <div className="space-y-5">
             {lines.map(({ item, product }) => (
-              <article key={`${item.slug}-${JSON.stringify(item.options)}-${item.giftWrap}`} className="rounded-[2rem] border border-black/10 bg-[#fffaf2] p-6">
+              <article key={`${item.slug}-${JSON.stringify(item.options)}-${item.giftWrap}`} className="rounded-[2rem] border border-black/10 bg-[#FFFFFF] p-6">
                 <div className="flex flex-col justify-between gap-6 md:flex-row">
                   <div>
                     <Link href={cartItemHref(product.slug, product.deliveryFlavor)} className="font-display text-4xl">{product.name}</Link>
-                    <p className="mt-2 text-[#7a7167]">{product.subtitle}</p>
-                    <p className="mt-2 text-sm text-[#7a7167]">{Object.entries(item.options).map(([k, v]) => `${k}: ${v}`).join(" · ")}</p>
+                    <p className="mt-2 text-[#5A4A6A]">{product.subtitle}</p>
+                    <p className="mt-2 text-sm text-[#5A4A6A]">{Object.entries(item.options).map(([k, v]) => `${k}: ${v}`).join(" · ")}</p>
                     <CartOptionEditor item={item} product={product} />
                     {product.giftWrap && <label className="mt-4 flex items-center gap-2 text-sm"><input type="checkbox" checked={Boolean(item.giftWrap)} onChange={(e) => setGiftWrap(item.slug, item.options, e.target.checked)} /> 虚拟礼品包装 +¥9</label>}
                   </div>
@@ -59,23 +59,23 @@ export default function CartPage() {
                       <span className="min-w-10 text-center">{item.quantity}</span>
                       <button className="px-4 py-2" onClick={() => setQuantity(item.slug, item.options, item.quantity + 1, item.giftWrap)}>+</button>
                     </div>
-                    <button onClick={() => removeItem(item.slug, item.options, item.giftWrap)} className="mt-4 block text-xs uppercase tracking-[0.25em] text-[#7a7167] md:ml-auto">移除</button>
+                    <button onClick={() => removeItem(item.slug, item.options, item.giftWrap)} className="mt-4 block text-xs uppercase tracking-[0.25em] text-[#5A4A6A] md:ml-auto">移除</button>
                   </div>
                 </div>
               </article>
             ))}
           </div>
-          <aside className="h-fit rounded-[2rem] bg-[#0b0b0b] p-7 text-[#f6f1e8]">
+          <aside className="h-fit rounded-[2rem] bg-[#241A4D] p-7 text-[#FFF5F8]">
             <h2 className="font-display text-4xl">结算仪式</h2>
             <div className="mt-6 rounded-2xl bg-white/10 p-4 text-sm text-white/70">
               {nextThreshold ? `再加 ${formatCurrency(nextThreshold - subtotal)} 解锁更大虚拟满减` : "已达到最高虚拟满减门槛"}
             </div>
-            <div className="mt-5 bg-[#fffaf2] text-black rounded-[1.5rem]"><CouponPicker subtotal={subtotal} value={code} onChange={setCode} /></div>
-            <div className="mt-5 bg-[#fffaf2] text-black rounded-[1.5rem]"><BundleHints slugs={slugs} /></div>
+            <div className="mt-5 bg-[#FFFFFF] text-black rounded-[1.5rem]"><CouponPicker subtotal={subtotal} value={code} onChange={setCode} /></div>
+            <div className="mt-5 bg-[#FFFFFF] text-black rounded-[1.5rem]"><BundleHints slugs={slugs} /></div>
             <div className="mt-6 space-y-4 text-sm text-white/70">
               <div className="flex justify-between"><span>虚拟小计</span><span>{formatCurrency(subtotal)}</span></div>
               <div className="flex justify-between"><span>{coupon?.label ?? "优惠"}</span><span>-{formatCurrency(discount)}</span></div>
-              <div className="flex justify-between border-t border-white/10 pt-4 text-[#f6f1e8]"><span>仍然不会支付</span><span className="font-display text-3xl">{formatCurrency(total)}</span></div>
+              <div className="flex justify-between border-t border-white/10 pt-4 text-[#FFF5F8]"><span>仍然不会支付</span><span className="font-display text-3xl">{formatCurrency(total)}</span></div>
             </div>
             <p className="mt-5 text-sm text-[#ffd23f]">结算预计获得 +{rewardCoins} 多巴胺币</p>
             <ButtonLink href={`/checkout?coupon=${code}`} variant="light" className="mt-8 w-full">进入虚拟结算</ButtonLink>

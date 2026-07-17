@@ -9,7 +9,7 @@ export function TakeawayCategoryGrid({ active, onSelect }: { active: string; onS
         <button
           key={item.id}
           onClick={() => onSelect(item.id)}
-          className={`flex flex-col items-center gap-2 rounded-2xl border px-2 py-4 transition ${active === item.id ? "border-black bg-black text-[#f6f1e8]" : "border-black/10 bg-[#fffaf2] hover:border-black/30"}`}
+          className={`flex flex-col items-center gap-2 rounded-2xl border px-2 py-4 transition ${active === item.id ? "border-black bg-black text-[#FFF5F8]" : "border-black/10 bg-[#FFFFFF] hover:border-black/30"}`}
         >
           <span className="text-2xl">{item.emoji}</span>
           <span className="text-xs font-semibold">{item.label}</span>

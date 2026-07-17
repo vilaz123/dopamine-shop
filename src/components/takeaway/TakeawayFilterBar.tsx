@@ -15,7 +15,7 @@ export function TakeawayFilterBar({ active, onSelect }: { active: string; onSele
         <button
           key={id}
           onClick={() => onSelect(id)}
-          className={`rounded-full border px-4 py-2 transition ${active === id ? "border-black bg-black text-[#f6f1e8]" : "border-black/10 bg-[#fffaf2] hover:border-black/30"}`}
+          className={`rounded-full border px-4 py-2 transition ${active === id ? "border-black bg-black text-[#FFF5F8]" : "border-black/10 bg-[#FFFFFF] hover:border-black/30"}`}
         >
           {label}
         </button>

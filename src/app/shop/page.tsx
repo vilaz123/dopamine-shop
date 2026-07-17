@@ -24,7 +24,7 @@ export default function ShopPage() {
   }
 
   const sorted = useMemo(() => {
-    const pool = products.filter((product) => product.category !== "food-delivery");
+    const pool = products.filter((product) => product.category !== "food-delivery" && product.category !== "snacks");
     const filtered = category === "all" ? pool : pool.filter((product) => product.category === category);
     return [...filtered].sort((a, b) => {
       if (sort === "price-asc") return a.price - b.price;
@@ -36,14 +36,14 @@ export default function ShopPage() {
   return (
     <section className="container-shell py-16">
       <div className="mb-12 max-w-3xl">
-        <p className="text-xs uppercase tracking-[0.32em] text-[#8b6b2f]">Dopahub Market</p>
+        <p className="text-xs uppercase tracking-[0.32em] text-[#FF3D81]">Dopahub Market</p>
         <h1 className="font-display mt-4 text-6xl">多巴胺仓货架</h1>
-        <p className="mt-5 text-lg leading-8 text-[#7a7167]">复刻真实电商信息流：热榜、满减、新品、稀缺库存都在，但所有价格都是虚拟金额，无需真实支付。</p>
+        <p className="mt-5 text-lg leading-8 text-[#5A4A6A]">复刻真实电商信息流：热榜、满减、新品、稀缺库存都在，但所有价格都是虚拟金额，无需真实支付。</p>
       </div>
       <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div className="flex flex-wrap gap-3">
           {categories.map((item) => (
-            <button key={item.id} onClick={() => updateQuery(item.id, sort)} className={`rounded-full border px-4 py-2 text-sm transition ${category === item.id ? "border-black bg-black text-[#f6f1e8]" : "border-black/10 hover:border-black/30"}`}>
+            <button key={item.id} onClick={() => updateQuery(item.id, sort)} className={`rounded-full border px-4 py-2 text-sm transition ${category === item.id ? "border-black bg-black text-[#FFF5F8]" : "border-black/10 hover:border-black/30"}`}>
               {item.label}
             </button>
           ))}
@@ -54,7 +54,7 @@ export default function ShopPage() {
             ["price-asc", "价格升序"],
             ["price-desc", "价格降序"],
           ].map(([id, label]) => (
-            <button key={id} onClick={() => updateQuery(category, id)} className={sort === id ? "font-semibold" : "text-[#7a7167]"}>{label}</button>
+            <button key={id} onClick={() => updateQuery(category, id)} className={sort === id ? "font-semibold" : "text-[#5A4A6A]"}>{label}</button>
           ))}
         </div>
       </div>

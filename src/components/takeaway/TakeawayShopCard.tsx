@@ -36,15 +36,15 @@ export function TakeawayShopCard({ shop, priority = false }: { shop: TakeawaySho
   }
 
   return (
-    <div className="flex gap-5 rounded-[2rem] border border-black/10 bg-[#fffaf2] p-4 transition hover:border-black/30 md:p-5">
+    <div className="flex gap-5 rounded-[2rem] border border-black/10 bg-[#FFFFFF] p-4 transition hover:border-black/30 md:p-5">
       <Link href={`/takeaway/${shop.slug}`} className="relative w-32 shrink-0 sm:w-44">
         <ShopMonogram shop={shop} priority={priority} />
       </Link>
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <Link href={`/takeaway/${shop.slug}`} className="font-display text-3xl leading-none hover:text-[#8b6b2f] md:text-4xl">{shop.name}</Link>
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[#554c43]">
+            <Link href={`/takeaway/${shop.slug}`} className="font-display text-3xl leading-none hover:text-[#FF3D81] md:text-4xl">{shop.name}</Link>
+            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[#3D3357]">
               <span className="font-semibold text-black">★ {shop.rating.toFixed(1)}</span>
               <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>
               <span>{shop.distanceKm}km 幻想距离</span>
@@ -52,23 +52,23 @@ export function TakeawayShopCard({ shop, priority = false }: { shop: TakeawaySho
           </div>
           <div className="hidden gap-2 sm:flex">
             {shop.tags.slice(0, 2).map((tag) => (
-              <span key={tag} className="rounded-full border border-black/10 px-3 py-1 text-xs text-[#7a7167]">{tag}</span>
+              <span key={tag} className="rounded-full border border-black/10 px-3 py-1 text-xs text-[#5A4A6A]">{tag}</span>
             ))}
           </div>
         </div>
-        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-[#7a7167]">
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-[#5A4A6A]">
           <span>起送 ¥{shop.minOrder}</span>
           <span>配送 ¥{shop.deliveryFee}</span>
           <span>预计 {shop.deliveryTimeMin} 分钟后进入骑手配送中</span>
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
           {shop.discounts.map((discount) => (
-            <span key={discount} className="rounded-full border border-yellow-400/50 bg-yellow-400/15 px-3 py-1 text-xs text-[#8b6b2f]">{discount}</span>
+            <span key={discount} className="rounded-full border border-yellow-400/50 bg-yellow-400/15 px-3 py-1 text-xs text-[#FF3D81]">{discount}</span>
           ))}
         </div>
         <div className="mt-4 flex gap-3">
           <Link href={`/takeaway/${shop.slug}`} className="inline-flex items-center justify-center rounded-full border border-black/15 bg-transparent px-6 py-3 text-sm font-semibold transition hover:border-black/40">进店</Link>
-          <button onClick={quickOrder} className="inline-flex items-center justify-center rounded-full bg-[#0b0b0b] px-6 py-3 text-sm font-semibold text-[#f6f1e8] transition hover:bg-[#2a2118]">一键虚拟下单</button>
+          <button onClick={quickOrder} className="inline-flex items-center justify-center rounded-full bg-[#241A4D] px-6 py-3 text-sm font-semibold text-[#FFF5F8] transition hover:bg-[#3A2A6E]">一键虚拟下单</button>
         </div>
       </div>
     </div>
