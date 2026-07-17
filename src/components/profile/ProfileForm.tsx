@@ -30,23 +30,23 @@ export function ProfileForm() {
   }
 
   return (
-    <form onSubmit={submit} className="rounded-[2.5rem] bg-[#FFFFFF] p-8">
-      <h2 className="font-display text-5xl">设置你的仓主资料</h2>
+    <form onSubmit={submit} className="rounded-[2.5rem] border border-white/60 bg-white/85 p-8 shadow-sm">
+      <h2 className="font-display text-5xl" style={{ color: "var(--page-ink)" }}>设置你的仓主资料</h2>
       <div className="mt-8 space-y-4">
         <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="用户名" required />
-        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={addShipping} onChange={(e) => setAddShipping(e.target.checked)} /> 添加虚拟收货信息</label>
+        <label className="flex items-center gap-2 text-sm" style={{ color: "var(--page-soft)" }}><input type="checkbox" checked={addShipping} onChange={(e) => setAddShipping(e.target.checked)} /> 添加虚拟收货信息</label>
       </div>
       {addShipping && (
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           <Input value={receiverName} onChange={(e) => setReceiverName(e.target.value)} placeholder="收货人" />
           <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="电话" />
           <Input className="md:col-span-2" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="地址" />
-          <select value={deliveryPreference} onChange={(e) => setDeliveryPreference(e.target.value)} className="md:col-span-2 rounded-2xl border border-black/10 bg-white/65 px-4 py-3 text-sm">
+          <select value={deliveryPreference} onChange={(e) => setDeliveryPreference(e.target.value)} className="md:col-span-2 rounded-2xl border border-black/10 bg-white/80 px-4 py-3 text-sm">
             {preferences.map((item) => <option key={item}>{item}</option>)}
           </select>
           <div className="md:col-span-2 grid gap-3 md:grid-cols-2">
-            <button type="button" onClick={() => setDeliveryCompletion("never")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "never" ? "border-black bg-black text-[#FFF5F8]" : "border-black/10"}`}>永不签收<br/><span className="opacity-70">维持派送中/骑手配送中</span></button>
-            <button type="button" onClick={() => setDeliveryCompletion("signed")} className={`rounded-2xl border p-4 text-left text-sm ${deliveryCompletion === "signed" ? "border-black bg-black text-[#FFF5F8]" : "border-black/10"}`}>允许送达签收<br/><span className="opacity-70">增加已送达和一键签收</span></button>
+            <button type="button" onClick={() => setDeliveryCompletion("never")} className={`rounded-2xl border p-4 text-left text-sm transition ${deliveryCompletion === "never" ? "border-transparent text-white" : "border-black/10"}`} style={deliveryCompletion === "never" ? { background: "var(--page-ink)" } : undefined}>永不签收<br/><span className="opacity-70">维持派送中/骑手配送中</span></button>
+            <button type="button" onClick={() => setDeliveryCompletion("signed")} className={`rounded-2xl border p-4 text-left text-sm transition ${deliveryCompletion === "signed" ? "border-transparent text-white" : "border-black/10"}`} style={deliveryCompletion === "signed" ? { background: "var(--page-ink)" } : undefined}>允许送达签收<br/><span className="opacity-70">增加已送达和一键签收</span></button>
           </div>
         </div>
       )}

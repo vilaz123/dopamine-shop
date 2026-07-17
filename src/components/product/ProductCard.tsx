@@ -17,10 +17,10 @@ export function ProductCard({ product, priority = false }: { product: Product; p
       </div>
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-[#FF3D81]">{product.badge}</p>
-          <h3 className="font-display mt-3 text-3xl leading-none group-hover:text-[#FF3D81]">{product.name}</h3>
-          <p className="mt-2 text-sm text-[#5A4A6A]">{product.subtitle}</p>
-          <p className="mt-2 text-xs text-[#FF3D81]">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单 · 无需真实支付</p>
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--hot)]">{product.badge}</p>
+          <h3 className="font-display mt-3 text-3xl leading-none group-hover:text-[var(--hot)]">{product.name}</h3>
+          <p className="mt-2 text-sm text-[var(--muted)]">{product.subtitle}</p>
+          <p className="mt-2 text-xs text-[var(--hot)]">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单 · 无需真实支付</p>
         </div>
         <Price value={product.price} className="font-display text-2xl" />
       </div>

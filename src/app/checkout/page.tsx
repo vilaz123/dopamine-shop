@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/Input";
 import { CouponPicker } from "@/components/checkout/CouponPicker";
 import { BundleHints } from "@/components/checkout/BundleHints";
 import { GiftWrapToggle } from "@/components/checkout/GiftWrapToggle";
+import { PageTheme } from "@/components/common/PageTheme";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -74,34 +75,42 @@ export default function CheckoutPage() {
   }
 
   if (!user || user.isAnonymous) return (
+    <PageTheme className="min-h-screen">
     <section className="container-shell py-16">
-      <div className="rounded-[2.5rem] border border-dashed border-black/15 bg-[#FFFFFF] p-12 text-center">
-        <h1 className="font-display text-5xl">登录后即可虚拟下单</h1>
-        <p className="mt-5 text-lg leading-8 text-[#5A4A6A]">虚拟下单、获得多巴胺币与勋章需要先注册账号。你匿名浏览攒下的进度会在注册后自动继承到账号里。购物车已保留，登录回来一键结算。</p>
+      <div className="rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center">
+        <h1 className="font-display text-5xl" style={{ color: "var(--page-ink)" }}>登录后即可虚拟下单</h1>
+        <p className="mt-5 text-lg leading-8" style={{ color: "var(--page-soft)" }}>虚拟下单、获得多巴胺币与勋章需要先注册账号。你匿名浏览攒下的进度会在注册后自动继承到账号里。购物车已保留，登录回来一键结算。</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <ButtonLink href="/login">去注册 / 登录</ButtonLink>
           <ButtonLink href="/shop" variant="ghost">继续逛逛</ButtonLink>
         </div>
       </div>
     </section>
+    </PageTheme>
   );
 
-  if (lines.length === 0) return <section className="container-shell py-16"><div className="rounded-[2.5rem] border border-dashed border-black/15 bg-[#FFFFFF] p-12 text-center"><h1 className="font-display text-5xl">没有可结算的虚拟商品。</h1><ButtonLink href="/shop" className="mt-8">返回多巴胺仓</ButtonLink></div></section>;
+  if (lines.length === 0) return (
+    <PageTheme className="min-h-screen">
+    <section className="container-shell py-16"><div className="rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center"><h1 className="font-display text-5xl" style={{ color: "var(--page-ink)" }}>没有可结算的虚拟商品。</h1><ButtonLink href="/shop" className="mt-8">返回多巴胺仓</ButtonLink></div></section>
+    </PageTheme>
+  );
 
   return (
+    <PageTheme className="min-h-screen">
     <section className="container-shell py-16">
-      <p className="text-xs uppercase tracking-[0.32em] text-[#FF3D81]">One-click virtual checkout</p>
-      <h1 className="font-display mt-4 text-6xl">一键虚拟下单</h1>
+      <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>One-click virtual checkout</p>
+      <h1 className="font-display mt-4 text-6xl" style={{ color: "var(--page-ink)" }}>一键虚拟下单</h1>
       <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_420px]">
         <div className="space-y-6">
-          <div className="rounded-[2rem] bg-[#FFFFFF] p-7"><h2 className="font-display text-4xl">虚拟地址</h2><input value={virtualAddress} onChange={(e) => setVirtualAddress(e.target.value)} className="mt-5 w-full rounded-2xl border border-black/10 bg-white/65 px-4 py-3 text-sm outline-none" /></div>
+          <div className="rounded-[2rem] bg-white p-7"><h2 className="font-display text-4xl">虚拟地址</h2><input value={virtualAddress} onChange={(e) => setVirtualAddress(e.target.value)} className="mt-5 w-full rounded-2xl border border-black/10 bg-white/65 px-4 py-3 text-sm outline-none" /></div>
           <CouponPicker subtotal={subtotal} value={couponCode} onChange={setCouponCode} />
           <BundleHints slugs={slugs} />
           <GiftWrapToggle checked={giftWrap} onChange={setGiftWrap} />
-          <div className="rounded-[2rem] bg-[#FFFFFF] p-7"><h2 className="font-display text-4xl">备注留言</h2><Textarea className="mt-5" rows={4} value={note} onChange={(e) => setNote(e.target.value)} placeholder="例如：请把快乐放在门口，不要真实敲门。" /></div>
+          <div className="rounded-[2rem] bg-white p-7"><h2 className="font-display text-4xl">备注留言</h2><Textarea className="mt-5" rows={4} value={note} onChange={(e) => setNote(e.target.value)} placeholder="例如：请把快乐放在门口，不要真实敲门。" /></div>
         </div>
-        <aside className="h-fit rounded-[2rem] bg-[#241A4D] p-7 text-[#FFF5F8]"><h2 className="font-display text-4xl">订单确认</h2><div className="mt-6 space-y-4">{lines.map(({ item, product }) => <div key={`${item.slug}-${JSON.stringify(item.options)}`} className="flex justify-between gap-4 border-b border-white/10 pb-4 text-sm text-white/70"><span>{product.name} × {item.quantity}</span><span>{formatCurrency((product.price + (item.optionPriceDelta ?? 0)) * item.quantity)}</span></div>)}</div><div className="mt-6 space-y-3 text-sm text-white/70"><div className="flex justify-between"><span>虚拟小计</span><span>{formatCurrency(subtotal)}</span></div><div className="flex justify-between"><span>优惠</span><span>-{formatCurrency(discount)}</span></div><div className="flex justify-between border-t border-white/10 pt-4 text-[#FFF5F8]"><span>实际扣款</span><span className="font-display text-4xl">¥0</span></div><p className="text-[#ffd23f]">下单后获得 +{coinsEarned} 币 · +{xpEarned} XP</p></div><Button type="button" variant="light" className="mt-8 w-full" onClick={submit}>一键虚拟下单</Button></aside>
+        <aside className="h-fit rounded-[2rem] bg-[var(--ink)] p-7 text-[var(--bone)]"><h2 className="font-display text-4xl">订单确认</h2><div className="mt-6 space-y-4">{lines.map(({ item, product }) => <div key={`${item.slug}-${JSON.stringify(item.options)}`} className="flex justify-between gap-4 border-b border-white/10 pb-4 text-sm text-white/70"><span>{product.name} × {item.quantity}</span><span>{formatCurrency((product.price + (item.optionPriceDelta ?? 0)) * item.quantity)}</span></div>)}</div><div className="mt-6 space-y-3 text-sm text-white/70"><div className="flex justify-between"><span>虚拟小计</span><span>{formatCurrency(subtotal)}</span></div><div className="flex justify-between"><span>优惠</span><span>-{formatCurrency(discount)}</span></div><div className="flex justify-between border-t border-white/10 pt-4 text-[var(--bone)]"><span>实际扣款</span><span className="font-display text-4xl">¥0</span></div><p className="text-[var(--gold)]">下单后获得 +{coinsEarned} 币 · +{xpEarned} XP</p></div><Button type="button" variant="light" className="mt-8 w-full" onClick={submit}>一键虚拟下单</Button></aside>
       </div>
     </section>
+    </PageTheme>
   );
 }

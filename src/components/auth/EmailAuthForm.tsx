@@ -159,11 +159,11 @@ export function EmailAuthForm() {
   }
 
   return (
-    <form onSubmit={submit} className="rounded-[2.5rem] bg-[#FFFFFF] p-8">
+    <form onSubmit={submit} className="rounded-[2.5rem] bg-white p-8">
       <h2 className="font-display text-5xl">{mode === "signin" ? "邮箱登录" : "注册账号"}</h2>
-      <p className="mt-3 text-sm leading-6 text-[#5A4A6A]">
+      <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
         用邮箱 + 密码登录，订单、资产与社区记录会同步到云端并在多设备间共享。
-        {cloudOff && <span className="text-[#FF3D81]"> （未配置云端，当前为本地账号模式。）</span>}
+        {cloudOff && <span className="text-[var(--hot)]"> （未配置云端，当前为本地账号模式。）</span>}
       </p>
       <div className="mt-8 space-y-4">
         <Input type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="邮箱" />
@@ -179,13 +179,13 @@ export function EmailAuthForm() {
         )}
       </div>
       {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
-      {notice && <p className="mt-4 text-sm text-[#FF3D81]">{notice}</p>}
+      {notice && <p className="mt-4 text-sm text-[var(--hot)]">{notice}</p>}
       <Button type="submit" className="mt-6 w-full" disabled={busy}>
         {busy ? "处理中…" : mode === "signin" ? "登录 / 进入账号" : "注册并进入"}
       </Button>
       <button
         type="button"
-        className="mt-4 w-full text-sm text-[#5A4A6A] underline-offset-4 hover:underline"
+        className="mt-4 w-full text-sm text-[var(--muted)] underline-offset-4 hover:underline"
         onClick={() => {
           setError("");
           setNotice("");

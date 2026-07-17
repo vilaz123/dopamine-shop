@@ -11,7 +11,7 @@ export function CartButton() {
   return (
     <button onClick={() => setCartOpen(true)} className="relative rounded-full border border-black/10 p-3 transition hover:border-black/30" aria-label="打开购物车">
       <ShoppingBag size={18} />
-      {count > 0 && <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[#241A4D] px-1 text-[11px] text-[#FFF5F8]">{count}</span>}
+      {count > 0 && <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[var(--ink)] px-1 text-[11px] text-[var(--bone)]">{count}</span>}
     </button>
   );
 }

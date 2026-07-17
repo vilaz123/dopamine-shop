@@ -14,10 +14,10 @@ export function CouponPicker({ subtotal, value, onChange }: { subtotal: number; 
       <input value={value} onChange={(e) => onChange(e.target.value.toUpperCase())} placeholder="NEWCOMER / DOPAHUB / FEAST / TAKEAWAYNEW" className="mt-3 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none" />
       <div className="mt-3 flex flex-wrap gap-2">
         {presets.map((code) => (
-          <button key={code} onClick={() => onChange(code)} className={`rounded-full border px-3 py-1 text-xs transition ${value === code ? "border-black bg-black text-[#FFF5F8]" : "border-black/10 hover:border-black/40"}`}>{code}</button>
+          <button key={code} onClick={() => onChange(code)} className={`rounded-full border px-3 py-1 text-xs transition ${value === code ? "border-black bg-black text-[var(--bone)]" : "border-black/10 hover:border-black/40"}`}>{code}</button>
         ))}
       </div>
-      {coupon && <p className="mt-3 text-sm text-[#FF3D81]">{coupon.label} · 已抵扣 {discount}</p>}
+      {coupon && <p className="mt-3 text-sm text-[var(--hot)]">{coupon.label} · 已抵扣 {discount}</p>}
     </div>
   );
 }

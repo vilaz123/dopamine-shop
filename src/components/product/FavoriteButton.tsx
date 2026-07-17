@@ -16,7 +16,7 @@ export function FavoriteButton({ slug }: { slug: string }) {
       className="rounded-full bg-white/85 p-3 text-black shadow-lg transition hover:scale-105"
       aria-label={active ? "取消收藏" : "收藏"}
     >
-      <Heart size={18} fill={active ? "#FF3D81" : "none"} color={active ? "#FF3D81" : "currentColor"} />
+      <Heart size={18} fill={active ? "var(--hot)" : "none"} color={active ? "var(--hot)" : "currentColor"} />
     </button>
   );
 }

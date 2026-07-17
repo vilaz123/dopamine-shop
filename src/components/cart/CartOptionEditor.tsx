@@ -22,7 +22,7 @@ export function CartOptionEditor({ item, product }: { item: CartItem; product: P
     <div className="mt-4 space-y-3">
       {product.options.map((option) => (
         <div key={option.label}>
-          <p className="mb-2 text-xs font-semibold text-[#5A4A6A]">{option.label}</p>
+          <p className="mb-2 text-xs font-semibold text-[var(--muted)]">{option.label}</p>
           <div className="flex flex-wrap gap-2">
             {option.values.map((raw) => {
               const value = optionValueLabel(raw);
@@ -32,7 +32,7 @@ export function CartOptionEditor({ item, product }: { item: CartItem; product: P
                 <button
                   key={value}
                   onClick={() => update(option.label, value)}
-                  className={`rounded-full border px-3 py-1 text-xs transition ${active ? "border-black bg-black text-[#FFF5F8]" : "border-black/10 hover:border-black/30"}`}
+                  className={`rounded-full border px-3 py-1 text-xs transition ${active ? "border-black bg-black text-[var(--bone)]" : "border-black/10 hover:border-black/30"}`}
                 >
                   {value}{delta ? ` +¥${delta}` : ""}
                 </button>

@@ -15,6 +15,83 @@
   --line: #E8DEF5;
   --gilt: #6C5CE7;
   --charcoal: #241A4D;
+  /* 跨页品牌点缀色：一处定义，全站复用，避免散落硬编码 */
+  --hot: #FF3D81;     /* 热卖/眉标粉 */
+  --gold: #FFD23F;    /* 多巴胺币/促销金 */
+  --success: #22C55E; /* 领取成功绿 */
+  --danger: #EF4444;  /* 终态/错误红 */
+  /* --page-* 默认值 = home 主题。.theme-* 容器会按区覆盖；
+     没有挂在 .theme-* 里的组件（Header/Footer/详情页/monogram/骑手地图）
+     也能拿到一套合法的页面色，不会因 var 未定义而塌掉。 */
+  --page-bg: #FFF9C4;
+  --page-card: #FFFFFF;
+  --page-ink: #AD5380;
+  --page-accent: #F8BBD0;
+  --page-soft: #6E4A5C;
+  --page-highlight: #FFCCBC;
+  /* 次级文字/描边：随当前 --page-ink 变深，给浅色卡片上的次要文本用。
+     只在 :root 定义一次，靠 var 惰性求值自动跟随各区主题。 */
+  --page-ink-soft: color-mix(in srgb, var(--page-ink) 78%, var(--ink));
+}
+
+/* ====== 分区分色：每页顶层挂一个 theme-* class 切换该区三色 ======
+   --page-bg    页面背景主色（最浅/最底的第三色）
+   --page-card  卡片色
+   --page-ink   深色块/主按钮/主文字压底色
+   --page-accent 三色之一（大色块）
+   --page-soft  次文字/描边淡色
+   --page-highlight 三色之一（点缀高亮）
+   .page-paint 用多个高饱和、大尺寸、错位的 radial-gradient 硬叠，
+   三色一眼可辨，不是单一铺色。 */
+.theme-home {
+  --page-bg: #FFF9C4;      /* 淡奶油黄（铺底） */
+  --page-card: #FFFFFF;
+  --page-ink: #AD5380;     /* 蜜桃粉压暗，深色块/文字 */
+  --page-accent: #F8BBD0;  /* 蜜桃粉（大色块） */
+  --page-soft: #6E4A5C;
+  --page-highlight: #FFCCBC; /* 暖杏色（点缀） */
+}
+.theme-home .page-paint {
+  background:
+    radial-gradient(38% 48% at 16% 22%, var(--page-accent) 0%, var(--page-accent) 55%, transparent 78%),
+    radial-gradient(34% 42% at 84% 18%, var(--page-highlight) 0%, var(--page-highlight) 52%, transparent 76%),
+    radial-gradient(42% 46% at 70% 82%, var(--page-accent) 0%, var(--page-accent) 48%, transparent 80%),
+    radial-gradient(30% 38% at 30% 78%, var(--page-highlight) 0%, var(--page-highlight) 50%, transparent 78%),
+    var(--page-bg);
+}
+
+.theme-shop {
+  --page-bg: #FFE8D6;      /* 暖肉粉（铺底） */
+  --page-card: #FFFFFF;
+  --page-ink: #8A5A3C;     /* 灰粉调棕压暗 */
+  --page-accent: #DDBEA9;  /* 浅杏调棕（大色块） */
+  --page-soft: #6B4A38;
+  --page-highlight: #CB997E; /* 灰粉调棕（点缀） */
+}
+.theme-shop .page-paint {
+  background:
+    radial-gradient(40% 50% at 12% 24%, var(--page-accent) 0%, var(--page-accent) 55%, transparent 80%),
+    radial-gradient(36% 44% at 88% 22%, var(--page-highlight) 0%, var(--page-highlight) 52%, transparent 78%),
+    radial-gradient(44% 48% at 72% 84%, var(--page-accent) 0%, var(--page-accent) 50%, transparent 82%),
+    radial-gradient(28% 38% at 28% 80%, var(--page-highlight) 0%, var(--page-highlight) 50%, transparent 78%),
+    var(--page-bg);
+}
+
+.theme-food {
+  --page-bg: #880E4F;     /* 浓郁玫紫（铺底） */
+  --page-card: #FFFFFF;
+  --page-ink: #880E4F;
+  --page-accent: #D84315;  /* 珊瑚红（大色块） */
+  --page-soft: #FFF0E8;
+  --page-highlight: #E5A500; /* 琥珀黄（点缀） */
+}
+.theme-food .page-paint {
+  background:
+    radial-gradient(40% 50% at 14% 22%, var(--page-accent) 0%, var(--page-accent) 55%, transparent 80%),
+    radial-gradient(36% 44% at 86% 20%, var(--page-highlight) 0%, var(--page-highlight) 52%, transparent 78%),
+    radial-gradient(44% 48% at 70% 84%, var(--page-accent) 0%, var(--page-accent) 50%, transparent 82%),
+    radial-gradient(28% 38% at 30% 80%, var(--page-highlight) 0%, var(--page-highlight) 50%, transparent 78%),
+    var(--page-bg);
 }
 
 * {
@@ -29,7 +106,8 @@ body {
   margin: 0;
   background: var(--bone);
   color: var(--ink);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
 }
 
 ::selection {
@@ -55,7 +133,9 @@ textarea {
 }
 
 .font-display {
-  font-family: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+  font-family: var(--font-display), "PingFang SC", "Microsoft YaHei", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0;
 }
 
 .container-shell {
@@ -92,8 +172,61 @@ textarea {
   100% { transform: scale(1.8); opacity: 0; }
 }
 
-@keyframes rider-run {
-  0% { left: 0%; }
-  50% { left: 100%; }
-  100% { left: 0%; }
+/* 骑手光晕脉冲（animateMotion 驱动位置，这里只做呼吸） */
+@keyframes rider-glow-pulse {
+  0%, 100% { opacity: 0.4;  transform: scale(0.82); }
+  50%      { opacity: 0.75; transform: scale(1.18); }
 }
+
+/* ====== 骑手配送地图（RiderMapMock · 响应式 SVG）====== */
+.rider-map {
+  background: color-mix(in srgb, var(--page-bg) 78%, #fff);
+  color: var(--page-ink);
+}
+/* SVG 随容器等比缩放：viewBox 100×60，宽满高自适应，任何尺寸都清晰 */
+.rider-map__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 100 / 60;
+}
+/* 底图：比页面背景更淡的地图铺底 */
+.rm-base { fill: color-mix(in srgb, var(--page-bg) 62%, #fff); }
+/* 路网网格：ink 描边，极淡 */
+.rm-grid { color: var(--page-ink); opacity: 0.16; }
+/* 街区色块：accent 半透明，呼应主题三色 */
+.rm-block {
+  fill: color-mix(in srgb, var(--page-accent) 64%, transparent);
+  opacity: 0.5;
+}
+/* 配送路线：虚线，ink 描边 */
+.rm-route {
+  fill: none;
+  stroke: var(--page-ink);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-dasharray: 3 2.4;
+  opacity: 0.78;
+}
+/* 起终点大头针：白边描出，底色用 highlight / ink 区分 */
+.rm-pin circle {
+  stroke: var(--page-bg);
+  stroke-width: 0.9;
+}
+.rm-pin--start circle { fill: var(--page-highlight); }
+.rm-pin--end   circle { fill: var(--page-ink); }
+/* 骑手光晕：黄圈呼吸；位置由 SVG animateMotion 驱动，与缩放无关 */
+.rm-rider-glow {
+  fill: #ffd23f;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: rider-glow-pulse 1.8s ease-in-out infinite;
+}
+.rider-map__caption {
+  position: relative;
+  margin: 0;
+  padding: 12px 20px 16px;
+  font-size: 0.875rem;
+  color: var(--page-soft);
+}
+

@@ -132,7 +132,7 @@ export function MediaGallery({ images, alt, aspect, children }: MediaGalleryProp
                 aria-label={`查看第 ${index + 1} 张图`}
                 aria-pressed={selected}
                 className={`relative aspect-square h-20 w-20 shrink-0 overflow-hidden rounded-2xl transition ${
-                  selected ? "ring-2 ring-[#FF3D81] ring-offset-2 ring-offset-[#FFFFFF]" : "opacity-70 hover:opacity-100"
+                  selected ? "ring-2 ring-[var(--hot)] ring-offset-2 ring-offset-white" : "opacity-70 hover:opacity-100"
                 }`}
               >
                 <img src={`${BASE_PATH}${thumbUrl(src)}`} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />

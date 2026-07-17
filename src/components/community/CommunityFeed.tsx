@@ -43,7 +43,7 @@ export function CommunityFeed() {
   return (
     <div className="grid gap-10 lg:grid-cols-[360px_1fr]">
       <aside>
-        <form onSubmit={submit} className="rounded-[2rem] bg-[#FFFFFF] p-6">
+        <form onSubmit={submit} className="rounded-[2rem] bg-white p-6">
           <h2 className="font-display text-4xl">发布战利品</h2>
           <Input className="mt-5" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="昵称" />
           <Input className="mt-3" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="标题" />
@@ -54,18 +54,18 @@ export function CommunityFeed() {
           <Button className="mt-4 w-full" type="submit">发布并领取 +30 币</Button>
         </form>
         <div className="mt-6 flex flex-wrap gap-2">
-          {communityTopics.map((item) => <button key={item} onClick={() => setTopic(item)} className={`rounded-full border px-3 py-2 text-sm ${topic === item ? "border-black bg-black text-[#FFF5F8]" : "border-black/10"}`}>#{item}</button>)}
+          {communityTopics.map((item) => <button key={item} onClick={() => setTopic(item)} className={`rounded-full border px-3 py-2 text-sm ${topic === item ? "border-black bg-black text-[var(--bone)]" : "border-black/10"}`}>#{item}</button>)}
         </div>
       </aside>
       <div className="space-y-5">
         {filtered.map((post) => (
-          <article key={post.id} className="rounded-[2rem] border border-black/10 bg-[#FFFFFF] p-6">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#FF3D81]">#{post.topic}</p>
+          <article key={post.id} className="rounded-[2rem] border border-black/10 bg-white p-6">
+            <p className="text-xs uppercase tracking-[0.25em] text-[var(--hot)]">#{post.topic}</p>
             <h3 className="font-display mt-3 text-4xl">{post.title}</h3>
-            <p className="mt-3 leading-7 text-[#3D3357]">{post.body}</p>
-            {post.relatedProductSlugs.length > 0 && <p className="mt-3 text-sm text-[#5A4A6A]">关联商品：{post.relatedProductSlugs.map((slug) => products.find((p) => p.slug === slug)?.name).filter(Boolean).join("、")}</p>}
-            {post.savedAmount > 0 && <p className="mt-2 text-sm text-[#FF3D81]">本次省下 {formatCurrency(post.savedAmount)}</p>}
-            <div className="mt-5 flex items-center justify-between text-sm text-[#5A4A6A]"><span>{post.author} · {new Date(post.createdAt).toLocaleDateString("zh-CN")}</span><button onClick={() => void likePost(post.id)}>👍 {post.likes}</button></div>
+            <p className="mt-3 leading-7 text-[var(--muted)]">{post.body}</p>
+            {post.relatedProductSlugs.length > 0 && <p className="mt-3 text-sm text-[var(--muted)]">关联商品：{post.relatedProductSlugs.map((slug) => products.find((p) => p.slug === slug)?.name).filter(Boolean).join("、")}</p>}
+            {post.savedAmount > 0 && <p className="mt-2 text-sm text-[var(--hot)]">本次省下 {formatCurrency(post.savedAmount)}</p>}
+            <div className="mt-5 flex items-center justify-between text-sm text-[var(--muted)]"><span>{post.author} · {new Date(post.createdAt).toLocaleDateString("zh-CN")}</span><button onClick={() => void likePost(post.id)}>👍 {post.likes}</button></div>
           </article>
         ))}
       </div>
