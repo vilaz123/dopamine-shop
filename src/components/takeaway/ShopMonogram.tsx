@@ -6,7 +6,7 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export function ShopMonogram({ shop, large = false, priority = false }: { shop: TakeawayShop; large?: boolean; priority?: boolean }) {
   if (shop.image) {
     return (
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1rem] sm:rounded-[2rem] luxury-shadow">
+      <div className="relative h-full w-full overflow-hidden rounded-[1rem] sm:rounded-[2rem] luxury-shadow">
         <img
           src={`${BASE_PATH}${large ? shop.image : thumbUrl(shop.image)}`}
           alt={shop.name}
@@ -23,7 +23,7 @@ export function ShopMonogram({ shop, large = false, priority = false }: { shop: 
 
   return (
     <div
-      className="monogram-grid relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[1rem] sm:rounded-[2rem] luxury-shadow"
+      className="monogram-grid relative flex h-full w-full items-center justify-center overflow-hidden rounded-[1rem] sm:rounded-[2rem] luxury-shadow"
       style={{
         background: `radial-gradient(circle at 22% 15%, rgba(255,255,255,.52), transparent 25%), radial-gradient(circle at 82% 25%, ${shop.saturation}, transparent 24%), linear-gradient(135deg, ${shop.saturation}, var(--ink) 78%)`,
       }}

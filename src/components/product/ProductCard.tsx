@@ -18,7 +18,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
       <div className="mt-4 flex items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="text-xs uppercase tracking-[0.22em] text-[var(--hot)]">{product.badge}</p>
-          <h3 className="font-display mt-2 text-2xl leading-tight group-hover:text-[var(--hot)] sm:text-3xl">{product.name}</h3>
+          <h3 className="font-display mt-1.5 text-lg leading-snug group-hover:text-[var(--hot)] sm:text-xl">{product.name}</h3>
           <p className="mt-1 text-sm text-[var(--muted)]">{product.subtitle}</p>
           <p className="mt-1 text-xs text-[var(--hot)]">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单 · 无需真实支付</p>
         </div>
