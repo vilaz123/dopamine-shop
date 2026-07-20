@@ -8,7 +8,7 @@ export default function LoginPage() {
         <div>
           <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Account</p>
           <h1 className="font-display mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl" style={{ color: "var(--page-ink)" }}>登录 Dopahub 多巴胺仓</h1>
-          <p className="mt-6 text-lg leading-8" style={{ color: "var(--page-soft)" }}>用邮箱登录后，订单、虚拟资产、收货偏好与社区记录会同步到云端，并可在多设备间共享。</p>
+          <p className="mt-5 text-base leading-7 sm:mt-6 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>用邮箱登录后，订单、虚拟资产、收货偏好与社区记录会同步到云端，并可在多设备间共享。</p>
         </div>
         <EmailAuthForm />
       </section>

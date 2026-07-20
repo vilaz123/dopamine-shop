@@ -11,9 +11,9 @@ export function OrderSuccessModal({ coins, xp, badges, onClose }: { coins: numbe
           <p className="text-xs uppercase tracking-[0.32em] text-[var(--hot)]">Order Created</p>
           <h2 className="font-display mt-3 text-3xl sm:text-4xl">下单成功！</h2>
           <p className="mt-4 text-[var(--muted)]">订单已生成，物流包裹正在进入永远派送中的快乐循环。</p>
-          <div className="mt-6 rounded-3xl bg-black p-5 text-[var(--bone)]">
-            <p className="font-display text-3xl sm:text-4xl">+{coins} 多巴胺币 · +{xp} XP</p>
-            {badges.length > 0 && <p className="mt-2 text-sm text-white/70">解锁勋章：{badges.join("、")}</p>}
+          <div className="mt-6 rounded-2xl bg-black p-4 text-[var(--bone)] sm:rounded-3xl sm:p-5">
+            <p className="font-display text-2xl leading-tight sm:text-4xl">+{coins} 多巴胺币 · +{xp} XP</p>
+            {badges.length > 0 && <p className="mt-2 break-words text-sm leading-6 text-white/70">解锁勋章：{badges.join("、")}</p>}
           </div>
           <Button className="mt-7 w-full" onClick={onClose}>查看物流包裹</Button>
         </div>

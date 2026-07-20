@@ -77,7 +77,7 @@ export default function CheckoutPage() {
   if (!user || user.isAnonymous) return (
     <PageTheme className="min-h-screen">
     <section className="container-shell py-10 sm:py-16">
-      <div className="rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center">
+      <div className="rounded-[1.75rem] border border-dashed border-black/15 bg-white p-6 text-center sm:rounded-[2.5rem] sm:p-12">
         <h1 className="font-display text-4xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>登录后即可虚拟下单</h1>
         <p className="mt-5 text-lg leading-8" style={{ color: "var(--page-soft)" }}>虚拟下单、获得多巴胺币与勋章需要先注册账号。你匿名浏览攒下的进度会在注册后自动继承到账号里。购物车已保留，登录回来一键结算。</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -91,7 +91,7 @@ export default function CheckoutPage() {
 
   if (lines.length === 0) return (
     <PageTheme className="min-h-screen">
-    <section className="container-shell py-10 sm:py-16"><div className="rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center"><h1 className="font-display text-4xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>没有可结算的虚拟商品。</h1><ButtonLink href="/shop" className="mt-8">返回多巴胺仓</ButtonLink></div></section>
+    <section className="container-shell py-10 sm:py-16"><div className="rounded-[1.75rem] border border-dashed border-black/15 bg-white p-6 text-center sm:rounded-[2.5rem] sm:p-12"><h1 className="font-display text-4xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>没有可结算的虚拟商品。</h1><ButtonLink href="/shop" className="mt-8">返回多巴胺仓</ButtonLink></div></section>
     </PageTheme>
   );
 

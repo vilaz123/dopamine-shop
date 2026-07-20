@@ -36,7 +36,7 @@ export default function CartPage() {
       <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Cart</p>
       <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>虚拟购物车</h1>
       {lines.length === 0 ? (
-        <div className="mt-12 rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center">
+        <div className="mt-12 rounded-[1.75rem] border border-dashed border-black/15 bg-white p-6 text-center sm:rounded-[2.5rem] sm:p-12">
           <p className="font-display text-4xl" style={{ color: "var(--page-ink)" }}>你的购物车是空的。</p>
           <p className="mt-4" style={{ color: "var(--page-soft)" }}>多巴胺仓还没开始装货。</p>
           <ButtonLink href="/shop" className="mt-8">开始虚拟购物</ButtonLink>
@@ -48,7 +48,7 @@ export default function CartPage() {
               <article key={`${item.slug}-${JSON.stringify(item.options)}-${item.giftWrap}`} className="rounded-[1.25rem] border border-black/10 bg-white p-4 sm:rounded-[2rem] sm:p-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:gap-6">
                   <div className="min-w-0">
-                    <Link href={cartItemHref(product.slug, product.deliveryFlavor)} className="font-display text-2xl sm:text-3xl md:text-4xl">{product.name}</Link>
+                    <Link href={cartItemHref(product.slug, product.deliveryFlavor)} className="font-display line-clamp-2 text-xl sm:text-3xl md:text-4xl">{product.name}</Link>
                     <p className="mt-1 text-sm text-[var(--muted)] sm:mt-2">{product.subtitle}</p>
                     <p className="mt-1 text-xs text-[var(--muted)] sm:mt-2 sm:text-sm">{Object.entries(item.options).map(([k, v]) => `${k}: ${v}`).join(" · ")}</p>
                     <CartOptionEditor item={item} product={product} />

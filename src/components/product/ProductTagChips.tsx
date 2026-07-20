@@ -18,7 +18,7 @@ export function ProductTagChips({ tags }: { tags: ProductTag[] }) {
   const primary = pickPrimary(tags);
   if (!primary) return null;
   return (
-    <Badge tone={toneFor(primary.kind)} className="shadow-md shadow-black/10">
+    <Badge tone={toneFor(primary.kind)} className="max-w-full truncate shadow-md shadow-black/10">
       {primary.label}
     </Badge>
   );

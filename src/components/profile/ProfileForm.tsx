@@ -30,7 +30,7 @@ export function ProfileForm() {
   }
 
   return (
-    <form onSubmit={submit} className="rounded-[2.5rem] border border-white/60 bg-white/85 p-8 shadow-sm">
+    <form onSubmit={submit} className="rounded-[1.75rem] border border-white/60 bg-white/85 p-5 shadow-sm sm:rounded-[2.5rem] sm:p-8">
       <h2 className="font-display text-3xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>设置你的仓主资料</h2>
       <div className="mt-8 space-y-4">
         <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="用户名" required />

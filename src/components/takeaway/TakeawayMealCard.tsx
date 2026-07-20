@@ -52,14 +52,14 @@ export function TakeawayMealCard({ product }: { product: Product }) {
           <Link href={`/shop/${product.slug}`} className="font-display text-xl leading-tight hover:opacity-70 sm:text-2xl" style={{ color: "var(--page-ink)" }}>{product.name}</Link>
           <p className="mt-1 text-xs sm:text-sm" style={{ color: "var(--page-ink-soft)" }}>{product.subtitle}</p>
           <p className="mt-1 text-[11px] sm:text-xs" style={{ color: "var(--page-accent)" }}>已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</p>
-          <div className="mt-2 flex items-center justify-between gap-2">
-            <Price value={product.price} className="font-display text-xl sm:text-2xl" />
-            <div className="flex flex-wrap justify-end gap-2">
-              <Link href={`/shop/${product.slug}`} className="rounded-full border border-white/70 bg-white/60 px-3 py-1.5 text-xs transition hover:bg-white sm:px-4 sm:py-2 sm:text-sm" style={{ color: "var(--page-ink)" }}>详情</Link>
-              <button onClick={() => setExpanded((value) => !value)} className="rounded-full border border-white/70 bg-white/60 px-3 py-1.5 text-xs transition hover:bg-white sm:px-4 sm:py-2 sm:text-sm" style={{ color: "var(--page-ink)" }}>{expanded ? "收起" : "选规格"}</button>
-              {!expanded && (
-                <button onClick={quickAdd} className="rounded-full px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90 sm:px-5 sm:py-2 sm:text-sm" style={{ background: "var(--page-accent)" }}>加购</button>
-              )}
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+            <Price value={product.price} className="font-display text-lg sm:text-2xl" />
+            <div className="grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:justify-end sm:gap-2">
+              <Link href={`/shop/${product.slug}`} className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/60 px-2 py-1.5 text-[11px] transition hover:bg-white sm:px-4 sm:py-2 sm:text-sm" style={{ color: "var(--page-ink)" }}>详情</Link>
+              <button onClick={() => setExpanded((value) => !value)} className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/60 px-2 py-1.5 text-[11px] transition hover:bg-white sm:px-4 sm:py-2 sm:text-sm" style={{ color: "var(--page-ink)" }}>{expanded ? "收起" : "选规格"}</button>
+              {!expanded ? (
+                <button onClick={quickAdd} className="inline-flex items-center justify-center rounded-full px-2 py-1.5 text-[11px] font-semibold text-white transition hover:opacity-90 sm:px-5 sm:py-2 sm:text-sm" style={{ background: "var(--page-accent)" }}>加购</button>
+              ) : <span className="hidden sm:block" />}
             </div>
           </div>
         </div>

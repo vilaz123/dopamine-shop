@@ -44,7 +44,7 @@ export function TakeawayPromoBanner() {
   }
 
   return (
-    <div className="flex gap-3 overflow-x-auto pb-1">
+    <div className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
       {promos.map((promo) => {
         const done = isClaimed(promo);
         return (
@@ -52,13 +52,13 @@ export function TakeawayPromoBanner() {
             key={promo.tag}
             onClick={() => claim(promo)}
             disabled={done}
-            className={`flex min-w-[220px] flex-col gap-1 rounded-2xl border p-4 text-left transition ${done ? "cursor-default border-black/10 bg-white opacity-60" : "border-yellow-400/40 bg-yellow-400/15 hover:border-yellow-400/80 hover:bg-yellow-400/25"}`}
+            className={`flex min-w-[78vw] snap-start flex-col gap-1 rounded-2xl border p-4 text-left transition sm:min-w-[220px] ${done ? "cursor-default border-black/10 bg-white opacity-60" : "border-yellow-400/40 bg-yellow-400/15 hover:border-yellow-400/80 hover:bg-yellow-400/25"}`}
           >
             <span className="flex items-center justify-between">
               <span className="text-xs uppercase tracking-[0.24em] text-[var(--hot)]">{promo.tag}</span>
               {done && <span className="text-xs text-[var(--success)]">已领取 ✓</span>}
             </span>
-            <span className="font-display text-2xl">{promo.text}</span>
+            <span className="font-display text-xl sm:text-2xl">{promo.text}</span>
             <span className="text-xs text-[var(--muted)]">{done ? "已放进你的虚拟券包" : promo.hint}</span>
           </button>
         );

@@ -42,21 +42,21 @@ export default function ShopPage() {
         <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>多巴胺仓货架</h1>
         <p className="mt-5 text-lg leading-8" style={{ color: "var(--page-soft)" }}>复刻真实电商信息流：热榜、满减、新品、稀缺库存都在，但所有价格都是虚拟金额，无需真实支付。</p>
       </div>
-      <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end sm:mb-12">
-        <div className="flex flex-wrap gap-3">
+      <div className="mb-8 flex flex-col gap-4 sm:mb-12 md:flex-row md:items-end md:justify-between">
+        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0">
           {categories.map((item) => (
-            <button key={item.id} onClick={() => updateQuery(item.id, sort)} className={`rounded-full border px-4 py-2 text-sm transition ${category === item.id ? "border-black bg-black text-white" : "border-black/10 hover:border-black/30"}`}>
+            <button key={item.id} onClick={() => updateQuery(item.id, sort)} className={`shrink-0 rounded-full border px-3 py-2 text-sm transition sm:px-4 ${category === item.id ? "border-black bg-black text-white" : "border-black/10 hover:border-black/30"}`}>
               {item.label}
             </button>
           ))}
         </div>
-        <div className="flex gap-3 text-sm">
+        <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
           {[
             ["hot", "热度"],
             ["price-asc", "价格升序"],
             ["price-desc", "价格降序"],
           ].map(([id, label]) => (
-            <button key={id} onClick={() => updateQuery(category, id)} className={sort === id ? "font-semibold" : "opacity-70"} style={{ color: "var(--page-ink)" }}>{label}</button>
+            <button key={id} onClick={() => updateQuery(category, id)} className={`shrink-0 ${sort === id ? "font-semibold" : "opacity-70"}`} style={{ color: "var(--page-ink)" }}>{label}</button>
           ))}
         </div>
       </div>

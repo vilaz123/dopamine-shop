@@ -33,7 +33,7 @@ export function ProfileDashboard() {
         <p className="text-sm text-white/70">当前账号</p>
         <h2 className="font-display mt-2 text-3xl sm:mt-3 sm:text-4xl">{user.username}</h2>
         <p className="mt-3 text-white/80 sm:mt-4">账号：{user.email ?? user.phone ?? "—"}</p>
-        <div className="mt-6 grid grid-cols-3 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3 lg:grid-cols-1">
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4 lg:grid-cols-1">
           <div className="rounded-2xl bg-white/15 p-3 sm:rounded-3xl sm:p-5"><p className="text-xs text-white/70 sm:text-sm">多巴胺币</p><p className="font-display text-2xl sm:text-4xl">{coins}</p></div>
           <div className="rounded-2xl bg-white/15 p-3 sm:rounded-3xl sm:p-5"><p className="text-xs text-white/70 sm:text-sm">等级</p><p className="font-display text-2xl sm:text-4xl">Lv.{level.level}</p></div>
           <div className="rounded-2xl bg-white/15 p-3 sm:rounded-3xl sm:p-5"><p className="text-xs text-white/70 sm:text-sm">订单</p><p className="font-display text-2xl sm:text-4xl">{orders.length}</p></div>

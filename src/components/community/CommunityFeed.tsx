@@ -43,7 +43,7 @@ export function CommunityFeed() {
   return (
     <div className="grid gap-6 sm:gap-10 lg:grid-cols-[360px_1fr]">
       <aside>
-        <form onSubmit={submit} className="rounded-[2rem] bg-white p-6">
+        <form onSubmit={submit} className="rounded-[1.5rem] bg-white p-4 sm:rounded-[2rem] sm:p-6">
           <h2 className="font-display text-3xl sm:text-4xl">发布战利品</h2>
           <Input className="mt-5" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="昵称" />
           <Input className="mt-3" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="标题" />
@@ -59,13 +59,13 @@ export function CommunityFeed() {
       </aside>
       <div className="space-y-5">
         {filtered.map((post) => (
-          <article key={post.id} className="rounded-[2rem] border border-black/10 bg-white p-6">
+          <article key={post.id} className="rounded-[1.5rem] border border-black/10 bg-white p-4 sm:rounded-[2rem] sm:p-6">
             <p className="text-xs uppercase tracking-[0.25em] text-[var(--hot)]">#{post.topic}</p>
             <h3 className="font-display mt-3 text-3xl sm:text-4xl">{post.title}</h3>
             <p className="mt-3 leading-7 text-[var(--muted)]">{post.body}</p>
             {post.relatedProductSlugs.length > 0 && <p className="mt-3 text-sm text-[var(--muted)]">关联商品：{post.relatedProductSlugs.map((slug) => products.find((p) => p.slug === slug)?.name).filter(Boolean).join("、")}</p>}
             {post.savedAmount > 0 && <p className="mt-2 text-sm text-[var(--hot)]">本次省下 {formatCurrency(post.savedAmount)}</p>}
-            <div className="mt-5 flex items-center justify-between text-sm text-[var(--muted)]"><span>{post.author} · {new Date(post.createdAt).toLocaleDateString("zh-CN")}</span><button onClick={() => void likePost(post.id)}>👍 {post.likes}</button></div>
+            <div className="mt-5 flex flex-col gap-2 text-sm text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between"><span className="min-w-0 break-words">{post.author} · {new Date(post.createdAt).toLocaleDateString("zh-CN")}</span><button className="w-fit shrink-0" onClick={() => void likePost(post.id)}>👍 {post.likes}</button></div>
           </article>
         ))}
       </div>

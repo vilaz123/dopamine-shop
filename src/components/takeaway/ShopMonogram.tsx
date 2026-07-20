@@ -31,7 +31,7 @@ export function ShopMonogram({ shop, large = false, priority = false }: { shop: 
       <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,.12)_0,rgba(255,255,255,.12)_1px,transparent_1px,transparent_12px)]" />
       <div className="absolute inset-3 rounded-[0.75rem] border border-white/25 sm:inset-4 sm:rounded-[1.5rem]" />
       <div className="absolute bottom-3 left-3 rounded-full bg-black/40 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm sm:bottom-4 sm:left-4 sm:text-xs">{shop.category}</div>
-      <div className="font-display relative text-white/95 drop-shadow-2xl" style={{ fontSize: large ? "6rem" : "clamp(2rem, 14vw, 3.5rem)" }}>
+      <div className="font-display relative text-white/95 drop-shadow-2xl" style={{ fontSize: large ? "clamp(4.5rem, 22vw, 6rem)" : "clamp(2rem, 14vw, 3.5rem)" }}>
         {shop.monogram}
       </div>
     </div>

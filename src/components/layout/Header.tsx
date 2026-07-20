@@ -22,13 +22,13 @@ export function Header() {
     <>
     <header className="sticky top-0 z-40 border-b border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-[color-mix(in_srgb,var(--page-bg)_85%,transparent)] backdrop-blur shadow-sm">
       <div className="container-shell flex h-16 items-center justify-between gap-3 sm:h-20 sm:gap-4">
-        <Link href="/" className="font-display text-xl tracking-tight sm:text-2xl md:text-3xl" style={{ color: "var(--page-ink)" }}>Dopahub 多巴胺仓</Link>
+        <Link href="/" className="min-w-0 truncate font-display text-lg tracking-tight sm:text-2xl md:text-3xl" style={{ color: "var(--page-ink)" }}>Dopahub 多巴胺仓</Link>
         <nav className="hidden items-center gap-7 text-sm md:flex">
           {navItems.map(([href, label]) => (
             <Link key={href} href={href} className="font-medium transition hover:opacity-70" style={{ color: "var(--page-soft)" }}>{label}</Link>
           ))}
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <AssetHeaderButton />
           <CartButton />
           <button className="rounded-full border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/60 p-3 md:hidden" onClick={() => setOpen(true)} aria-label="打开菜单" style={{ color: "var(--page-ink)" }}><Menu size={18} /></button>

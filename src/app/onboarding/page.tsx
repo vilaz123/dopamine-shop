@@ -8,7 +8,7 @@ export default function OnboardingPage() {
         <div>
           <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Onboarding</p>
           <h1 className="font-display mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl" style={{ color: "var(--page-ink)" }}>成为多巴胺仓主</h1>
-          <p className="mt-6 text-lg leading-8" style={{ color: "var(--page-soft)" }}>设置用户名，并选择是否添加虚拟收货信息。所有信息当前保存在本地账号空间，后续可迁移到云端。</p>
+          <p className="mt-5 text-base leading-7 sm:mt-6 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>设置用户名，并选择是否添加虚拟收货信息。所有信息当前保存在本地账号空间，后续可迁移到云端。</p>
         </div>
         <ProfileForm />
       </section>

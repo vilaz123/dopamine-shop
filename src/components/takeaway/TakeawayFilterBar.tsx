@@ -10,12 +10,12 @@ const filters: Array<[string, string]> = [
 
 export function TakeawayFilterBar({ active, onSelect }: { active: string; onSelect: (id: string) => void }) {
   return (
-    <div className="flex flex-wrap gap-3 text-sm">
+    <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 text-sm sm:mx-0 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0">
       {filters.map(([id, label]) => (
         <button
           key={id}
           onClick={() => onSelect(id)}
-          className={`rounded-full border px-4 py-2 backdrop-blur transition ${active === id ? "border-[var(--gold)] bg-[var(--gold)] text-black" : "border-white/25 bg-white/12 text-white hover:bg-white/20"}`}
+          className={`shrink-0 rounded-full border px-3 py-2 backdrop-blur transition sm:px-4 ${active === id ? "border-[var(--gold)] bg-[var(--gold)] text-black" : "border-white/25 bg-white/12 text-white hover:bg-white/20"}`}
         >
           {label}
         </button>

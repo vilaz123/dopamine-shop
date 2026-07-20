@@ -38,7 +38,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <p className="text-xs uppercase tracking-[0.32em] text-[var(--hot)]">{product.badge}</p>
           <h1 className="font-display mt-4 text-2xl leading-tight sm:text-3xl md:text-4xl" style={{ color: "var(--page-ink)" }}>{product.name}</h1>
           <p className="mt-3 text-lg text-[var(--muted)] sm:mt-4">{product.subtitle}</p>
-          <p className="font-display mt-6 text-4xl sm:mt-8 sm:text-5xl" style={{ color: "var(--page-ink)" }}>{formatCurrency(product.price)}<span className="ml-2 align-top text-sm font-sans text-[var(--muted)]">虚拟金额，无需真实支付</span></p>
+          <p className="font-display mt-6 text-4xl sm:mt-8 sm:text-5xl" style={{ color: "var(--page-ink)" }}>{formatCurrency(product.price)}<span className="mt-1 block text-sm font-sans text-[var(--muted)] sm:ml-2 sm:inline sm:align-top">虚拟金额，无需真实支付</span></p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Badge tone="gold">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</Badge>
             <Badge tone="green">虚拟库存仅剩 {product.stock} 件</Badge>
@@ -56,8 +56,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </div>
       <ReviewSection productSlug={product.slug} />
       {related.length > 0 && (
-        <section className="mt-20 border-t border-black/10 pt-12">
-          <h2 className="font-display mb-4 text-5xl" style={{ color: "var(--page-ink)" }}>凑单与相关推荐</h2>
+        <section className="mt-14 border-t border-black/10 pt-8 sm:mt-20 sm:pt-12">
+          <h2 className="font-display mb-4 text-3xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>凑单与相关推荐</h2>
           <p className="mb-10 text-[var(--muted)]">继续加购可获得更多多巴胺币，但仍然不会真实扣款。</p>
           <ProductGrid products={related} />
         </section>

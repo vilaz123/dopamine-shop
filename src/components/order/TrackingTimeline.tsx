@@ -14,9 +14,9 @@ export function TrackingTimeline({ createdAt, flavor, completion = "never", sign
             {index < tracking.length - 1 && <div className={`mt-2 h-full min-h-10 w-px ${stage.reached ? "bg-black/40" : "bg-black/10"}`} />}
           </div>
           <div className="flex-1 border-b border-black/10 pb-5">
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <p className={stage.reached ? "font-semibold" : "opacity-70"} style={{ color: "var(--page-ink)" }}>{stage.label}{stage.terminal ? " · 终态" : ""}</p>
-              {stage.terminal && <span className="rounded-full bg-[var(--danger)] px-3 py-1 text-xs text-white">{completion === "signed" ? (signedAt ? "已签收" : "待签收") : "永不签收"}</span>}
+              {stage.terminal && <span className="w-fit rounded-full bg-[var(--danger)] px-3 py-1 text-xs text-white">{completion === "signed" ? (signedAt ? "已签收" : "待签收") : "永不签收"}</span>}
             </div>
             <p className="mt-1 text-sm" style={{ color: "var(--page-soft)" }}>{stage.note}</p>
             <p className="mt-1 text-xs uppercase tracking-[0.2em] opacity-60" style={{ color: "var(--page-soft)" }}>{formatDateTime(stage.at)}</p>
