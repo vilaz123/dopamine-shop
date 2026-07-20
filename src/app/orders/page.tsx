@@ -29,7 +29,7 @@ export default function OrdersPage() {
       <section className="container-shell py-10 sm:py-16">
         <div className="rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center">
           <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Orders</p>
-          <h1 className="font-display mt-4 text-4xl sm:text-6xl" style={{ color: "var(--page-ink)" }}>还没有虚拟订单。</h1>
+          <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>还没有虚拟订单。</h1>
           <p className="mt-5" style={{ color: "var(--page-soft)" }}>当购买欲出现时，可以先在 Dopahub 多巴胺仓下一单。</p>
           <ButtonLink href="/shop" className="mt-8">开始虚拟购物</ButtonLink>
         </div>
@@ -43,11 +43,11 @@ export default function OrdersPage() {
     <section className="container-shell py-10 sm:py-16">
       {selected && showSuccess && <OrderSuccessModal coins={selected.coinsEarned} xp={selected.xpEarned} badges={selected.badges} onClose={() => setShowSuccess(false)} />}
       <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Orders</p>
-      <h1 className="font-display mt-4 text-4xl sm:text-6xl" style={{ color: "var(--page-ink)" }}>我的虚拟订单</h1>
+      <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>我的虚拟订单</h1>
       <div className="mt-8 grid gap-6 sm:gap-10 lg:grid-cols-[360px_1fr]">
         <aside className="space-y-4">
           {orders.map((order) => (
-            <button key={order.id} onClick={() => setSelectedId(order.id)} className={`w-full rounded-[1.5rem] border p-5 text-left transition ${selected?.id === order.id ? "border-transparent text-white shadow-md" : "border-white/60 bg-white/85"}`} style={selected?.id === order.id ? { background: "var(--page-ink)" } : undefined}>
+            <button key={order.id} onClick={() => setSelectedId(order.id)} className={`w-full rounded-[1.5rem] border p-5 text-left transition ${selected?.id === order.id ? "dopamine-panel border-transparent shadow-md" : "border-white/60 bg-white/85"}`}>
               <p className="font-display text-2xl">{order.id}</p>
               <p className="mt-2 text-sm opacity-70">{formatDateTime(order.createdAt)} · {formatCurrency(order.total)}</p>
             </button>
@@ -67,10 +67,10 @@ function OrderDetail({ order, onSign }: { order: ReturnType<typeof useOrderStore
     <div className="rounded-[1.5rem] border border-white/60 bg-white/85 p-5 shadow-sm sm:rounded-[2.5rem] sm:p-8">
       <div className="flex flex-col justify-between gap-5 border-b border-black/10 pb-6 sm:gap-6 sm:pb-8 md:flex-row md:items-start">
         <div><p className="text-sm" style={{ color: "var(--page-soft)" }}>订单编号</p><h2 className="font-display mt-2 text-3xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>{order.id}</h2><p className="mt-3 sm:mt-4" style={{ color: "var(--page-soft)" }}>当前状态：<span style={{ color: "var(--page-ink)" }}>{current.label}</span></p></div>
-        <div className="rounded-2xl p-5 text-white sm:rounded-3xl sm:p-6" style={{ background: "var(--page-ink)" }}><p className="text-sm text-white/70">本单奖励</p><p className="font-display mt-2 text-3xl sm:text-4xl">+{order.coinsEarned} 币</p><p className="text-sm text-white/70">+{order.xpEarned} XP</p></div>
+        <div className="dopamine-panel rounded-2xl p-5 sm:rounded-3xl sm:p-6"><p className="text-sm text-white/75">本单奖励</p><p className="font-display mt-2 text-3xl sm:text-4xl">+{order.coinsEarned} 币</p><p className="text-sm text-white/75">+{order.xpEarned} XP</p></div>
       </div>
       {order.deliveryFlavor === "rider" && (
-        <div className="mt-6 rounded-2xl p-5 text-white sm:mt-8 sm:rounded-3xl sm:p-6" style={{ background: "var(--page-ink)" }}>
+        <div className="dopamine-panel mt-6 rounded-2xl p-5 sm:mt-8 sm:rounded-3xl sm:p-6">
           <p className="font-display text-3xl sm:text-4xl">{current.label}</p>
           <p className="mt-2 text-sm text-white/80">骑手正在幻想路线中接近你，永远差一栋楼</p>
         </div>

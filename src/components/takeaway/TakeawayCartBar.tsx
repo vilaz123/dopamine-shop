@@ -17,7 +17,7 @@ export function TakeawayCartBar() {
   return (
     <div className="sticky bottom-4 z-30 mt-10">
       <div className="container-shell">
-        <Link href="/checkout" className="flex items-center justify-between gap-4 rounded-full bg-[var(--ink)] px-6 py-4 text-[var(--bone)] luxury-shadow">
+        <Link href="/checkout" className="luxury-shadow dopamine-panel flex items-center justify-between gap-4 rounded-full px-6 py-4">
           <span className="flex items-center gap-3">
             <span className="grid h-8 w-8 place-items-center rounded-full bg-[var(--gold)] text-sm font-bold text-black">{count}</span>
             <span className="text-sm text-white/70">已选 {count} 件 · {formatCurrency(total)}</span>

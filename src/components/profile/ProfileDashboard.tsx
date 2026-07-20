@@ -29,7 +29,7 @@ export function ProfileDashboard() {
 
   return (
     <div className="grid gap-6 sm:gap-10 lg:grid-cols-[.9fr_1.1fr]">
-      <aside className="rounded-[1.5rem] p-5 text-white shadow-md sm:rounded-[2.5rem] sm:p-8" style={{ background: "var(--page-ink)" }}>
+      <aside className="dopamine-panel rounded-[1.5rem] p-5 shadow-md sm:rounded-[2.5rem] sm:p-8">
         <p className="text-sm text-white/70">当前账号</p>
         <h2 className="font-display mt-2 text-4xl sm:mt-3 sm:text-6xl">{user.username}</h2>
         <p className="mt-3 text-white/80 sm:mt-4">账号：{user.email ?? user.phone ?? "—"}</p>

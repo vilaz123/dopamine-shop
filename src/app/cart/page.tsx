@@ -34,7 +34,7 @@ export default function CartPage() {
     <PageTheme className="min-h-screen">
     <section className="container-shell py-10 sm:py-16">
       <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Cart</p>
-      <h1 className="font-display mt-4 text-4xl sm:text-6xl" style={{ color: "var(--page-ink)" }}>虚拟购物车</h1>
+      <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>虚拟购物车</h1>
       {lines.length === 0 ? (
         <div className="mt-12 rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center">
           <p className="font-display text-4xl" style={{ color: "var(--page-ink)" }}>你的购物车是空的。</p>
@@ -69,7 +69,7 @@ export default function CartPage() {
               </article>
             ))}
           </div>
-          <aside className="h-fit rounded-[1.5rem] bg-[var(--ink)] p-5 text-[var(--bone)] sm:rounded-[2rem] sm:p-7">
+          <aside className="dopamine-panel h-fit rounded-[1.5rem] p-5 sm:rounded-[2rem] sm:p-7">
             <h2 className="font-display text-3xl sm:text-4xl">结算仪式</h2>
             <div className="mt-5 rounded-2xl bg-white/10 p-3 text-sm text-white/70 sm:mt-6 sm:p-4">
               {nextThreshold ? `再加 ${formatCurrency(nextThreshold - subtotal)} 解锁更大虚拟满减` : "已达到最高虚拟满减门槛"}

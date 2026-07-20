@@ -35,7 +35,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
         </div>
         <div className="lg:pt-6">
           <p className="text-xs uppercase tracking-[0.32em] text-[var(--hot)]">{shop.category}</p>
-          <h1 className="font-display mt-4 text-4xl leading-none sm:text-6xl md:text-7xl" style={{ color: "var(--page-ink)" }}>{shop.name}</h1>
+          <h1 className="font-display mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl" style={{ color: "var(--page-ink)" }}>{shop.name}</h1>
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-base text-[var(--page-ink-soft)] sm:mt-5 sm:text-lg">
             <span className="font-semibold text-black">★ {shop.rating.toFixed(1)}</span>
             <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>

@@ -43,7 +43,7 @@ export function TakeawayShopCard({ shop, priority = false }: { shop: TakeawaySho
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-start justify-between gap-2 sm:gap-3">
           <div className="min-w-0">
-            <Link href={`/takeaway/${shop.slug}`} className="font-display text-2xl leading-tight hover:opacity-70 sm:text-3xl md:text-4xl" style={{ color: "var(--page-ink)" }}>{shop.name}</Link>
+            <Link href={`/takeaway/${shop.slug}`} className="font-display text-xl leading-tight hover:opacity-70 sm:text-2xl md:text-3xl" style={{ color: "var(--page-ink)" }}>{shop.name}</Link>
             <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:mt-2 sm:text-sm" style={{ color: "var(--page-ink-soft)" }}>
               <span className="font-semibold" style={{ color: "var(--page-ink)" }}>★ {shop.rating.toFixed(1)}</span>
               <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>

@@ -156,6 +156,16 @@ textarea {
   box-shadow: 0 24px 70px rgb(36 26 77 / 0.16);
 }
 
+/* 多巴胺面板：深底(page-ink)上叠 accent/highlight 两色高光渐变，
+   替代单调的纯紫白字块，自动跟随所在分区主题三色。白字保持可读。 */
+.dopamine-panel {
+  color: #fff;
+  background:
+    radial-gradient(130% 120% at 0% 0%, color-mix(in srgb, var(--page-accent) 75%, transparent) 0%, transparent 55%),
+    radial-gradient(120% 130% at 100% 100%, color-mix(in srgb, var(--page-highlight) 70%, transparent) 0%, transparent 55%),
+    var(--page-ink);
+}
+
 .monogram-grid {
   background-image: linear-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.16) 1px, transparent 1px);
   background-size: 32px 32px;
