@@ -62,16 +62,16 @@ export default function TakeawayPage() {
         <p className="mt-4 text-base leading-7 sm:mt-5 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>复刻真实外卖信息流：分类、满减、骑手、配送进度都在，但所有餐品都不会真正送到，热量也永远不落地。</p>
       </div>
 
-      <div className="mb-5 flex flex-col justify-between gap-4 rounded-[1.25rem] border border-black/10 bg-white p-4 sm:mb-6 sm:rounded-[2rem] sm:p-5 md:flex-row md:items-center">
+      <div className="mb-5 flex flex-col justify-between gap-4 rounded-[1.25rem] border border-white/25 bg-white/12 p-4 text-white backdrop-blur sm:mb-6 sm:rounded-[2rem] sm:p-5 md:flex-row md:items-center">
         <div className="flex flex-col gap-2">
-          <span className="flex items-center gap-2 text-sm text-[var(--page-ink-soft)]">
-            <MapPin size={16} /> 当前位置：<span className="font-semibold text-black">幻想街区 · 永不签收门牌 8 号</span>
+          <span className="flex items-center gap-2 text-sm text-white/85">
+            <MapPin size={16} /> 当前位置：<span className="font-semibold text-white">幻想街区 · 永不签收门牌 8 号</span>
           </span>
-          <span className="flex items-center gap-2 text-sm text-[var(--page-ink-soft)]">
-            <Clock size={16} /> 预计送达：<span className="font-semibold text-black">永远配送中</span>
+          <span className="flex items-center gap-2 text-sm text-white/85">
+            <Clock size={16} /> 预计送达：<span className="font-semibold text-white">永远配送中</span>
           </span>
         </div>
-        <Link href="/profile" className="inline-flex w-fit items-center justify-center rounded-full border border-black/15 px-5 py-3 text-sm font-semibold transition hover:border-black/40">更改虚拟地址</Link>
+        <Link href="/profile" className="inline-flex w-fit items-center justify-center rounded-full border border-white/35 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15">更改虚拟地址</Link>
       </div>
 
       <div className="mb-5 sm:mb-6">
@@ -101,7 +101,7 @@ export default function TakeawayPage() {
       </div>
 
       {snacks.length > 0 && (
-        <section className="mt-16 rounded-[2.5rem] bg-white p-8 md:p-12">
+        <section className="mt-16 rounded-[2.5rem] border border-white/20 bg-white/10 p-6 backdrop-blur md:p-12">
           <div className="mb-8 flex items-end justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-highlight)" }}>Snacks</p>

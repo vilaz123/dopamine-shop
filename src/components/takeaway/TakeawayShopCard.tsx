@@ -36,7 +36,7 @@ export function TakeawayShopCard({ shop, priority = false }: { shop: TakeawaySho
   }
 
   return (
-    <div className="flex gap-3 rounded-[1.25rem] border border-white/60 bg-white/85 p-3 shadow-sm transition hover:border-white sm:gap-5 sm:rounded-[2rem] sm:p-4 md:p-5">
+    <div className="flex gap-3 rounded-[1.25rem] border border-white/60 bg-white/80 p-3 backdrop-blur shadow-lg shadow-black/10 transition hover:border-white sm:gap-5 sm:rounded-[2rem] sm:p-4 md:p-5">
       <Link href={`/takeaway/${shop.slug}`} className="relative w-24 shrink-0 sm:w-32 md:w-44">
         <ShopMonogram shop={shop} priority={priority} />
       </Link>

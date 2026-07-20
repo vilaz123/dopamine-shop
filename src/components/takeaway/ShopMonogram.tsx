@@ -15,9 +15,8 @@ export function ShopMonogram({ shop, large = false, priority = false }: { shop: 
           fetchPriority={priority ? "high" : "auto"}
           decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-white/10" />
-        <div className="absolute left-3 top-3 text-[10px] uppercase tracking-[0.32em] text-white/85 sm:left-5 sm:top-5 sm:text-xs">{shop.category}</div>
-        <div className="absolute bottom-3 right-3 rounded-full bg-white/80 px-2 py-0.5 text-[10px] uppercase tracking-[0.18em] text-black sm:bottom-5 sm:right-5 sm:px-3 sm:py-1 sm:text-xs">虚拟外卖</div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-white/10" />
+        <div className="absolute bottom-3 left-3 rounded-full bg-black/40 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm sm:bottom-4 sm:left-4 sm:text-xs">{shop.category}</div>
       </div>
     );
   }
@@ -31,8 +30,7 @@ export function ShopMonogram({ shop, large = false, priority = false }: { shop: 
     >
       <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,.12)_0,rgba(255,255,255,.12)_1px,transparent_1px,transparent_12px)]" />
       <div className="absolute inset-3 rounded-[0.75rem] border border-white/25 sm:inset-4 sm:rounded-[1.5rem]" />
-      <div className="absolute left-3 top-3 text-[10px] uppercase tracking-[0.32em] text-white/85 sm:left-5 sm:top-5 sm:text-xs">{shop.category}</div>
-      <div className="absolute bottom-3 right-3 rounded-full bg-white/80 px-2 py-0.5 text-[10px] uppercase tracking-[0.18em] text-black sm:bottom-5 sm:right-5 sm:px-3 sm:py-1 sm:text-xs">虚拟外卖</div>
+      <div className="absolute bottom-3 left-3 rounded-full bg-black/40 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm sm:bottom-4 sm:left-4 sm:text-xs">{shop.category}</div>
       <div className="font-display relative text-white/95 drop-shadow-2xl" style={{ fontSize: large ? "6rem" : "clamp(2rem, 14vw, 3.5rem)" }}>
         {shop.monogram}
       </div>

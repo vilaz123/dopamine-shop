@@ -34,7 +34,7 @@ export function TakeawayMealCard({ product }: { product: Product }) {
   }
 
   return (
-    <div className="rounded-[1.25rem] border border-white/60 bg-white/85 p-4 shadow-sm sm:rounded-[1.5rem] sm:p-5">
+    <div className="rounded-[1.25rem] border border-white/60 bg-white/80 p-4 backdrop-blur shadow-lg shadow-black/10 sm:rounded-[1.5rem] sm:p-5">
       <div className="flex gap-3 sm:gap-4">
         <Link
           href={`/shop/${product.slug}`}

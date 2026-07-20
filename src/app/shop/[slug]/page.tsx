@@ -6,7 +6,6 @@ import { MediaGallery } from "@/components/common/MediaGallery";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { AddToCart } from "@/components/product/AddToCart";
 import { ReviewSection } from "@/components/reviews/ReviewSection";
-import { ProductTagChips } from "@/components/product/ProductTagChips";
 import { FavoriteButton } from "@/components/product/FavoriteButton";
 import { Badge } from "@/components/ui/Badge";
 
@@ -30,8 +29,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="mt-8 grid gap-8 sm:gap-12 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
           <MediaGallery images={productImages(product)} alt={product.name} aspect="4/5">
-            <div className="absolute left-5 top-5 right-5 flex items-start justify-between gap-3">
-              <ProductTagChips tags={product.tags} />
+            <div className="absolute left-4 top-4 right-4 flex items-start justify-end">
               <FavoriteButton slug={product.slug} />
             </div>
           </MediaGallery>
@@ -47,7 +45,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <Badge tone={product.deliveryFlavor === "rider" ? "hot" : "blue"}>{product.deliveryFlavor === "rider" ? "骑手配送" : "快递派送"} · 永不签收</Badge>
           </div>
           <p className="mt-8 text-lg leading-8 text-[var(--muted)]">{product.description}</p>
-          <div className="mt-8 rounded-[2rem] border border-black/10 bg-white p-6">
+          <div className="mt-8 rounded-[1.5rem] border border-white/50 bg-white/65 p-5 backdrop-blur sm:rounded-[2rem] sm:p-6">
             <p className="text-sm uppercase tracking-[0.28em] text-[var(--hot)]">Product Story</p>
             <p className="mt-4 leading-7 text-[var(--muted)]">{product.story}</p>
           </div>

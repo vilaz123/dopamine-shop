@@ -35,17 +35,17 @@ export function Header() {
       </div>
       {open && (
         <div className="fixed inset-0 z-[999] md:hidden">
-          {/* 半透明暗背：点它关闭，不全屏实色，让下方内容若隐若现但不乱 */}
-          <button className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setOpen(false)} aria-label="关闭菜单" />
-          {/* 右侧抽屉：宽度按屏宽自适应，小屏更窄，大屏不超 320px */}
-          <aside className="absolute right-0 top-0 flex h-full w-[78vw] min-w-[260px] max-w-[320px] flex-col p-5 shadow-2xl" style={{ background: "var(--page-bg)" }}>
-            <div className="flex items-center justify-between border-b border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] pb-5">
+          {/* 半透明暗背：div 而非 button，避免吞掉事件；点它关闭 */}
+          <div className="absolute inset-0 bg-black/45 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden />
+          {/* 右侧抽屉：relative + z-10 确保在暗背之上、可点可滚动 */}
+          <aside className="absolute right-0 top-0 z-10 flex h-full w-[82vw] min-w-[260px] max-w-[320px] flex-col overflow-y-auto p-5 shadow-2xl" style={{ background: "var(--page-bg)" }}>
+            <div className="flex items-center justify-between border-b border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] pb-4">
               <p className="font-display text-2xl" style={{ color: "var(--page-ink)" }}>菜单</p>
-              <button className="rounded-full border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/60 p-2" onClick={() => setOpen(false)} aria-label="关闭菜单" style={{ color: "var(--page-ink)" }}><X size={18} /></button>
+              <button className="rounded-full border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/70 p-2.5" onClick={() => setOpen(false)} aria-label="关闭菜单" style={{ color: "var(--page-ink)" }}><X size={18} /></button>
             </div>
-            <nav className="mt-6 grid auto-rows-min gap-2 overflow-y-auto">
+            <nav className="mt-5 grid gap-2.5">
               {navItems.map(([href, label]) => (
-                <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/60 px-4 py-3 text-base font-semibold transition hover:bg-white" style={{ color: "var(--page-soft)" }}>
+                <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/70 px-4 py-3.5 text-lg font-semibold transition hover:bg-white" style={{ color: "var(--page-ink)" }}>
                   {label}
                 </Link>
               ))}
