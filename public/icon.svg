@@ -1,5 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="143" ry="143" fill="#241A4D"/>
-  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="central"
-        font-family="Georgia, 'PingFang SC', serif" font-size="256" font-weight="700" fill="#FFD23F">DH</text>
+  <defs>
+    <radialGradient id="g1" cx="22%" cy="18%" r="62%">
+      <stop offset="0%" stop-color="#F8BBD0" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#F8BBD0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="84%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#FFCCBC" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFCCBC" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g3" cx="78%" cy="86%" r="64%">
+      <stop offset="0%" stop-color="#AD5380" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#AD5380" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g4" cx="18%" cy="82%" r="52%">
+      <stop offset="0%" stop-color="#F8BBD0" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#F8BBD0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="143" ry="143" fill="#FFF9C4"/>
+  <rect width="512" height="512" rx="143" ry="143" fill="url(#g1)"/>
+  <rect width="512" height="512" rx="143" ry="143" fill="url(#g2)"/>
+  <rect width="512" height="512" rx="143" ry="143" fill="url(#g3)"/>
+  <rect width="512" height="512" rx="143" ry="143" fill="url(#g4)"/>
+  <text x="50%" y="55%" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'PingFang SC', serif" font-size="236" font-weight="700" fill="#241A4D">DH</text>
 </svg>

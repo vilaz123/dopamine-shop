@@ -6,8 +6,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#FFF5F8",
-  "theme_color": "#241A4D",
+  "background_color": "#FFF9C4",
+  "theme_color": "#AD5380",
   "lang": "zh-CN",
   "categories": ["shopping", "lifestyle"],
   "icons": [
