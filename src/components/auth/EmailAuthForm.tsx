@@ -160,7 +160,7 @@ export function EmailAuthForm() {
 
   return (
     <form onSubmit={submit} className="rounded-[2.5rem] bg-white p-8">
-      <h2 className="font-display text-5xl">{mode === "signin" ? "邮箱登录" : "注册账号"}</h2>
+      <h2 className="font-display text-3xl sm:text-5xl">{mode === "signin" ? "邮箱登录" : "注册账号"}</h2>
       <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
         用邮箱 + 密码登录，订单、资产与社区记录会同步到云端并在多设备间共享。
         {cloudOff && <span className="text-[var(--hot)]"> （未配置云端，当前为本地账号模式。）</span>}

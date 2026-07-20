@@ -36,7 +36,7 @@ export default function ShopPage() {
   return (
     <section className="theme-shop relative overflow-hidden">
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
-      <div className="container-shell py-16">
+      <div className="container-shell py-10 sm:py-16">
       <div className="mb-10 max-w-3xl sm:mb-12">
         <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Dopahub Market</p>
         <h1 className="font-display mt-4 text-4xl sm:text-6xl" style={{ color: "var(--page-ink)" }}>多巴胺仓货架</h1>

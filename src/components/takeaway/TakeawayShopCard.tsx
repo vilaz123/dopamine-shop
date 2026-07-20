@@ -36,18 +36,18 @@ export function TakeawayShopCard({ shop, priority = false }: { shop: TakeawaySho
   }
 
   return (
-    <div className="flex gap-5 rounded-[2rem] border border-white/60 bg-white/85 p-4 shadow-sm transition hover:border-white md:p-5">
-      <Link href={`/takeaway/${shop.slug}`} className="relative w-32 shrink-0 sm:w-44">
+    <div className="flex gap-3 rounded-[1.25rem] border border-white/60 bg-white/85 p-3 shadow-sm transition hover:border-white sm:gap-5 sm:rounded-[2rem] sm:p-4 md:p-5">
+      <Link href={`/takeaway/${shop.slug}`} className="relative w-24 shrink-0 sm:w-32 md:w-44">
         <ShopMonogram shop={shop} priority={priority} />
       </Link>
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <Link href={`/takeaway/${shop.slug}`} className="font-display text-3xl leading-none hover:opacity-70 md:text-4xl" style={{ color: "var(--page-ink)" }}>{shop.name}</Link>
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm" style={{ color: "var(--page-ink-soft)" }}>
+        <div className="flex items-start justify-between gap-2 sm:gap-3">
+          <div className="min-w-0">
+            <Link href={`/takeaway/${shop.slug}`} className="font-display text-2xl leading-tight hover:opacity-70 sm:text-3xl md:text-4xl" style={{ color: "var(--page-ink)" }}>{shop.name}</Link>
+            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:mt-2 sm:text-sm" style={{ color: "var(--page-ink-soft)" }}>
               <span className="font-semibold" style={{ color: "var(--page-ink)" }}>★ {shop.rating.toFixed(1)}</span>
               <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>
-              <span>{shop.distanceKm}km 幻想距离</span>
+              <span>{shop.distanceKm}km</span>
             </div>
           </div>
           <div className="hidden gap-2 sm:flex">
@@ -56,19 +56,19 @@ export function TakeawayShopCard({ shop, priority = false }: { shop: TakeawaySho
             ))}
           </div>
         </div>
-        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm" style={{ color: "var(--page-ink-soft)" }}>
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs sm:mt-3 sm:flex-wrap sm:gap-x-4 sm:text-sm" style={{ color: "var(--page-ink-soft)" }}>
           <span>起送 ¥{shop.minOrder}</span>
           <span>配送 ¥{shop.deliveryFee}</span>
-          <span>预计 {shop.deliveryTimeMin} 分钟后进入骑手配送中</span>
+          <span>预计 {shop.deliveryTimeMin} 分钟</span>
         </div>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-2 flex flex-wrap gap-2 sm:mt-3">
           {shop.discounts.map((discount) => (
-            <span key={discount} className="rounded-full border border-white/70 px-3 py-1 text-xs" style={{ background: "var(--page-highlight)", color: "var(--page-ink)" }}>{discount}</span>
+            <span key={discount} className="rounded-full border border-white/70 px-2.5 py-1 text-[11px] sm:px-3 sm:text-xs" style={{ background: "var(--page-highlight)", color: "var(--page-ink)" }}>{discount}</span>
           ))}
         </div>
-        <div className="mt-4 flex gap-3">
-          <Link href={`/takeaway/${shop.slug}`} className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/60 px-6 py-3 text-sm font-semibold transition hover:bg-white" style={{ color: "var(--page-ink)" }}>进店</Link>
-          <button onClick={quickOrder} className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ background: "var(--page-accent)" }}>一键虚拟下单</button>
+        <div className="mt-3 flex flex-col gap-2 sm:mt-4 sm:flex-row sm:gap-3">
+          <Link href={`/takeaway/${shop.slug}`} className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/60 px-5 py-2.5 text-sm font-semibold transition hover:bg-white sm:px-6 sm:py-3" style={{ color: "var(--page-ink)" }}>进店</Link>
+          <button onClick={quickOrder} className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 sm:px-6 sm:py-3" style={{ background: "var(--page-accent)" }}>一键虚拟下单</button>
         </div>
       </div>
     </div>

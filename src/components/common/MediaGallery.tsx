@@ -66,7 +66,7 @@ export function MediaGallery({ images, alt, aspect, children }: MediaGalleryProp
   return (
     <div className="relative">
       <div
-        className={`relative ${aspectClass} w-full overflow-hidden rounded-[2rem] luxury-shadow`}
+        className={`relative ${aspectClass} w-full overflow-hidden rounded-[1.25rem] sm:rounded-[2rem] luxury-shadow`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onKeyDown={handleKeyDown}

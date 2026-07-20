@@ -4,7 +4,7 @@ import { PageTheme } from "@/components/common/PageTheme";
 export default function LoginPage() {
   return (
     <PageTheme className="min-h-screen">
-      <section className="container-shell grid min-h-[70vh] items-center py-16 lg:grid-cols-[.9fr_1.1fr] gap-10">
+      <section className="container-shell grid min-h-[60vh] items-center gap-8 py-10 sm:py-16 lg:grid-cols-[.9fr_1.1fr]">
         <div>
           <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Account</p>
           <h1 className="font-display mt-4 text-6xl leading-none md:text-8xl" style={{ color: "var(--page-ink)" }}>登录 Dopahub 多巴胺仓</h1>

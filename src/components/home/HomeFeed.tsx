@@ -40,17 +40,17 @@ export function HomeFeed() {
               <ShareButton className="border border-current bg-transparent hover:opacity-70" type="invite" title="Dopahub 多巴胺仓" text="我发现了一个可以虚拟下单、真实不付款的网站，来试试看。" />
             </div>
           </div>
-          <div className="rounded-[2.5rem] border border-white/40 bg-white/70 p-8 backdrop-blur">
+          <div className="rounded-[1.5rem] border border-white/40 bg-white/70 p-5 backdrop-blur sm:rounded-[2.5rem] sm:p-8">
             <p className="text-sm" style={{ color: "var(--page-soft)" }}>刚被虚拟下单</p>
-            <div className="mt-8 space-y-6">
+            <div className="mt-6 space-y-5 sm:mt-8 sm:space-y-6">
               {hot.map((product, index) => (
-                <Link href={`/shop/${product.slug}`} key={product.slug} className="flex items-center justify-between border-b border-black/10 pb-5 last:border-0">
-                  <div>
-                    <p className="text-xs" style={{ color: "var(--page-highlight)", filter: "saturate(1.1)" }}>TOP {index + 1} · 已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</p>
-                    <h3 className="font-display mt-1 text-3xl" style={{ color: "var(--page-ink)" }}>{product.name}</h3>
-                    <p className="text-sm" style={{ color: "var(--page-soft)" }}>虚拟库存仅剩 {product.stock} 件</p>
+                <Link href={`/shop/${product.slug}`} key={product.slug} className="flex items-center justify-between border-b border-black/10 pb-4 last:border-0 sm:pb-5">
+                  <div className="min-w-0">
+                    <p className="text-[11px] sm:text-xs" style={{ color: "var(--page-highlight)", filter: "saturate(1.1)" }}>TOP {index + 1} · 已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</p>
+                    <h3 className="font-display mt-1 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>{product.name}</h3>
+                    <p className="text-xs sm:text-sm" style={{ color: "var(--page-soft)" }}>虚拟库存仅剩 {product.stock} 件</p>
                   </div>
-                  <span style={{ color: "var(--page-ink)" }}><Price value={product.price} className="font-display text-2xl" /></span>
+                  <span className="shrink-0" style={{ color: "var(--page-ink)" }}><Price value={product.price} className="font-display text-xl sm:text-2xl" /></span>
                 </Link>
               ))}
             </div>

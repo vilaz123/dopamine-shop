@@ -4,7 +4,7 @@ import { PageTheme } from "@/components/common/PageTheme";
 export default function AboutPage() {
   return (
     <PageTheme className="min-h-screen">
-      <section className="container-shell py-16">
+      <section className="container-shell py-10 sm:py-16">
         <div className="max-w-4xl">
           <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>About Dopahub</p>
           <h1 className="font-display mt-4 text-6xl leading-none md:text-8xl" style={{ color: "var(--page-ink)" }}>Dopahub 多巴胺仓：复刻电商快感，删除扣款痛苦。</h1>

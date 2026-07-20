@@ -60,7 +60,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
       <section className="mt-16 border-t border-black/10 pt-12">
         <h2 className="font-display mb-8 text-5xl" style={{ color: "var(--page-ink)" }}>本店菜单</h2>
         <p className="mb-10 text-[var(--page-ink-soft)]">选规格可展开口味/辣度等选项，加入购物车后仍可在购物车里改。</p>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
           {meals.map((product) => (
             <TakeawayMealCard key={product.slug} product={product} />
           ))}
