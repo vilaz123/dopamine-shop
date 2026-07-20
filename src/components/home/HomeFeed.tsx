@@ -32,7 +32,7 @@ export function HomeFeed() {
         <div className="container-shell relative grid min-h-[70vh] items-center gap-10 py-16 sm:min-h-[78vh] sm:gap-12 sm:py-20 lg:grid-cols-[1.05fr_.95fr]">
           <div>
             <p className="mb-5 text-xs uppercase tracking-[0.38em] sm:mb-6" style={{ color: "var(--page-ink)" }}>Dopahub 多巴胺仓</p>
-            <h1 className="font-display max-w-4xl text-4xl leading-[1.05] sm:text-5xl md:text-7xl md:leading-[.95]" style={{ color: "var(--page-ink)" }}>虚拟下单，真实不付款。</h1>
+            <h1 className="font-display max-w-4xl text-3xl leading-[1.1] sm:text-4xl md:text-6xl md:leading-[1]" style={{ color: "var(--page-ink)" }}>虚拟下单，真实不付款。</h1>
             <p className="mt-6 max-w-xl text-base leading-7 sm:mt-8 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>复刻浏览、加购、满减、物流与晒单的快感，把扣款痛苦完全抹除。库存有限，物流永远在路上。</p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <ButtonLink href="/shop" variant="light">进入多巴胺仓</ButtonLink>

@@ -34,7 +34,7 @@ export default function CartPage() {
     <PageTheme className="min-h-screen">
     <section className="container-shell py-10 sm:py-16">
       <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Cart</p>
-      <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>虚拟购物车</h1>
+      <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>虚拟购物车</h1>
       {lines.length === 0 ? (
         <div className="mt-12 rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center">
           <p className="font-display text-4xl" style={{ color: "var(--page-ink)" }}>你的购物车是空的。</p>

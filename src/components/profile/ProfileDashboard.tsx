@@ -31,7 +31,7 @@ export function ProfileDashboard() {
     <div className="grid gap-6 sm:gap-10 lg:grid-cols-[.9fr_1.1fr]">
       <aside className="dopamine-panel rounded-[1.5rem] p-5 shadow-md sm:rounded-[2.5rem] sm:p-8">
         <p className="text-sm text-white/70">当前账号</p>
-        <h2 className="font-display mt-2 text-4xl sm:mt-3 sm:text-6xl">{user.username}</h2>
+        <h2 className="font-display mt-2 text-3xl sm:mt-3 sm:text-4xl">{user.username}</h2>
         <p className="mt-3 text-white/80 sm:mt-4">账号：{user.email ?? user.phone ?? "—"}</p>
         <div className="mt-6 grid grid-cols-3 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3 lg:grid-cols-1">
           <div className="rounded-2xl bg-white/15 p-3 sm:rounded-3xl sm:p-5"><p className="text-xs text-white/70 sm:text-sm">多巴胺币</p><p className="font-display text-2xl sm:text-4xl">{coins}</p></div>

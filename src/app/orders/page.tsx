@@ -29,7 +29,7 @@ export default function OrdersPage() {
       <section className="container-shell py-10 sm:py-16">
         <div className="rounded-[2.5rem] border border-dashed border-black/15 bg-white p-12 text-center">
           <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Orders</p>
-          <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>还没有虚拟订单。</h1>
+          <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>还没有虚拟订单。</h1>
           <p className="mt-5" style={{ color: "var(--page-soft)" }}>当购买欲出现时，可以先在 Dopahub 多巴胺仓下一单。</p>
           <ButtonLink href="/shop" className="mt-8">开始虚拟购物</ButtonLink>
         </div>
@@ -43,7 +43,7 @@ export default function OrdersPage() {
     <section className="container-shell py-10 sm:py-16">
       {selected && showSuccess && <OrderSuccessModal coins={selected.coinsEarned} xp={selected.xpEarned} badges={selected.badges} onClose={() => setShowSuccess(false)} />}
       <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Orders</p>
-      <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>我的虚拟订单</h1>
+      <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>我的虚拟订单</h1>
       <div className="mt-8 grid gap-6 sm:gap-10 lg:grid-cols-[360px_1fr]">
         <aside className="space-y-4">
           {orders.map((order) => (

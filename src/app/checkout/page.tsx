@@ -99,7 +99,7 @@ export default function CheckoutPage() {
     <PageTheme className="min-h-screen">
     <section className="container-shell py-10 sm:py-16">
       <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>One-click virtual checkout</p>
-      <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>一键虚拟下单</h1>
+      <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>一键虚拟下单</h1>
       <div className="mt-8 grid gap-6 sm:gap-10 lg:grid-cols-[1fr_420px]">
         <div className="space-y-5 sm:space-y-6">
           <div className="rounded-[1.25rem] border border-white/50 bg-white/65 p-5 backdrop-blur sm:rounded-[2rem] sm:p-7"><h2 className="font-display text-3xl sm:text-4xl">虚拟地址</h2><input value={virtualAddress} onChange={(e) => setVirtualAddress(e.target.value)} className="mt-4 w-full rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-sm outline-none sm:mt-5" /></div>

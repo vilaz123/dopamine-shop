@@ -40,14 +40,14 @@ export function Header() {
          导致抽屉被压缩进 header 高度。移到此处即相对 viewport 正常全屏。 */
       <div className="fixed inset-0 z-[999] md:hidden">
         <div className="absolute inset-0 bg-black/45 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden />
-        <aside className="absolute right-0 top-0 z-10 flex h-full w-[82vw] min-w-[260px] max-w-[320px] flex-col overflow-y-auto p-5 shadow-2xl" style={{ background: "var(--page-bg)" }}>
-          <div className="flex items-center justify-between border-b border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] pb-4">
-            <p className="font-display text-2xl" style={{ color: "var(--page-ink)" }}>菜单</p>
-            <button className="rounded-full border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/70 p-2.5" onClick={() => setOpen(false)} aria-label="关闭菜单" style={{ color: "var(--page-ink)" }}><X size={18} /></button>
+        <aside className="absolute right-0 top-0 z-10 flex h-full w-[68vw] min-w-[240px] max-w-[300px] flex-col overflow-y-auto p-4 shadow-2xl" style={{ background: "var(--page-bg)" }}>
+          <div className="flex items-center justify-between border-b border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] pb-3">
+            <p className="font-display text-lg" style={{ color: "var(--page-ink)" }}>菜单</p>
+            <button className="rounded-full border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/70 p-1.5" onClick={() => setOpen(false)} aria-label="关闭菜单" style={{ color: "var(--page-ink)" }}><X size={16} /></button>
           </div>
-          <nav className="mt-5 grid gap-2.5">
+          <nav className="mt-3 grid gap-1.5">
             {navItems.map(([href, label]) => (
-              <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-2xl border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/70 px-4 py-3.5 text-lg font-semibold transition hover:bg-white" style={{ color: "var(--page-ink)" }}>
+              <Link key={href} href={href} onClick={() => setOpen(false)} className="rounded-xl border border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-white/70 px-3.5 py-2.5 text-sm font-semibold transition hover:bg-white" style={{ color: "var(--page-ink)" }}>
                 {label}
               </Link>
             ))}

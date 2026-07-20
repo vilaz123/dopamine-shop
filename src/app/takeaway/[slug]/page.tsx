@@ -22,7 +22,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
     <section className="theme-food relative overflow-hidden">
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
       <div className="container-shell py-10 sm:py-14">
-      <Link href="/takeaway" className="text-sm text-[var(--page-ink-soft)] hover:text-black">← 返回外卖</Link>
+      <Link href="/takeaway" className="text-sm text-white/70 hover:text-white">← 返回外卖</Link>
       <div className="mt-8 grid gap-8 sm:gap-10 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
           <MediaGallery images={shopImages(shop)} alt={shop.name} aspect="4/3">
@@ -34,21 +34,21 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
           </MediaGallery>
         </div>
         <div className="lg:pt-6">
-          <p className="text-xs uppercase tracking-[0.32em] text-[var(--hot)]">{shop.category}</p>
-          <h1 className="font-display mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl" style={{ color: "var(--page-ink)" }}>{shop.name}</h1>
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-base text-[var(--page-ink-soft)] sm:mt-5 sm:text-lg">
-            <span className="font-semibold text-black">★ {shop.rating.toFixed(1)}</span>
+          <p className="text-xs uppercase tracking-[0.32em] text-[var(--page-highlight)]">{shop.category}</p>
+          <h1 className="font-display mt-4 text-3xl leading-tight text-white sm:text-4xl md:text-5xl">{shop.name}</h1>
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-base text-white/85 sm:mt-5 sm:text-lg">
+            <span className="font-semibold text-[var(--gold)]">★ {shop.rating.toFixed(1)}</span>
             <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>
             <span>{shop.distanceKm}km 幻想距离</span>
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
-            <span className="rounded-full border border-black/10 px-4 py-2 text-sm">起送 ¥{shop.minOrder}</span>
-            <span className="rounded-full border border-black/10 px-4 py-2 text-sm">配送 ¥{shop.deliveryFee}</span>
-            <span className="rounded-full border border-black/10 px-4 py-2 text-sm">预计 {shop.deliveryTimeMin} 分钟</span>
+            <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur">起送 ¥{shop.minOrder}</span>
+            <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur">配送 ¥{shop.deliveryFee}</span>
+            <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur">预计 {shop.deliveryTimeMin} 分钟</span>
           </div>
           <div className="mt-6 flex flex-wrap gap-2">
             {shop.discounts.map((discount) => (
-              <span key={discount} className="rounded-full border border-yellow-400/50 bg-yellow-400/15 px-3 py-1 text-xs text-[var(--hot)]">{discount}</span>
+              <span key={discount} className="rounded-full border border-[var(--gold)]/50 bg-[var(--gold)]/15 px-3 py-1 text-xs text-[var(--gold)]">{discount}</span>
             ))}
           </div>
           <div className="mt-8">
@@ -57,9 +57,9 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
         </div>
       </div>
 
-      <section className="mt-16 border-t border-black/10 pt-12">
-        <h2 className="font-display mb-8 text-5xl" style={{ color: "var(--page-ink)" }}>本店菜单</h2>
-        <p className="mb-10 text-[var(--page-ink-soft)]">选规格可展开口味/辣度等选项，加入购物车后仍可在购物车里改。</p>
+      <section className="mt-16 border-t border-white/15 pt-12">
+        <h2 className="font-display mb-6 text-3xl text-white sm:text-4xl">本店菜单</h2>
+        <p className="mb-8 text-white/70 sm:mb-10">选规格可展开口味/辣度等选项，加入购物车后仍可在购物车里改。</p>
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
           {meals.map((product) => (
             <TakeawayMealCard key={product.slug} product={product} />

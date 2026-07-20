@@ -36,7 +36,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="lg:pt-8">
           <p className="text-xs uppercase tracking-[0.32em] text-[var(--hot)]">{product.badge}</p>
-          <h1 className="font-display mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl" style={{ color: "var(--page-ink)" }}>{product.name}</h1>
+          <h1 className="font-display mt-4 text-2xl leading-tight sm:text-3xl md:text-4xl" style={{ color: "var(--page-ink)" }}>{product.name}</h1>
           <p className="mt-3 text-lg text-[var(--muted)] sm:mt-4">{product.subtitle}</p>
           <p className="font-display mt-6 text-4xl sm:mt-8 sm:text-5xl" style={{ color: "var(--page-ink)" }}>{formatCurrency(product.price)}<span className="ml-2 align-top text-sm font-sans text-[var(--muted)]">虚拟金额，无需真实支付</span></p>
           <div className="mt-6 flex flex-wrap gap-3">
