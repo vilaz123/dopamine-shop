@@ -58,8 +58,8 @@ export default function TakeawayPage() {
       <section className="container-shell py-12">
       <div className="mb-8 max-w-3xl">
         <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-highlight)" }}>Dopahub Takeaway</p>
-        <h1 className="font-display mt-4 text-6xl text-white">虚拟外卖</h1>
-        <p className="mt-5 text-lg leading-8" style={{ color: "var(--page-soft)" }}>复刻真实外卖信息流：分类、满减、骑手、配送进度都在，但所有餐品都不会真正送到，热量也永远不落地。</p>
+        <h1 className="font-display mt-4 text-4xl text-white sm:text-6xl">虚拟外卖</h1>
+        <p className="mt-4 text-base leading-7 sm:mt-5 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>复刻真实外卖信息流：分类、满减、骑手、配送进度都在，但所有餐品都不会真正送到，热量也永远不落地。</p>
       </div>
 
       <div className="mb-6 flex flex-col justify-between gap-4 rounded-[2rem] border border-black/10 bg-white p-5 md:flex-row md:items-center">
@@ -105,7 +105,7 @@ export default function TakeawayPage() {
           <div className="mb-8 flex items-end justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-highlight)" }}>Snacks</p>
-              <h2 className="font-display mt-3 text-5xl text-white">零食囤货</h2>
+              <h2 className="font-display mt-3 text-4xl text-white sm:text-5xl">零食囤货</h2>
             </div>
           </div>
           <ProductGrid products={snacks} />

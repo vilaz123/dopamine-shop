@@ -25,9 +25,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <section className="theme-shop relative overflow-hidden">
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
-      <div className="container-shell py-14">
+      <div className="container-shell py-10 sm:py-14">
       <Link href="/shop" className="text-sm text-[var(--muted)] hover:text-black">← 返回多巴胺仓</Link>
-      <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_.9fr]">
+      <div className="mt-8 grid gap-8 sm:gap-12 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
           <MediaGallery images={productImages(product)} alt={product.name} aspect="4/5">
             <div className="absolute left-5 top-5 right-5 flex items-start justify-between gap-3">
@@ -38,9 +38,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="lg:pt-8">
           <p className="text-xs uppercase tracking-[0.32em] text-[var(--hot)]">{product.badge}</p>
-          <h1 className="font-display mt-4 text-6xl leading-none md:text-7xl" style={{ color: "var(--page-ink)" }}>{product.name}</h1>
-          <p className="mt-4 text-xl text-[var(--muted)]">{product.subtitle}</p>
-          <p className="font-display mt-8 text-5xl" style={{ color: "var(--page-ink)" }}>{formatCurrency(product.price)}<span className="ml-2 align-top text-sm font-sans text-[var(--muted)]">虚拟金额，无需真实支付</span></p>
+          <h1 className="font-display mt-4 text-4xl leading-none sm:text-6xl md:text-7xl" style={{ color: "var(--page-ink)" }}>{product.name}</h1>
+          <p className="mt-3 text-lg text-[var(--muted)] sm:mt-4">{product.subtitle}</p>
+          <p className="font-display mt-6 text-4xl sm:mt-8 sm:text-5xl" style={{ color: "var(--page-ink)" }}>{formatCurrency(product.price)}<span className="ml-2 align-top text-sm font-sans text-[var(--muted)]">虚拟金额，无需真实支付</span></p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Badge tone="gold">已有 {product.sold.toLocaleString("zh-CN")} 人虚拟下单</Badge>
             <Badge tone="green">虚拟库存仅剩 {product.stock} 件</Badge>

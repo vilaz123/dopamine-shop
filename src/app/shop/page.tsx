@@ -37,12 +37,12 @@ export default function ShopPage() {
     <section className="theme-shop relative overflow-hidden">
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
       <div className="container-shell py-16">
-      <div className="mb-12 max-w-3xl">
+      <div className="mb-10 max-w-3xl sm:mb-12">
         <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Dopahub Market</p>
-        <h1 className="font-display mt-4 text-6xl" style={{ color: "var(--page-ink)" }}>多巴胺仓货架</h1>
+        <h1 className="font-display mt-4 text-4xl sm:text-6xl" style={{ color: "var(--page-ink)" }}>多巴胺仓货架</h1>
         <p className="mt-5 text-lg leading-8" style={{ color: "var(--page-soft)" }}>复刻真实电商信息流：热榜、满减、新品、稀缺库存都在，但所有价格都是虚拟金额，无需真实支付。</p>
       </div>
-      <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end sm:mb-12">
         <div className="flex flex-wrap gap-3">
           {categories.map((item) => (
             <button key={item.id} onClick={() => updateQuery(item.id, sort)} className={`rounded-full border px-4 py-2 text-sm transition ${category === item.id ? "border-black bg-black text-white" : "border-black/10 hover:border-black/30"}`}>

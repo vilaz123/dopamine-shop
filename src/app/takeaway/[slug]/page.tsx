@@ -21,9 +21,9 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
   return (
     <section className="theme-food relative overflow-hidden">
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
-      <div className="container-shell py-14">
+      <div className="container-shell py-10 sm:py-14">
       <Link href="/takeaway" className="text-sm text-[var(--page-ink-soft)] hover:text-black">← 返回外卖</Link>
-      <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_.9fr]">
+      <div className="mt-8 grid gap-8 sm:gap-10 lg:grid-cols-[1fr_.9fr]">
         <div className="relative">
           <MediaGallery images={shopImages(shop)} alt={shop.name} aspect="4/3">
             {shop.promo && (
@@ -35,8 +35,8 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
         </div>
         <div className="lg:pt-6">
           <p className="text-xs uppercase tracking-[0.32em] text-[var(--hot)]">{shop.category}</p>
-          <h1 className="font-display mt-4 text-6xl leading-none md:text-7xl" style={{ color: "var(--page-ink)" }}>{shop.name}</h1>
-          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-lg text-[var(--page-ink-soft)]">
+          <h1 className="font-display mt-4 text-4xl leading-none sm:text-6xl md:text-7xl" style={{ color: "var(--page-ink)" }}>{shop.name}</h1>
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-base text-[var(--page-ink-soft)] sm:mt-5 sm:text-lg">
             <span className="font-semibold text-black">★ {shop.rating.toFixed(1)}</span>
             <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>
             <span>{shop.distanceKm}km 幻想距离</span>

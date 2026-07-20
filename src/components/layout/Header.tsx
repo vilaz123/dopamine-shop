@@ -20,8 +20,8 @@ export function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 border-b border-[color-mix(in_srgb,var(--page-accent)_60%,transparent)] bg-[color-mix(in_srgb,var(--page-bg)_85%,transparent)] backdrop-blur shadow-sm">
-      <div className="container-shell flex h-20 items-center justify-between gap-4">
-        <Link href="/" className="font-display text-2xl tracking-tight md:text-3xl" style={{ color: "var(--page-ink)" }}>Dopahub 多巴胺仓</Link>
+      <div className="container-shell flex h-16 items-center justify-between gap-3 sm:h-20 sm:gap-4">
+        <Link href="/" className="font-display text-xl tracking-tight sm:text-2xl md:text-3xl" style={{ color: "var(--page-ink)" }}>Dopahub 多巴胺仓</Link>
         <nav className="hidden items-center gap-7 text-sm md:flex">
           {navItems.map(([href, label]) => (
             <Link key={href} href={href} className="font-medium transition hover:opacity-70" style={{ color: "var(--page-soft)" }}>{label}</Link>

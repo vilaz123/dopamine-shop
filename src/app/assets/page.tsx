@@ -18,7 +18,7 @@ export default function AssetsPage() {
     <PageTheme className="min-h-screen">
     <section className="container-shell py-16">
       <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Dopahub Assets</p>
-      <h1 className="font-display mt-4 text-6xl" style={{ color: "var(--page-ink)" }}>我的多巴胺资产</h1>
+      <h1 className="font-display mt-4 text-4xl sm:text-6xl" style={{ color: "var(--page-ink)" }}>我的多巴胺资产</h1>
       <div className="mt-10 grid gap-6 md:grid-cols-3">
         <div className="rounded-[2rem] bg-[var(--ink)] p-7 text-[var(--bone)]"><p className="text-sm text-white/60">虚拟钱包</p><p className="font-display mt-2 text-5xl">{coins} 币</p></div>
         <div className="rounded-[2rem] bg-white p-7"><p className="text-sm text-[var(--muted)]">会员等级</p><p className="font-display mt-2 text-5xl">Lv.{level.level}</p><p className="mt-2 text-sm text-[var(--muted)]">{level.title} · {xp}/{level.xpToNext} XP</p></div>
