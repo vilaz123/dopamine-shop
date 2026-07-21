@@ -258,13 +258,13 @@ grant select, insert, update, delete on public.reviews to anon;
 -- profiles 昵称/头像公开读（排行榜要显示别人名字；email/phone 仍受 RLS 保护，列级不暴露）
 drop policy if exists profiles_public_read on public.profiles;
 create policy profiles_public_read on public.profiles
-  for select using (true) with check (true);
+  for select using (true);
 
 -- orders 公开读（排行榜聚合需要；payload 含订单明细但无真实支付/地址敏感字段，
 --   且仅聚合数值。如需更严可改用 security definer 的 rpc 只返回聚合。）
 drop policy if exists orders_public_read on public.orders;
 create policy orders_public_read on public.orders
-  for select using (true) with check (true);
+  for select using (true);
 
 -- 今日榜：按本日（按 created_at 的日期，UTC）聚合，返回前 50 + 每个用户的昵称/头像/各项指标。
 -- p_mode: 'today' | 'all'。卡路里 = 省钱金额 × 8（趣味换算）。
