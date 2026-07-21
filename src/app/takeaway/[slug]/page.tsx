@@ -57,6 +57,21 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
         </div>
       </div>
 
+      {shop.intro && (
+        <section className="mt-12 rounded-[1.5rem] border border-white/25 bg-white/10 p-5 backdrop-blur sm:mt-16 sm:rounded-[2rem] sm:p-7">
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--gold)]">Restaurant Story</p>
+          <h2 className="font-display mt-2 text-2xl text-white sm:text-3xl">关于这家餐厅</h2>
+          <p className="mt-4 leading-8 text-white/85 sm:text-lg sm:leading-9">{shop.intro}</p>
+          {shop.tags.length > 0 && (
+            <div className="mt-5 flex flex-wrap gap-2">
+              {shop.tags.map((tag) => (
+                <span key={tag} className="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs text-white/80">#{tag}</span>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+
       <section className="mt-16 border-t border-white/15 pt-12">
         <h2 className="font-display mb-6 text-3xl text-white sm:text-4xl">本店菜单</h2>
         <p className="mb-8 text-white/70 sm:mb-10">选规格可展开口味/辣度等选项，加入购物车后仍可在购物车里改。</p>

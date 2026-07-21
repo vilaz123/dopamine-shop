@@ -45,6 +45,8 @@ export type TakeawayShop = {
   monogram: string;
   productSlugs: string[];
   promo?: string;
+  /** 餐厅介绍解说（详情页展示，米其林餐厅用于讲述主厨/历史/理念）。 */
+  intro?: string;
   image?: string;
   detailImages?: string[];
 };
@@ -228,6 +230,8 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "菊",
     productSlugs: ["kikunoi-kaiseki-dinner", "kikunoi-kaiseki-lunch", "kikunoi-matsutake-gohan"],
     promo: "本月限定 · 松茸土瓶蒸",
+    intro: "京都「菊乃井」第三代主厨村田吉弘于 1958 年继承家业，主张「味道即记忆」。赤坂本店连续多年蝉联米其林二星，以四季为骨、以茶汤为魂，延续茶怀石「一汁三菜」规制。出汁只取利尻昆布与四年熟成本枯節，一日一炊。",
+    ...shopMedia("kikunoi-akasaka", 1),
   },
   {
     slug: "sukiyabashi-jiro-ginza",
@@ -246,6 +250,8 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "鮨",
     productSlugs: ["jiro-omakase-nigiri", "jiro-tuna-otoro"],
     promo: "江户前 · 主厨发办",
+    intro: "银座地下的小小寿司台只有 10 个座位，却蝉联米其林三星逾十年。主人小野二郎生于 1925 年，至今仍每日立于台前。江户前寿司讲究「从淡入浓」的贯序，米温与人体同温，称为「シャリ」。",
+    ...shopMedia("sukiyabashi-jiro-ginza", 1),
   },
   {
     slug: "xia-gong-beijing",
@@ -264,6 +270,8 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "夏",
     productSlugs: ["xiagong-peking-duck", "xiagong-business-set", "xiagong-buddha-jumps-soup"],
     promo: "袁超英师傅 · 155 年明火烤鸭",
+    intro: "夏宫坐落北京中国大饭店，1990 年开业，是改革开放后京城最早的商务宴请粤菜餐厅之一。如今由袁超英师傅坐镇，传承 155 年明火挂炉烤鸭技艺，融合粤菜与淮扬菜。",
+    ...shopMedia("xia-gong-beijing", 1),
   },
   {
     slug: "guy-savoy-paris",
@@ -282,6 +290,8 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "GS",
     productSlugs: ["guysavoy-art-tasting", "guysavoy-artichoke-truffle"],
     promo: "招牌 · 大理石纹鸡胸鹅肝洋蓟",
+    intro: "Guy Savoy 康提堤岸本店连续多年被《La Liste》评为全球最佳，米其林三星。主厨相信「味道是记忆」，招牌大理石纹鸡胸鹅肝洋蓟源自童年家常菜，被升华为法餐艺术巅峰。",
+    ...shopMedia("guy-savoy-paris", 1),
   },
   {
     slug: "fuhe-huaishan-zhai",
@@ -300,6 +310,8 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "福",
     productSlugs: ["fuhe-vegetable-kaiseki", "fuhe-tofu-white-truffle"],
     promo: "时令 · 白松露豆腐",
+    intro: "福和慧藏于上海愚园路，高端素食代表，主张「以素写荤」——杏鲍菇模拟鲍鱼、豆乳模拟奶香。米其林一星，菜单随二十四节气流转。",
+    ...shopMedia("fuhe-huaishan-zhai", 1),
   },
   {
     slug: "l-ambroisie-paris",
@@ -318,6 +330,68 @@ export const takeawayShops: TakeawayShop[] = [
     monogram: "LA",
     productSlugs: ["lambroisie-egg-caviar", "lambroisie-chocolate-souffle"],
     promo: "镇店 · 鱼子酱溏心蛋",
+    intro: "L'Ambroisie 隐于巴黎最古老的孚日广场回廊，自 1988 年起连续三十余年蝉联米其林三星，以近乎顽固的古典法餐闻名。鱼子酱溏心蛋与热巧克力舒芙蕾是镇店之宝。",
+    ...shopMedia("l-ambroisie-paris", 1),
+  },
+  {
+    slug: "da-vittorio-brusaporto",
+    name: "Da Vittorio · Brusaporto",
+    category: "米其林餐厅",
+    rating: 5.0,
+    monthlySales: 47,
+    distanceKm: 14.0,
+    deliveryTimeMin: 100,
+    deliveryFee: 200,
+    minOrder: 3800,
+    discounts: ["皮埃蒙特白松露季", "虚拟含家族酒庄配酒"],
+    tags: ["意大利餐", "米其林三星", "白松露", "家族经营"],
+    accent: "#B45309",
+    saturation: "#d97706",
+    monogram: "DV",
+    productSlugs: ["davittorio-tagliolini-truffle", "davittorio-paccheri-seafood"],
+    promo: "阿尔巴白松露 · 当季现刨",
+    intro: "Da Vittorio 位于意大利北部 Brusaporto，Cerea 家族四代经营，米其林三星逾半个世纪。每年 10–12 月白松露季，阿尔巴白松露按克现刨。",
+    ...shopMedia("da-vittorio-brusaporto", 1),
+  },
+  {
+    slug: "ukai-teppanyaki-ginza",
+    name: "うかい亭 · 银座铁板烧",
+    category: "米其林餐厅",
+    rating: 4.9,
+    monthlySales: 92,
+    distanceKm: 9.5,
+    deliveryTimeMin: 70,
+    deliveryFee: 130,
+    minOrder: 2500,
+    discounts: ["A5 近江牛铁板烧", "虚拟含主厨刀工秀"],
+    tags: ["铁板烧", "A5和牛", "近江牛", "东京"],
+    accent: "#7F1D1D",
+    saturation: "#991b1b",
+    monogram: "宇",
+    productSlugs: ["ukai-ohmi-gyu-teppan", "ukai-aba-lion-course"],
+    promo: "A5 近江牛 · 霜降 BMS 11",
+    intro: "うかい亭银座本店临海景铁板烧台，主厨在 280°C 铁板前完成刀工与火候的现场表演。坚持 A5 等级近江牛（滋贺县产，霜降 BMS 11）。",
+    ...shopMedia("ukai-teppanyaki-ginza", 1),
+  },
+  {
+    slug: "the-macallan-lounge",
+    name: "The Macallan Estate Lounge",
+    category: "米其林餐厅",
+    rating: 4.9,
+    monthlySales: 68,
+    distanceKm: 8.8,
+    deliveryTimeMin: 55,
+    deliveryFee: 60,
+    minOrder: 1800,
+    discounts: ["单一麦芽威士忌品鉴", "虚拟含雪松木酒杯"],
+    tags: ["威士忌", "单一麦芽", "品鉴", "酒廊"],
+    accent: "#78350F",
+    saturation: "#92400e",
+    monogram: "MC",
+    productSlugs: ["macallan-vintage-flight", "macallan-rare-cask-pour", "macallan-whisky-pairing-set"],
+    promo: "年份垂直品鉴 · 雪莉桶",
+    intro: "Macallan 被誉为「单一麦芽威士忌的劳斯莱斯」，坚持 100% 雪莉橡木桶熟成。Estate Lounge 提供从 12 年到 40 年的垂直品鉴，配手工水晶闻香杯与主理人手写风味轮。",
+    ...shopMedia("the-macallan-lounge", 1),
   },
 ];
 
