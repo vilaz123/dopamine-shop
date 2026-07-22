@@ -10,10 +10,10 @@ const ROOT = path.resolve(new URL("..", import.meta.url).pathname);
 const DIRS = ["public/products", "public/shops"];
 // 只压缩这些前缀（米其林 AI 图），不动原有小图
 const PREFIXES = ["kikunoi", "jiro", "sukiyabashi", "xiagong", "xia-gong", "guysavoy", "guy-savoy", "fuhe", "lambroisie", "l-ambroisie", "davittorio", "da-vittorio", "ukai", "macallan", "pinchiorri", "roca", "el-celler", "pavillon", "le-pavillon", "lijia", "enoteca"];
-const ORIG_MAX = 1200;
-const ORIG_Q = 80;
-const THUMB_MAX = 560;
-const THUMB_Q = 70;
+const ORIG_MAX = 1000;
+const ORIG_Q = 72;
+const THUMB_MAX = 480;
+const THUMB_Q = 68;
 
 async function list(dir) {
   const full = path.join(ROOT, dir);

@@ -114,41 +114,35 @@ async function download(url) {
   return Buffer.from(await res.arrayBuffer());
 }
 
-// 从主图生成 detail 变体：中心放大 + 局部裁切（菜品 2 张 / 餐厅 1 张）
-async function variants(buf, dir, slug, count) {
-  for (let i = 0; i < count; i++) {
-    const crop = i === 0
-      ? { left: 0.12, top: 0.1, w: 0.76, h: 0.8 }   // 中心主体放大
-      : { left: 0.2, top: 0.25, w: 0.6, h: 0.6 };    // 局部特写
-    const meta = await sharp(buf).metadata();
-    const W = meta.width, Hh = meta.height;
-    const v = await sharp(buf)
-      .extract({ left: Math.round(W * crop.left), top: Math.round(Hh * crop.top), width: Math.round(W * crop.w), height: Math.round(Hh * crop.h) })
-      .modulate({ brightness: i === 0 ? 1.0 : 1.05, saturation: 1.05 })
-      .webp({ quality: 84 })
-      .toBuffer();
-    writeFileSync(`${dir}/${slug}-${i + 2}.webp`, v);
-  }
+// detail 图也用 AI 独立生成（不同角度/特写），而非从主图裁切——裁切会尺寸小、糊、像拼接。
+// item: { slug, main: "主prompt", variants: ["变体prompt1", ...], size }
+// 生成：{slug}.webp(主) + {slug}-2.webp, {slug}-3.webp (各独立 AI)
+async function genImage(prompt, size, label) {
+  process.stdout.write(`→ ${label} 提交`);
+  const taskId = await submit(prompt, size);
+  const url = await poll(taskId);
+  const buf = await download(url);
+  process.stdout.write(" ✓\n");
+  return buf;
 }
 
 async function genOne(item, dir, size, variantCount) {
-  const path = `${dir}/${item.slug}.webp`;
-  // 主图存在但 detail 变体缺失时也要补（不 skip）
-  const detailMissing = variantCount > 0 && Array.from({ length: variantCount }, (_, i) => `${dir}/${item.slug}-${i + 2}.webp`).some((p) => !existsSync(p));
-  if (existsSync(path) && !detailMissing) { console.log(`✓ skip ${item.slug}（已存在）`); return; }
-  let buf;
-  if (existsSync(path) && detailMissing) {
-    buf = readFileSync(path); // 已有主图，只补变体
-  } else {
-    process.stdout.write(`→ ${item.slug} 提交`);
-    const taskId = await submit(item.p, size);
-    const url = await poll(taskId);
-    buf = await download(url);
+  const mainPath = `${dir}/${item.slug}.webp`;
+  // 主图
+  if (!existsSync(mainPath)) {
     mkdirSync(dir, { recursive: true });
-    writeFileSync(path, buf);
-    console.log(" ✓");
+    writeFileSync(mainPath, await genImage(item.p, size, item.slug));
+  } else {
+    console.log(`✓ skip 主图 ${item.slug}`);
   }
-  if (variantCount > 0) await variants(buf, dir, item.slug, variantCount);
+  // 变体：独立 AI 生成（item.v 提供不同角度 prompt；缺则用主 prompt + 角度后缀）
+  const angleSuffix = ["close-up macro shot of the same dish, different angle", "the dish on the table, wide overhead view with cutlery"];
+  for (let i = 0; i < variantCount; i++) {
+    const vp = `${dir}/${item.slug}-${i + 2}.webp`;
+    if (existsSync(vp)) { console.log(`✓ skip ${item.slug}-${i + 2}`); continue; }
+    const prompt = (item.v?.[i] ?? `${item.p}, ${angleSuffix[i % 2]}`) + SUFFIX;
+    writeFileSync(vp, await genImage(prompt, size, `${item.slug}-${i + 2}`));
+  }
 }
 
 (async () => {
