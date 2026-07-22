@@ -57,6 +57,14 @@ const dishes = [
   { slug: "macallan-vintage-flight", p: "three glasses of aged single malt Scotch whisky tasting flight, amber liquid in crystal tasting glasses on a wooden flight board, dark wood bar, moody lighting, 45 degree" },
   { slug: "macallan-rare-cask-pour", p: "single crystal glass of Macallan rare cask whisky with a large clear ice ball, amber whisky glowing, dark moody bar background, macro close-up" },
   { slug: "macallan-whisky-pairing-set", p: "whisky pairing set, three glasses of scotch with small bites smoked salmon tartare Iberico ham and truffle chocolate, dark wood bar, top-down view" },
+  { slug: "pinchiorri-truffle-banquet", p: "Italian white truffle tasting banquet, multiple courses with shaved Alba white truffle over egg fonduta polenta and veal, fine dining, elegant, dark warm background, top-down view" },
+  { slug: "pinchiorri-fonduta-truffle", p: "Italian fonduta melted fontina cheese fondue in a warm ceramic pot with crispy bread for dipping, topped with shaved white Alba truffle, Piedmont, dark cozy background, 45 degree angle" },
+  { slug: "roca-creative-menu", p: "modern molecular gastronomy creative fine dining spread, multiple artistic small plates, spherification olive liquid nitrogen dessert, avant-garde plating on white ceramic, minimalist dark background, top-down view" },
+  { slug: "roca-olive-molecular", p: "molecular gastronomy olive deconstruction, five different preparations of olive spheres chips powder and fried, artistic plating on dark slate, avant-garde minimalist, top-down macro" },
+  { slug: "pavillon-seafood-tower", p: "towering nine-tier stainless steel seafood plateau tower, fresh oysters lobster shrimp crab clams on ice with lemon, French seafood feast, luxury, dark elegant background, top-down view" },
+  { slug: "pavillon-oyster-champagne", p: "six fresh French oysters on ice with lemon wedges and a glass of champagne beside, raw oysters, dark elegant seafood plating, top-down 45 degree" },
+  { slug: "lijia-imperial-banquet", p: "Chinese imperial court cuisine banquet, twenty small elegant dishes on fine porcelain, bird nest soup and delicate pastries, Qing dynasty royal feast, dark elegant, top-down view" },
+  { slug: "lijia-peking-soup", p: "clear bird nest soup in imperial style, crystal clear broth with white edible bird nest in a fine porcelain bowl, Chinese court cuisine, dark elegant, close-up" },
 ];
 
 const shops = [
@@ -69,6 +77,10 @@ const shops = [
   { slug: "da-vittorio-brusaporto", p: "Italian family Michelin restaurant interior, warm rustic elegant Piedmont countryside dining room" },
   { slug: "ukai-teppanyaki-ginza", p: "Japanese teppanyaki restaurant, iron grill counter with chef cooking, dark dramatic Tokyo fine dining" },
   { slug: "the-macallan-lounge", p: "luxury whisky lounge bar interior, dark wood shelves of Scotch whisky, leather armchairs, moody warm lighting" },
+  { slug: "enoteca-pinchiorri-firenze", p: "Michelin three star Italian fine dining restaurant interior, 16th century Florentine palace, vaulted ceilings, wine cellar, warm elegant" },
+  { slug: "el-celler-de-can-roca", p: "modern minimalist Michelin three star restaurant interior, Catalan contemporary design, warm wood, calm natural light, creative gastronomy" },
+  { slug: "le-pavillon-de-la-mer", p: "upscale French seafood restaurant interior, elegant coastal decor, fresh seafood on ice display, champagne, bright refined" },
+  { slug: "lijia-cuisine-beijing", p: "traditional Chinese imperial court cuisine restaurant interior, courtyard house hutong, antique wooden furniture, red lanterns, elegant private dining" },
 ];
 
 async function submit(prompt, size) {
