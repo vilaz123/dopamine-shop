@@ -114,8 +114,8 @@ async function download(url) {
   return Buffer.from(await res.arrayBuffer());
 }
 
-// 从主图生成 detail 变体：中心放大 + 局部裁切
-async function variants(buf, outPrefix, slug, count) {
+// 从主图生成 detail 变体：中心放大 + 局部裁切（菜品 2 张 / 餐厅 1 张）
+async function variants(buf, dir, slug, count) {
   for (let i = 0; i < count; i++) {
     const crop = i === 0
       ? { left: 0.12, top: 0.1, w: 0.76, h: 0.8 }   // 中心主体放大
@@ -127,21 +127,28 @@ async function variants(buf, outPrefix, slug, count) {
       .modulate({ brightness: i === 0 ? 1.0 : 1.05, saturation: 1.05 })
       .webp({ quality: 84 })
       .toBuffer();
-    writeFileSync(`public/products/${slug}-${i + 2}.webp`, v);
+    writeFileSync(`${dir}/${slug}-${i + 2}.webp`, v);
   }
 }
 
 async function genOne(item, dir, size, variantCount) {
   const path = `${dir}/${item.slug}.webp`;
-  if (existsSync(path)) { console.log(`✓ skip ${item.slug}（已存在）`); return; }
-  process.stdout.write(`→ ${item.slug} 提交`);
-  const taskId = await submit(item.p, size);
-  const url = await poll(taskId);
-  const buf = await download(url);
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(path, buf);
-  if (dir.includes("products")) await variants(buf, dir, item.slug, variantCount);
-  console.log(` ✓`);
+  // 主图存在但 detail 变体缺失时也要补（不 skip）
+  const detailMissing = variantCount > 0 && Array.from({ length: variantCount }, (_, i) => `${dir}/${item.slug}-${i + 2}.webp`).some((p) => !existsSync(p));
+  if (existsSync(path) && !detailMissing) { console.log(`✓ skip ${item.slug}（已存在）`); return; }
+  let buf;
+  if (existsSync(path) && detailMissing) {
+    buf = readFileSync(path); // 已有主图，只补变体
+  } else {
+    process.stdout.write(`→ ${item.slug} 提交`);
+    const taskId = await submit(item.p, size);
+    const url = await poll(taskId);
+    buf = await download(url);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(path, buf);
+    console.log(" ✓");
+  }
+  if (variantCount > 0) await variants(buf, dir, item.slug, variantCount);
 }
 
 (async () => {
@@ -150,6 +157,6 @@ async function genOne(item, dir, size, variantCount) {
   console.log(`模型: ${MODEL} | 菜品 ${dishes.length} + 餐厅 ${shops.length}`);
   const failed = [];
   for (const d of dishes) { try { await genOne(d, "public/products", SIZE_DISH, 2); } catch (e) { console.log(`\n✗ ${d.slug}: ${e.message}`); failed.push(["dish", d]); } }
-  for (const s of shops) { try { await genOne(s, "public/shops", SIZE_SHOP, 0); } catch (e) { console.log(`\n✗ ${s.slug}: ${e.message}`); failed.push(["shop", s]); } }
+  for (const s of shops) { try { await genOne(s, "public/shops", SIZE_SHOP, 1); } catch (e) { console.log(`\n✗ ${s.slug}: ${e.message}`); failed.push(["shop", s]); } }
   console.log(failed.length ? `\n完成，失败 ${failed.length} 个（重跑即可续传）` : "\n全部完成 🎉");
 })();
