@@ -1,6 +1,7 @@
 /* 最小可安装 Service Worker：缓存静态资源 + 导航回退，离线也能打开。
-   只缓存 GET，不拦截 Supabase 等接口域名；版本号变更即整体失效。 */
-const CACHE = "dopahub-v1";
+   只缓存 GET，不拦截 Supabase 等接口域名；版本号变更即整体失效。
+   每次大批更新资源(图/JS)后递增 CACHE 版本号，强制客户端丢弃旧缓存。 */
+const CACHE = "dopahub-v6";
 const ASSETS = ["./", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./favicon.svg"];
 
 self.addEventListener("install", (event) => {
