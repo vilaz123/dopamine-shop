@@ -5,6 +5,7 @@ import { categories } from "@/lib/data/categories";
 import { products } from "@/lib/data/products";
 import { withBasePath } from "@/lib/utils/path";
 import { ProductGrid } from "@/components/product/ProductGrid";
+import { BlindBoxSection } from "@/components/product/BlindBoxSection";
 
 export default function ShopPage() {
   const [category, setCategory] = useState("all");
@@ -61,6 +62,7 @@ export default function ShopPage() {
         </div>
       </div>
       <ProductGrid products={sorted} />
+      <BlindBoxSection />
       </div>
     </section>
   );
