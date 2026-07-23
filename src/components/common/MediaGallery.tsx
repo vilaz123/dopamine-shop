@@ -2,7 +2,7 @@
 
 import { useRef, useState, type KeyboardEvent, type ReactNode, type TouchEvent } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { thumbUrl } from "@/lib/utils/image";
+import { thumbUrl, assetUrl } from "@/lib/utils/image";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -79,7 +79,7 @@ export function MediaGallery({ images, alt, aspect, children }: MediaGalleryProp
       >
         <img
           key={active}
-          src={`${BASE_PATH}${images[active]}`}
+          src={`${BASE_PATH}${assetUrl(images[active])}`}
           alt={alt}
           className="h-full w-full object-cover"
           loading="eager"

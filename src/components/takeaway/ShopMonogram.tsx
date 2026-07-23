@@ -1,5 +1,5 @@
 import type { TakeawayShop } from "@/lib/data/takeaway-shops";
-import { thumbUrl } from "@/lib/utils/image";
+import { thumbUrl, assetUrl } from "@/lib/utils/image";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -8,7 +8,7 @@ export function ShopMonogram({ shop, large = false, priority = false }: { shop: 
     return (
       <div className="relative h-full w-full overflow-hidden rounded-[1rem] sm:rounded-[2rem] luxury-shadow">
         <img
-          src={`${BASE_PATH}${large ? shop.image : thumbUrl(shop.image)}`}
+          src={`${BASE_PATH}${large ? assetUrl(shop.image) : thumbUrl(shop.image)}`}
           alt={shop.name}
           className="h-full w-full object-cover"
           loading={priority ? "eager" : "lazy"}

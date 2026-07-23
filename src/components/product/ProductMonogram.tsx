@@ -1,5 +1,5 @@
 import type { Product } from "@/types/product";
-import { thumbUrl } from "@/lib/utils/image";
+import { thumbUrl, assetUrl } from "@/lib/utils/image";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -8,7 +8,7 @@ export function ProductMonogram({ product, large = false, priority = false }: { 
     return (
       <div className="relative aspect-[5/6] w-full overflow-hidden rounded-[1rem] sm:aspect-[4/5] sm:rounded-[1.25rem] md:rounded-[2rem] luxury-shadow">
         <img
-          src={`${BASE_PATH}${large ? product.image : thumbUrl(product.image)}`}
+          src={`${BASE_PATH}${large ? assetUrl(product.image) : thumbUrl(product.image)}`}
           alt={product.name}
           className="h-full w-full object-cover"
           loading={priority ? "eager" : "lazy"}
