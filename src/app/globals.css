@@ -245,3 +245,93 @@ textarea {
   color: var(--page-soft);
 }
 
+/* ====== 盲盒开盒仪式（BlindBoxSection · 纯 CSS，无外部资源）====== */
+
+/* Stage 1 · 摇晃：高频抖动 + 轻微旋转 + 运动模糊 */
+@keyframes blind-shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); filter: blur(0); }
+  15% { transform: translateX(-6px) rotate(-6deg); filter: blur(1.2px); }
+  30% { transform: translateX(6px) rotate(6deg); filter: blur(1.4px); }
+  45% { transform: translateX(-7px) rotate(-7deg); filter: blur(1.6px); }
+  60% { transform: translateX(7px) rotate(7deg); filter: blur(1.4px); }
+  75% { transform: translateX(-4px) rotate(-4deg); filter: blur(1px); }
+}
+.blind-shake { animation: blind-shake 0.42s ease-in-out infinite; }
+
+/* Stage 2 · 撕开：全屏白闪 */
+@keyframes blind-tear-flash {
+  0% { opacity: 0; }
+  18% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+.blind-tear-flash { animation: blind-tear-flash 0.35s ease-out forwards; }
+
+/* Stage 2 · 盒子爆裂消失 */
+@keyframes blind-burst {
+  0% { transform: scale(1); opacity: 1; filter: blur(0); }
+  60% { transform: scale(1.45); opacity: 0.5; filter: blur(3px); }
+  100% { transform: scale(2.1); opacity: 0; filter: blur(8px); }
+}
+.blind-burst { animation: blind-burst 0.35s ease-in forwards; }
+
+/* Stage 2 · 放射光线 */
+@keyframes blind-rays {
+  0% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  40% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(1.8) rotate(35deg); }
+}
+.blind-rays { animation: blind-rays 0.6s ease-out forwards; }
+
+/* Stage 3 · 公仔放大去模糊 */
+@keyframes blind-reveal-in {
+  0% { transform: scale(0.3); opacity: 0; filter: blur(10px); }
+  60% { transform: scale(1.08); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+.blind-reveal-in { animation: blind-reveal-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+/* Stage 3 · 稀有度光晕呼吸 */
+@keyframes blind-aura {
+  0%, 100% { opacity: 0.45; transform: scale(0.9); }
+  50% { opacity: 0.9; transform: scale(1.12); }
+}
+.blind-aura { animation: blind-aura 1.6s ease-in-out infinite; }
+
+/* Stage 3 · 粒子飞溅/下落，由 --x/--d/--r 自定义属性参数化 */
+@keyframes blind-confetti {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) rotate(var(--r)); opacity: 0; }
+}
+.blind-confetti { animation: blind-confetti var(--d, 1s) cubic-bezier(0.2, 0.7, 0.3, 1) forwards; }
+
+/* hidden 款：金粒自顶飘落 */
+@keyframes blind-gold-rain {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(var(--r)); opacity: 0; }
+}
+.blind-gold-rain { animation: blind-gold-rain var(--d, 1.6s) linear forwards; }
+
+/* hidden 款：全屏金色柔光 */
+@keyframes blind-gold-glow {
+  0% { opacity: 0; }
+  25% { opacity: 0.6; }
+  100% { opacity: 0; }
+}
+.blind-gold-glow { animation: blind-gold-glow 1.6s ease-out forwards; }
+
+/* hidden 款：标题心跳放大 */
+@keyframes blind-legend-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  55% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.blind-legend-pop { animation: blind-legend-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+/* 摇晃阶段呼吸光环 */
+@keyframes blind-halo {
+  0%, 100% { opacity: 0.3; transform: scale(0.85); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+.blind-halo { animation: blind-halo 0.9s ease-in-out infinite; }
+
