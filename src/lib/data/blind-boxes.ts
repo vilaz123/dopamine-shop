@@ -10,6 +10,8 @@ export type BlindFigure = {
   rarity: BlindRarity;
   emoji: string;
   accent: string;
+  /** 公仔写实图路径（AI 生成，方图）。 */
+  image?: string;
 };
 
 export type BlindSeries = {
@@ -113,6 +115,11 @@ export const blindSeries: BlindSeries[] = [
 
 export function getBlindSeries(slug: string): BlindSeries | null {
   return blindSeries.find((s) => s.slug === slug) ?? null;
+}
+
+/** 款式公仔图路径（AI 写实，方图）。 */
+export function figureImage(seriesSlug: string, figureId: string): string {
+  return `/products/blindbox-${seriesSlug}-${figureId}.webp`;
 }
 
 /** 按稀有度概率随机抽一个款式。 */

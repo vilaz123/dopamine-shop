@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { blindSeries, drawRandomFigure, rarityMeta, type BlindFigure, type BlindSeries } from "@/lib/data/blind-boxes";
+import { blindSeries, drawRandomFigure, rarityMeta, figureImage, type BlindFigure, type BlindSeries } from "@/lib/data/blind-boxes";
 import { useAssetStore } from "@/stores/asset-store";
 import { useUiStore } from "@/stores/ui-store";
 import { Button } from "@/components/ui/Button";
@@ -81,8 +81,9 @@ export function BlindBoxSection() {
               </>
             ) : revealed ? (
               <>
-                <div className="mx-auto grid h-32 w-32 place-items-center rounded-3xl text-6xl shadow-lg" style={{ background: `linear-gradient(135deg, ${revealed.accent}, ${opening.accent})`, boxShadow: `0 0 60px ${revealed.accent}` }}>
-                  {revealed.emoji}
+                <div className="mx-auto grid h-40 w-40 place-items-center overflow-hidden rounded-3xl shadow-lg" style={{ background: `linear-gradient(135deg, ${revealed.accent}, ${opening.accent})`, boxShadow: `0 0 60px ${revealed.accent}` }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={`${figureImage(opening.slug, revealed.id)}?v=1`} alt={revealed.name} className="h-full w-full object-cover" />
                 </div>
                 <p className="mt-4 text-xs uppercase tracking-[0.25em] font-semibold" style={{ color: rarityMeta[revealed.rarity].color }}>{rarityMeta[revealed.rarity].label}</p>
                 <p className="font-display mt-2 text-3xl">{revealed.name}</p>
