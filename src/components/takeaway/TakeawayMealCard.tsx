@@ -7,6 +7,7 @@ import { optionValueLabel, optionValueDelta } from "@/types/product";
 import { useCartStore } from "@/stores/cart-store";
 import { useUiStore } from "@/stores/ui-store";
 import { useAssetStore } from "@/stores/asset-store";
+import { playPop } from "@/lib/utils/sfx";
 import { Price } from "@/components/ui/Price";
 import { AddToCart } from "@/components/product/AddToCart";
 import { thumbUrl } from "@/lib/utils/image";
@@ -18,11 +19,12 @@ export function TakeawayMealCard({ product }: { product: Product }) {
   const addItem = useCartStore((state) => state.addItem);
   const setCartOpen = useUiStore((state) => state.setCartOpen);
   const setLastReward = useUiStore((state) => state.setLastReward);
+  const triggerFly = useUiStore((state) => state.triggerFly);
   const addRecentlyViewed = useUiStore((state) => state.addRecentlyViewed);
   const grantCoins = useAssetStore((state) => state.grantCoins);
   const pushHistory = useAssetStore((state) => state.pushHistory);
 
-  function quickAdd() {
+  function quickAdd(btn: HTMLButtonElement) {
     const selected = Object.fromEntries(product.options.map((option) => [option.label, optionValueLabel(option.values[0])]));
     const delta = product.options.reduce((sum, option) => sum + optionValueDelta(option.values[0]), 0);
     addRecentlyViewed(product.slug);
@@ -30,6 +32,9 @@ export function TakeawayMealCard({ product }: { product: Product }) {
     addItem({ slug: product.slug, quantity: 1, options: selected, optionPriceDelta: delta, addedAt: new Date().toISOString() });
     grantCoins(product.rewardCoins);
     setLastReward({ id: `${product.slug}-${Date.now()}`, coins: product.rewardCoins });
+    playPop();
+    const r = btn.getBoundingClientRect();
+    triggerFly({ fromX: r.left + r.width / 2, fromY: r.top + r.height / 2, coins: product.rewardCoins, color: "var(--gold)" });
     setCartOpen(true);
   }
 
@@ -58,14 +63,14 @@ export function TakeawayMealCard({ product }: { product: Product }) {
               <Link href={`/shop/${product.slug}`} className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/60 px-2 py-1.5 text-[11px] transition hover:bg-white sm:px-4 sm:py-2 sm:text-sm" style={{ color: "var(--page-ink)" }}>详情</Link>
               <button onClick={() => setExpanded((value) => !value)} className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/60 px-2 py-1.5 text-[11px] transition hover:bg-white sm:px-4 sm:py-2 sm:text-sm" style={{ color: "var(--page-ink)" }}>{expanded ? "收起" : "选规格"}</button>
               {!expanded ? (
-                <button onClick={quickAdd} className="inline-flex items-center justify-center rounded-full px-2 py-1.5 text-[11px] font-semibold text-white transition hover:opacity-90 sm:px-5 sm:py-2 sm:text-sm" style={{ background: "var(--page-accent)" }}>加购</button>
+                <button onClick={(e) => quickAdd(e.currentTarget)} className="inline-flex items-center justify-center rounded-full px-2 py-1.5 text-[11px] font-semibold text-white transition hover:opacity-90 active:scale-95 sm:px-5 sm:py-2 sm:text-sm" style={{ background: "var(--page-accent)" }}>加购</button>
               ) : <span className="hidden sm:block" />}
             </div>
           </div>
         </div>
       </div>
       {expanded && (
-        <div className="mt-4 border-t border-black/10 pt-4 sm:mt-5 sm:pt-5">
+        <div className="slide-down mt-4 border-t border-black/10 pt-4 sm:mt-5 sm:pt-5">
           <AddToCart product={product} />
         </div>
       )}

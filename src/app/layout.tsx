@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { RewardFlash } from "@/components/asset/RewardFlash";
+import { FlyToCart } from "@/components/asset/FlyToCart";
 import { AccountSync } from "@/components/auth/AccountSync";
 import { ServiceWorkerRegister } from "@/components/common/ServiceWorkerRegister";
 
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <AccountSync />
         <ServiceWorkerRegister />
         <RewardFlash />
+        <FlyToCart />
         <CartDrawer />
         <main>{children}</main>
         <Footer />

@@ -123,3 +123,59 @@ export function playReveal(rarity: Rarity) {
     tone(c, 261.63, now, 1.1, "sine", 0.08);
   }
 }
+
+/** 加购"啵":短促下行 sine，按钮触感音。 */
+export function playPop() {
+  const c = ensureCtx();
+  if (!c) return;
+  const now = c.currentTime;
+  const osc = c.createOscillator();
+  const g = c.createGain();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(330, now);
+  osc.frequency.exponentialRampToValueAtTime(150, now + 0.08);
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.linearRampToValueAtTime(0.22, now + 0.006);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+  osc.connect(g).connect(c.destination);
+  osc.start(now);
+  osc.stop(now + 0.14);
+}
+
+/** 金币落地双叮：飞金币到达购物车时响。 */
+export function playCoin() {
+  const c = ensureCtx();
+  if (!c) return;
+  const now = c.currentTime;
+  tone(c, 1318.51, now, 0.18, "triangle", 0.16);
+  tone(c, 1567.98, now + 0.07, 0.22, "triangle", 0.16);
+}
+
+/** 选项咔哒：chip 选中时响，短噪声 click。 */
+export function playChip() {
+  const c = ensureCtx();
+  if (!c) return;
+  const now = c.currentTime;
+  const src = c.createBufferSource();
+  src.buffer = getNoise(c);
+  const bp = c.createBiquadFilter();
+  bp.type = "bandpass";
+  bp.frequency.value = 1800;
+  bp.Q.value = 1.2;
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.linearRampToValueAtTime(0.14, now + 0.003);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+  src.connect(bp).connect(g).connect(c.destination);
+  src.start(now);
+  src.stop(now + 0.06);
+}
+
+/** 收藏心形 pop：上行小二度 ding。 */
+export function playFav() {
+  const c = ensureCtx();
+  if (!c) return;
+  const now = c.currentTime;
+  tone(c, 880.0, now, 0.16, "sine", 0.14);
+  tone(c, 1174.66, now + 0.06, 0.2, "sine", 0.12);
+}

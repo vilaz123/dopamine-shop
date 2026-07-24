@@ -10,7 +10,7 @@ export function ProductMonogram({ product, large = false, priority = false }: { 
         <img
           src={`${BASE_PATH}${large ? assetUrl(product.image) : thumbUrl(product.image)}`}
           alt={product.name}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
           decoding="async"
