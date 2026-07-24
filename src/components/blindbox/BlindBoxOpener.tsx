@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { drawRandomFigure, rarityMeta, figureImage, type BlindFigure, type BlindRarity, type BlindSeries } from "@/lib/data/blind-boxes";
-import { assetUrl } from "@/lib/utils/image";
+import { thumbUrl } from "@/lib/utils/image";
 import { playShake, playTear, playReveal } from "@/lib/utils/sfx";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -209,6 +209,16 @@ export function BlindBoxOpener({ series, onClose }: { series: BlindSeries | null
           外层 overflow-hidden 裁掉飞出视口的粒子，避免横向划屏 */}
       <div className="absolute inset-0 flex justify-center overflow-y-auto overflow-x-hidden p-4">
         <div className="relative my-auto w-full max-w-sm rounded-[2rem] bg-white p-6 text-center shadow-2xl sm:p-8">
+          {/* 揭晓前预取该系列全部公仔图：摇晃/撕开阶段(约2s)利用空闲把图拉好，
+              揭晓时无论抽中哪只都已就绪，杜绝"揭晓了图还在转圈"。用 thumb 即可。 */}
+          {stage !== "reveal" && (
+            <div aria-hidden className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0">
+              {series.figures.map((f) => (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img key={f.id} src={`${BASE_PATH}${thumbUrl(figureImage(series.slug, f.id))}`} alt="" decoding="async" />
+              ))}
+            </div>
+          )}
           {stage === "shake" && (
             <>
               <div className="relative mx-auto grid h-32 w-32 place-items-center">
@@ -262,7 +272,7 @@ export function BlindBoxOpener({ series, onClose }: { series: BlindSeries | null
                 />
                 <div className="blind-reveal-in h-full w-full" style={{ boxShadow: `0 0 60px ${revealed.accent}` }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`${BASE_PATH}${assetUrl(figureImage(series.slug, revealed.id))}`} alt={revealed.name} className="h-full w-full rounded-3xl object-cover" />
+                  <img src={`${BASE_PATH}${thumbUrl(figureImage(series.slug, revealed.id))}`} alt={revealed.name} className="h-full w-full rounded-3xl object-cover" fetchPriority="high" />
                 </div>
               </div>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.25em]" style={{ color: rarityMeta[revealed.rarity].color }}>

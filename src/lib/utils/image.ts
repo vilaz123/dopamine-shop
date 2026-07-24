@@ -4,7 +4,7 @@
  * 导致放大图仍是旧的「白盘+色块」。带 ?v= 后浏览器视为新资源重新拉取。
  * 每次大批量重新生成图片后，把这个版本号 +1 即可全站破缓存。
  */
-export const IMAGE_VERSION = 5;
+export const IMAGE_VERSION = 6;
 
 function withVersion(path: string): string {
   if (!path) return path;

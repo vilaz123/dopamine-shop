@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { blindSeries, rarityMeta, figureImage, type BlindSeries } from "@/lib/data/blind-boxes";
-import { assetUrl } from "@/lib/utils/image";
+import { thumbUrl } from "@/lib/utils/image";
 import { useInView } from "@/lib/utils/useInView";
 import { BlindBoxOpener } from "./BlindBoxOpener";
 
@@ -129,29 +129,39 @@ function ShowcaseCard({ series, index, onOpen }: { series: BlindSeries; index: n
           </div>
         </div>
 
-        {/* 公仔轮播展示窗 */}
+        {/* 公仔轮播展示窗：只渲染当前张 + 预取下一张，避免一次挂载 13 张图 */}
         <div
           className="blind-carousel relative mt-4 aspect-square w-full overflow-hidden rounded-2xl"
           style={{ background: `radial-gradient(circle at 50% 40%, color-mix(in srgb, ${series.accent} 22%, white), color-mix(in srgb, var(--page-bg) 60%, white))` }}
         >
-          {figs.map((f, i) => (
-            <div
-              key={f.id}
-              className="blind-carousel-item absolute inset-0 grid place-items-center transition-all duration-500"
-              style={{ opacity: i === active ? 1 : 0, transform: i === active ? "scale(1)" : "scale(1.08)" }}
-              aria-hidden={i !== active}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`${BASE_PATH}${assetUrl(figureImage(series.slug, f.id))}`}
-                alt={f.name}
-                className="h-[78%] w-[78%] rounded-2xl object-cover"
-                style={{ boxShadow: `0 8px 28px color-mix(in srgb, ${f.accent} 45%, transparent)` }}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          ))}
+          {(() => {
+            const cur = figs[active];
+            const next = figs[(active + 1) % figs.length];
+            return (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  key={cur.id}
+                  src={`${BASE_PATH}${thumbUrl(figureImage(series.slug, cur.id))}`}
+                  alt={cur.name}
+                  className="blind-carousel-item absolute inset-0 m-auto h-[78%] w-[78%] rounded-2xl object-cover"
+                  style={{ boxShadow: `0 8px 28px color-mix(in srgb, ${cur.accent} 45%, transparent)` }}
+                  loading="lazy"
+                  decoding="async"
+                />
+                {/* 预取下一张，减少轮播切换时的空窗；隐藏但加载 */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${BASE_PATH}${thumbUrl(figureImage(series.slug, next.id))}`}
+                  alt=""
+                  className="absolute inset-0 m-auto h-[78%] w-[78%] rounded-2xl object-cover opacity-0"
+                  aria-hidden
+                  loading="lazy"
+                  decoding="async"
+                />
+              </>
+            );
+          })()}
           {/* 当前款式名 */}
           <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/35 to-transparent px-4 pb-3 pt-8">
             <span className="truncate text-sm font-semibold text-white drop-shadow">{figs[active].name}</span>
