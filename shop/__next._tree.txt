@@ -1,0 +1,4 @@
+:HL["/dopamine-shop/_next/static/chunks/2_s010fogok1q.css","style"]
+:HL["/dopamine-shop/_next/static/media/4a7551bcc3548e67-s.p.3jc5sq-923m_s.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/dopamine-shop/_next/static/media/d7d9c82e455b419c-s.p.2zp15__9k16__.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"shop","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"eYY5VOBtLMdlSwRTquEYg"}
