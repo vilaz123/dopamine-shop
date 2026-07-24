@@ -96,7 +96,7 @@ export default function TakeawayPage() {
             没有符合幻想条件的店铺，换个分类或搜索词试试。
           </div>
         ) : (
-          list.map((shop, index) => <TakeawayShopCard key={shop.slug} shop={shop} priority={index < 2} />)
+          list.map((shop, index) => <TakeawayShopCard key={shop.slug} shop={shop} priority={index < 2} enterDelay={(index % 3) * 60} />)
         )}
       </div>
 
@@ -108,7 +108,7 @@ export default function TakeawayPage() {
               <h2 className="font-display mt-3 text-4xl text-white sm:text-5xl">零食囤货</h2>
             </div>
           </div>
-          <ProductGrid products={snacks} />
+          <ProductGrid products={snacks} interactive />
         </section>
       )}
 
