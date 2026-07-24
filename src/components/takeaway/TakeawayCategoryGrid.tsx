@@ -4,7 +4,7 @@ import { takeawayCategories } from "@/lib/data/takeaway-shops";
 
 export function TakeawayCategoryGrid({ active, onSelect }: { active: string; onSelect: (id: string) => void }) {
   return (
-    <div className="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-9">
+    <div className="grid grid-cols-3 gap-2 sm:gap-3">
       {takeawayCategories.map((item) => (
         <button
           key={item.id}

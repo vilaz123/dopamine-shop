@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { MapPin, Clock } from "lucide-react";
-import { takeawayShops } from "@/lib/data/takeaway-shops";
+import { takeawayShops, takeawayBucket } from "@/lib/data/takeaway-shops";
 import { products } from "@/lib/data/products";
 import { withBasePath } from "@/lib/utils/path";
 import { TakeawaySearch } from "@/components/takeaway/TakeawaySearch";
@@ -34,7 +34,7 @@ export default function TakeawayPage() {
 
   const list = useMemo(() => {
     const filtered = takeawayShops.filter((shop) => {
-      if (category !== "all" && shop.category !== category) return false;
+      if (category !== "all" && takeawayBucket(shop.category) !== category) return false;
       if (query.trim()) {
         const q = query.trim().toLowerCase();
         return shop.name.toLowerCase().includes(q) || shop.tags.some((tag) => tag.toLowerCase().includes(q));
