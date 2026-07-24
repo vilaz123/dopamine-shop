@@ -401,3 +401,44 @@ textarea {
 }
 .slide-down { animation: slide-down 0.3s ease-out both; }
 
+/* ====== 导航卡片化（Header · 延用 home 3色）====== */
+/* active 项：accent 软填充 + ink 文字，带底色光晕 */
+.nav-card-active {
+  background: color-mix(in srgb, var(--page-accent) 38%, transparent);
+  color: var(--page-ink);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--page-accent) 40%, transparent);
+}
+.nav-card:not(.nav-card-active):hover {
+  background: color-mix(in srgb, var(--page-highlight) 30%, transparent);
+  color: var(--page-ink);
+}
+
+/* ====== 盲盒轮转展示柜（BlindShowcase · 延用 home 3色）====== */
+/* 3D 倾斜基础：perspective 在卡片父级，变换由 --rx/--ry 驱动 */
+.blind-showcase-card { perspective: 900px; }
+.blind-tilt {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.18s ease-out;
+  transform-style: preserve-3d;
+}
+
+/* 霓虹描边流转：active 时一条高光沿边框跑 */
+.blind-neon-edge {
+  background:
+    linear-gradient(120deg, transparent 30%, color-mix(in srgb, var(--page-highlight) 70%, transparent) 50%, transparent 70%) border-box;
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.blind-showcase-card.is-in:hover .blind-neon-edge {
+  opacity: 0.9;
+  animation: neon-sweep 2.4s linear infinite;
+}
+@keyframes neon-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 公仔轮播窗：当前项淡入放大，非当前淡出 */
+.blind-carousel-item { will-change: opacity, transform; }
+

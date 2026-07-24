@@ -26,6 +26,9 @@ const seriesStyle = {
   "mochi-planet-series": "a round chubby little star sprite character with a big head and small body",
   "skull-candy-series": "a cute small skull character with a candy-colored body, kawaii style, sweet but dark",
   "dimoo-dream-series": "a small dreamy boy character with a big head and soft features, like a little cloud creature",
+  "labu-forest-series": "a small elf creature with long pointy furry ears and a mischievous toothy grin, fuzzy plush vinyl monster figure, big bright eyes, in the style of a famous designer monster toy",
+  "hirono-street-series": "a quiet melancholic young boy character with a neutral calm expression, slim vinyl figure, plain streetwear, big downcast eyes, in the style of a famous moody designer boy toy",
+  "pucky-sprite-series": "a round chubby tiny sprite creature with a big head and huge glossy eyes, kawaii plush vinyl fairy figure, soft pastel, in the style of a famous fairy sprite designer toy",
 };
 
 async function submit(prompt) {
