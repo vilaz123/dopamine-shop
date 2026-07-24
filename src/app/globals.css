@@ -442,3 +442,28 @@ textarea {
 /* 公仔轮播窗：当前项淡入放大，非当前淡出 */
 .blind-carousel-item { will-change: opacity, transform; }
 
+/* ====== 通用轮转展示柜（外卖/商店展示卡 · 复用盲盒同款骨架，类名通用可复用）====== */
+/* 3D 倾斜基础：perspective 在卡片父级，变换由 --rx/--ry 驱动 */
+.showcase-card { perspective: 900px; }
+.tilt-3d {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.18s ease-out;
+  transform-style: preserve-3d;
+}
+
+/* 霓虹描边流转：hover 时一条高光沿边框跑（复用上面的 neon-sweep keyframe） */
+.neon-edge {
+  background:
+    linear-gradient(120deg, transparent 30%, color-mix(in srgb, var(--page-highlight) 70%, transparent) 50%, transparent 70%) border-box;
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.showcase-card.is-in:hover .neon-edge {
+  opacity: 0.9;
+  animation: neon-sweep 2.4s linear infinite;
+}
+
+/* 轮播项：当前项 key 切换触发重挂，留给将来加淡入用 */
+.carousel-item { will-change: opacity, transform; }
+
