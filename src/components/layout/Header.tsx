@@ -10,9 +10,9 @@ import { AssetHeaderButton } from "./AssetHeaderButton";
 type NavItem = { href: string; label: string; emoji: string };
 
 const navItems: NavItem[] = [
-  { href: "/shop", label: "虚拟商店", emoji: "🛍" },
+  { href: "/shop", label: "赛博进货部", emoji: "🛍" },
   { href: "/blindbox", label: "赌一把盲盒", emoji: "🎲" },
-  { href: "/takeaway", label: "虚拟外卖", emoji: "🛵" },
+  { href: "/takeaway", label: "卡路里投影区", emoji: "🛵" },
   { href: "/assets", label: "我的资产", emoji: "💰" },
   { href: "/community", label: "多巴胺广场", emoji: "🎤" },
   { href: "/orders", label: "我的订单", emoji: "📦" },

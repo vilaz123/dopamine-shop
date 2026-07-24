@@ -57,8 +57,8 @@ export default function TakeawayPage() {
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
       <section className="container-shell py-8 sm:py-12">
       <div className="mb-6 max-w-3xl sm:mb-8">
-        <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-highlight)" }}>Dopahub Takeaway</p>
-        <h1 className="font-display mt-3 text-2xl text-white sm:text-3xl">虚拟外卖</h1>
+        <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-highlight)" }}>Calorie Projection</p>
+        <h1 className="font-display mt-3 text-2xl text-white sm:text-3xl">卡路里投影区</h1>
         <p className="mt-4 text-base leading-7 sm:mt-5 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>复刻真实外卖信息流：分类、满减、骑手、配送进度都在，但所有餐品都不会真正送到，热量也永远不落地。</p>
       </div>
 
