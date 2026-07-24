@@ -9,23 +9,26 @@ export type TakeawayCategory =
   | "虚拟超市"
   | "米其林餐厅";
 
+/**
+ * 外卖分区只保留两个分类桶：高贵进（米其林）与猪瘾进（其余全部）。
+ * 店铺底层仍保留细类 TakeawayCategory（用于数据/展示细节），分类导航按桶聚合。
+ */
+export type TakeawayBucket = "高贵进" | "猪瘾进";
+
+export function takeawayBucket(category: TakeawayCategory): TakeawayBucket {
+  return category === "米其林餐厅" ? "高贵进" : "猪瘾进";
+}
+
 export type TakeawayCategoryMeta = {
-  id: TakeawayCategory | "all";
+  id: TakeawayBucket | "all";
   label: string;
   emoji: string;
 };
 
 export const takeawayCategories: TakeawayCategoryMeta[] = [
   { id: "all", label: "全部外卖", emoji: "🍽️" },
-  { id: "米其林餐厅", label: "米其林餐厅", emoji: "👑" },
-  { id: "奶茶咖啡", label: "奶茶咖啡", emoji: "🍵" },
-  { id: "炸鸡汉堡", label: "炸鸡汉堡", emoji: "🍔" },
-  { id: "火锅烧烤", label: "火锅烧烤", emoji: "🍲" },
-  { id: "甜品蛋糕", label: "甜品蛋糕", emoji: "🍰" },
-  { id: "夜宵", label: "夜宵", emoji: "🌙" },
-  { id: "轻食沙拉", label: "轻食沙拉", emoji: "🥗" },
-  { id: "零食便利", label: "零食便利", emoji: "🏪" },
-  { id: "虚拟超市", label: "虚拟超市", emoji: "🛒" },
+  { id: "高贵进", label: "高贵进", emoji: "👑" },
+  { id: "猪瘾进", label: "猪瘾进", emoji: "🐷" },
 ];
 
 export type TakeawayShop = {

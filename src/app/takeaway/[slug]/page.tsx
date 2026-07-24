@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getTakeawayShop, takeawayShops, formatMonthlySales, shopImages } from "@/lib/data/takeaway-shops";
+import { getTakeawayShop, takeawayShops, takeawayBucket, formatMonthlySales, shopImages } from "@/lib/data/takeaway-shops";
 import { getProduct } from "@/lib/data/products";
 import { MediaGallery } from "@/components/common/MediaGallery";
 import { TakeawayMealCard } from "@/components/takeaway/TakeawayMealCard";
@@ -34,7 +34,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
           </MediaGallery>
         </div>
         <div className="lg:pt-6">
-          <p className="text-xs uppercase tracking-[0.32em] text-[var(--page-highlight)]">{shop.category}</p>
+          <p className="text-xs uppercase tracking-[0.32em] text-[var(--page-highlight)]">{takeawayBucket(shop.category)}</p>
           <h1 className="font-display mt-4 text-3xl leading-tight text-white sm:text-4xl md:text-5xl">{shop.name}</h1>
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-base text-white/85 sm:mt-5 sm:text-lg">
             <span className="font-semibold text-[var(--gold)]">★ {shop.rating.toFixed(1)}</span>
