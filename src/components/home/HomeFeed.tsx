@@ -63,7 +63,7 @@ export function HomeFeed() {
         <div className="container-shell">
           <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>For You</p>
           <h2 className="font-display mt-3 text-4xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>为你推荐</h2>
-          <div className="mt-8 sm:mt-10"><ProductGrid products={recommended} /></div>
+          <div className="mt-8 sm:mt-10"><ProductGrid products={recommended} interactive /></div>
         </div>
       </section>
 
@@ -77,7 +77,7 @@ export function HomeFeed() {
             </div>
             <ButtonLink href="/takeaway" variant="light" className="w-fit">去点外卖</ButtonLink>
           </div>
-          <ProductGrid products={food} />
+          <ProductGrid products={food} interactive />
         </div>
       </section>
     </>
