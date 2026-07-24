@@ -72,8 +72,8 @@ export function HomeFeed() {
         <div className="container-shell">
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Food Delivery</p>
-              <h2 className="font-display mt-3 text-4xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>虚拟外卖专区</h2>
+              <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Calorie Projection</p>
+              <h2 className="font-display mt-3 text-4xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>卡路里投影区</h2>
             </div>
             <ButtonLink href="/takeaway" variant="light" className="w-fit">去点外卖</ButtonLink>
           </div>

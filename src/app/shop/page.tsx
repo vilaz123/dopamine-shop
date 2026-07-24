@@ -38,8 +38,8 @@ export default function ShopPage() {
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
       <div className="container-shell py-10 sm:py-16">
       <div className="mb-8 max-w-3xl sm:mb-12">
-        <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Dopahub Market</p>
-        <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>多巴胺仓货架</h1>
+        <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Cyber Restock</p>
+        <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>赛博进货部</h1>
         <p className="mt-4 text-base leading-7 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>复刻真实电商信息流：热榜、满减、新品、稀缺库存都在，但所有价格都是虚拟金额，无需真实支付。</p>
       </div>
       <div className="mb-6 flex flex-col gap-4 sm:mb-12 md:flex-row md:items-end md:justify-between">
