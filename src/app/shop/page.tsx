@@ -60,7 +60,7 @@ export default function ShopPage() {
           ))}
         </div>
       </div>
-      <ProductGrid products={sorted} />
+      <ProductGrid products={sorted} interactive />
       </div>
     </section>
   );
