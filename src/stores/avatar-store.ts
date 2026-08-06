@@ -8,17 +8,21 @@ import { storageKeys } from "@/lib/utils/storage";
 import { getSupabase } from "@/lib/supabase/client";
 import { useAuthStore } from "@/stores/auth-store";
 import { virtualCalories } from "@/lib/data/avatar-calories";
-import { computeMood, decaySatiety, hungerFromSatiety, weightFromCalories, clamp, clampWeight } from "@/lib/avatar/avatar-mood";
+import { computeMood, decaySatiety, decaySpirit, decaySlow, hungerFromSatiety, weightFromCalories, clamp, clampWeight } from "@/lib/avatar/avatar-mood";
 
 const BASE_WEIGHT = 1;
 
 const initialAvatar: AvatarState = {
   name: "小多",
   color: "#FF3D81",
+  shape: "human",
   hunger: 30,
   satiety: 70,
   calories: 0,
   weight: BASE_WEIGHT,
+  dopamine: 50,
+  endorphin: 50,
+  spirit: 80,
   mood: "content",
   wardrobe: [],
   lastFedAt: "",
@@ -28,14 +32,14 @@ const initialAvatar: AvatarState = {
 
 type AvatarStore = AvatarState & {
   /** 建分身（首次）。 */
-  createAvatar: (name: string, color: string) => void;
+  createAvatar: (name: string, color: string, shape: AvatarState["shape"]) => void;
   /** 喂食：仅食物。返回本次卡路里（供 UI 飞金币）。 */
   feed: (product: Product) => number;
   /** 穿戴：仅服饰。 */
   wear: (slug: string) => void;
   /** 重置形体/卡路里，保留分身。 */
   resetShape: () => void;
-  /** 按当前时间重算 hunger/satiety/mood（纯派生，组件挂载/聚焦时调）。 */
+  /** 按当前时间重算 hunger/satiety/dopamine/endorphin/spirit/mood（纯派生，组件挂载/聚焦时调）。 */
   recompute: () => void;
   setMood: (mood: AvatarMood) => void;
 };
@@ -52,10 +56,14 @@ function syncAvatarToCloud(state: AvatarState) {
         user_id: user.id,
         name: state.name,
         color: state.color,
+        shape: state.shape,
         hunger: state.hunger,
         satiety: state.satiety,
         calories: state.calories,
         weight: state.weight,
+        dopamine: state.dopamine,
+        endorphin: state.endorphin,
+        spirit: state.spirit,
         mood: state.mood,
         wardrobe: state.wardrobe,
         last_fed_at: state.lastFedAt || null,
@@ -66,11 +74,15 @@ function syncAvatarToCloud(state: AvatarState) {
     .then(() => undefined);
 }
 
-/** 派生当前 satiety/hunger（按时间衰减）。 */
-function derive(state: AvatarState, now = Date.now()): { satiety: number; hunger: number } {
-  const sinceMs = state.lastFedAt ? now - new Date(state.lastFedAt).getTime() : 0;
-  const satiety = state.lastFedAt ? decaySatiety(state.satiety, sinceMs) : state.satiety;
-  return { satiety, hunger: hungerFromSatiety(satiety) };
+/** 派生按时间衰减后的状态。satiety/spirit/dopamine/endorphin 都随 lastInteractedAt 衰减。 */
+function derive(state: AvatarState, now = Date.now()): { satiety: number; hunger: number; spirit: number; dopamine: number; endorphin: number } {
+  const sinceMs = state.lastInteractedAt ? now - new Date(state.lastInteractedAt).getTime() : 0;
+  const fedSince = state.lastFedAt ? now - new Date(state.lastFedAt).getTime() : 0;
+  const satiety = state.lastFedAt ? decaySatiety(state.satiety, fedSince) : state.satiety;
+  const spirit = state.lastInteractedAt ? decaySpirit(state.spirit, sinceMs) : state.spirit;
+  const dopamine = state.lastInteractedAt ? decaySlow(state.dopamine, sinceMs) : state.dopamine;
+  const endorphin = state.lastInteractedAt ? decaySlow(state.endorphin, sinceMs) : state.endorphin;
+  return { satiety, hunger: hungerFromSatiety(satiety), spirit, dopamine, endorphin };
 }
 
 export const useAvatarStore = create<AvatarStore>()(
@@ -78,13 +90,14 @@ export const useAvatarStore = create<AvatarStore>()(
     (set, get) => ({
       ...initialAvatar,
 
-      createAvatar: (name, color) =>
+      createAvatar: (name, color, shape) =>
         set(() => {
           const now = new Date().toISOString();
           const state: AvatarState = {
             ...initialAvatar,
             name: name.trim() || "小多",
             color: color || initialAvatar.color,
+            shape: shape || "human",
             created: true,
             lastFedAt: now,
             lastInteractedAt: now,
@@ -99,16 +112,22 @@ export const useAvatarStore = create<AvatarStore>()(
         const prev = get();
         if (!prev.created) return 0;
         const now = new Date().toISOString();
-        const { satiety: decayed } = derive(prev);
-        const satiety = clamp(decayed + 28); // 一份约 +28 饱腹
+        const { satiety: decayedSat, spirit: decayedSpirit, dopamine: decayedDop } = derive(prev);
+        const satiety = clamp(decayedSat + 28); // 一份约 +28 饱腹
         const calories = prev.calories + cal;
+        const weight = clampWeight(weightFromCalories(calories));
+        const dopamine = clamp(decayedDop + 12); // 喂食加多巴胺
+        const spirit = clamp(decayedSpirit + 10); // 喂食回精神
+        const hunger = hungerFromSatiety(satiety);
         const state: AvatarState = {
           ...prev,
           satiety,
-          hunger: hungerFromSatiety(satiety),
+          hunger,
           calories,
-          weight: clampWeight(weightFromCalories(calories)),
-          mood: computeMood({ ...prev, satiety, hunger: hungerFromSatiety(satiety), calories, weight: clampWeight(weightFromCalories(calories)) }, "feed"),
+          weight,
+          dopamine,
+          spirit,
+          mood: computeMood({ ...prev, satiety, hunger, calories, weight, dopamine, spirit }, "feed"),
           lastFedAt: now,
           lastInteractedAt: now,
         };
@@ -120,11 +139,15 @@ export const useAvatarStore = create<AvatarStore>()(
       wear: (slug) =>
         set((state) => {
           if (!state.created) return state;
+          const { spirit: dSpirit, dopamine: dDop, endorphin: dEnd } = derive(state);
           const wardrobe = state.wardrobe.includes(slug) ? state.wardrobe : [...state.wardrobe, slug];
           const next: AvatarState = {
             ...state,
             wardrobe,
-            mood: computeMood(state, "wear"),
+            dopamine: clamp(dDop + 6),
+            endorphin: clamp(dEnd + 15), // 穿戴加内啡肽
+            spirit: clamp(dSpirit + 6),
+            mood: computeMood({ ...state, dopamine: clamp(dDop + 6), endorphin: clamp(dEnd + 15), spirit: clamp(dSpirit + 6) }, "wear"),
             lastInteractedAt: new Date().toISOString(),
           };
           syncAvatarToCloud(next);
@@ -151,9 +174,9 @@ export const useAvatarStore = create<AvatarStore>()(
       recompute: () =>
         set((state) => {
           if (!state.created) return state;
-          const { satiety, hunger } = derive(state);
-          if (satiety === state.satiety && hunger === state.hunger) return state; // 无变化不写
-          const next: AvatarState = { ...state, satiety, hunger, mood: computeMood({ ...state, satiety, hunger }) };
+          const { satiety, hunger, spirit, dopamine, endorphin } = derive(state);
+          if (satiety === state.satiety && hunger === state.hunger && spirit === state.spirit && dopamine === state.dopamine && endorphin === state.endorphin) return state;
+          const next: AvatarState = { ...state, satiety, hunger, spirit, dopamine, endorphin, mood: computeMood({ ...state, satiety, hunger, spirit, dopamine, endorphin }) };
           return next; // 派生重算不触发云写（仅稳态），避免高频写
         }),
 

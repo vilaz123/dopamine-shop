@@ -15,9 +15,10 @@ const lines: Record<AvatarMood, string[]> = {
   excited: ["这件好看！我穿了", "感觉精神多了", "穿上这件，今天稳了"],
   happy: ["今天也很满足", "有你喂我真好", "状态不错，继续保持"],
   content: ["嗯，刚刚好", "不饿不撑，舒服", "就这样挺好"],
+  tired: ["累了…陪我待会儿", "精神有点跟不上", "想躺平一会儿"],
 };
 
-/** 随机取一句，避免每次同一心情台词不变。调用方传入 index 以便确定性（可选）。 */
+/** 随机取一句。调用方可传 index 做确定性。 */
 export function pickLine(mood: AvatarMood, randomIndex?: number): string {
   const pool = lines[mood];
   const i = randomIndex != null ? randomIndex % pool.length : Math.floor(Math.random() * pool.length);
@@ -25,8 +26,8 @@ export function pickLine(mood: AvatarMood, randomIndex?: number): string {
 }
 
 /**
- * 计算心情。优先级：刚穿 > 吃撑 > 饿 > 烦恼(胖) > 默认。
- * justEvent 触发瞬时心情，否则按稳态 hunger/satiety/weight 判。
+ * 计算心情。优先级：刚穿 > 吃撑 > 累(精神低) > 饿 > 烦恼(胖) > 默认。
+ * justEvent 触发瞬时心情，否则按稳态各维度判。
  */
 export function computeMood(state: AvatarState, justEvent: AvatarEvent = "idle"): AvatarMood {
   if (justEvent === "wear") return "excited";
@@ -34,21 +35,36 @@ export function computeMood(state: AvatarState, justEvent: AvatarEvent = "idle")
   if (justEvent === "feed") {
     return state.satiety >= 90 ? "stuffed" : "happy";
   }
-  // 稳态
+  // 稳态：精神低优先于饥饿（累了最显眼）
+  if (state.spirit < 25) return "tired";
   if (state.hunger >= 80) return "hungry";
   if (state.weight > 1.18 && state.calories > 2500) return "worried";
   if (state.satiety >= 90) return "stuffed";
   if (state.hunger >= 55) return "hungry";
-  return state.satiety >= 40 ? "content" : "happy";
+  if (state.dopamine >= 80) return "happy";
+  if (state.satiety >= 40) return "content";
+  return "happy";
 }
 
-/** 饱腹随时间衰减：每小时降 8（约 12 小时从满到 0）。返回新 satiety（0-100）。 */
+/** 饱腹随时间衰减：每小时降 8（约 12 小时从满到 0）。 */
 export function decaySatiety(satiety: number, sinceMs: number): number {
   const hours = sinceMs / 3_600_000;
   return clamp(satiety - hours * 8);
 }
 
-/** 从饱腹反推饥饿：hunger = 100 - satiety（互补，简单可读）。 */
+/** 精神随时间衰减：每小时 -5（约 20 小时从满到 0，比饱腹慢）。 */
+export function decaySpirit(spirit: number, sinceMs: number): number {
+  const hours = sinceMs / 3_600_000;
+  return clamp(spirit - hours * 5);
+}
+
+/** 多巴胺/内啡肽慢衰减：每小时 -3（让长期不互动会低落）。 */
+export function decaySlow(v: number, sinceMs: number): number {
+  const hours = sinceMs / 3_600_000;
+  return clamp(v - hours * 3);
+}
+
+/** 从饱腹反推饥饿：hunger = 100 - satiety。 */
 export function hungerFromSatiety(satiety: number): number {
   return clamp(100 - satiety);
 }

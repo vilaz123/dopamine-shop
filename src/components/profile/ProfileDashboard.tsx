@@ -45,7 +45,7 @@ export function ProfileDashboard() {
         {/* 分身入口：小 SVG + 当前心情，跳 /avatar */}
         <Link href="/avatar" className="mt-6 flex items-center gap-4 rounded-2xl bg-white/15 p-4 transition hover:bg-white/20 sm:mt-8 sm:rounded-3xl sm:p-5">
           <div className="shrink-0">
-            <AvatarBody weight={avatar.created ? avatar.weight : 1} mood={avatar.created ? avatar.mood : "content"} color={avatar.created ? avatar.color : (user.avatarColor ?? "#FF3D81")} size={64} />
+            <AvatarBody weight={avatar.created ? avatar.weight : 1} mood={avatar.created ? avatar.mood : "content"} color={avatar.created ? avatar.color : (user.avatarColor ?? "#FF3D81")} shape={avatar.created ? avatar.shape : "human"} wardrobe={avatar.created ? avatar.wardrobe : []} size={64} />
           </div>
           <div className="min-w-0">
             <p className="text-xs text-white/70 sm:text-sm">AI 分身</p>
