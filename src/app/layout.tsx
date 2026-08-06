@@ -8,6 +8,7 @@ import { RewardFlash } from "@/components/asset/RewardFlash";
 import { FlyToCart } from "@/components/asset/FlyToCart";
 import { AccountSync } from "@/components/auth/AccountSync";
 import { ServiceWorkerRegister } from "@/components/common/ServiceWorkerRegister";
+import { DeliveryConfirmManager } from "@/components/order/DeliveryConfirmManager";
 
 // 卡通可爱风：标题 Baloo 2（圆润饱满），正文 Quicksand（圆润 sans）。
 // next/font 自托管，静态导出兼容，无外部请求。
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <FlyToCart />
         <CartDrawer />
         <main>{children}</main>
+        <DeliveryConfirmManager />
         <Footer />
       </body>
     </html>
