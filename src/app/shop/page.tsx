@@ -5,10 +5,12 @@ import { categories } from "@/lib/data/categories";
 import { products } from "@/lib/data/products";
 import { withBasePath } from "@/lib/utils/path";
 import { ProductGrid } from "@/components/product/ProductGrid";
+import { MenuBook } from "@/components/product/MenuBook";
 
 export default function ShopPage() {
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("hot");
+  const [bookOpen, setBookOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -41,6 +43,7 @@ export default function ShopPage() {
         <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--page-ink)" }}>Cyber Restock</p>
         <h1 className="font-display mt-3 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>赛博进货部</h1>
         <p className="mt-4 text-base leading-7 sm:text-lg sm:leading-8" style={{ color: "var(--page-soft)" }}>复刻真实电商信息流：热榜、满减、新品、稀缺库存都在，但所有价格都是虚拟金额，无需真实支付。</p>
+        <button onClick={() => setBookOpen(true)} className="mt-5 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 active:scale-95" style={{ background: "var(--page-ink)" }}>📖 翻菜单</button>
       </div>
       <div className="mb-6 flex flex-col gap-4 sm:mb-12 md:flex-row md:items-end md:justify-between">
         <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0">
@@ -62,6 +65,7 @@ export default function ShopPage() {
       </div>
       <ProductGrid products={sorted} interactive />
       </div>
+      {bookOpen && <MenuBook products={sorted} theme="shop" title="进货部菜单" />}
     </section>
   );
 }
