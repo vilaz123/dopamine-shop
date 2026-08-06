@@ -408,6 +408,30 @@ textarea {
 }
 .slide-up { animation: slide-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
+/* ====== 菜单点菜动画版详情页（MenuDetail）====== */
+/* 区块进视口才上浮"上菜"：默认隐藏，加 .in 触发，错峰用 animation-delay */
+.menu-section {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.menu-section.in { opacity: 1; transform: translateY(0); }
+
+/* 文字逐行扫出：mask 从左铺开，给"上菜时念菜名"感 */
+@keyframes menu-text-reveal {
+  0% { opacity: 0; transform: translateY(8px); filter: blur(3px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.menu-section.in .menu-text { animation: menu-text-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* 菜单勾选 chip 选中 pop（复用 chip-pop 名空间，这里单独给菜单） */
+@keyframes menu-check-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.menu-check-pop { animation: menu-check-pop 0.26s cubic-bezier(0.22, 1, 0.36, 1); }
+
 /* ====== 导航卡片化（Header · 延用 home 3色）====== */
 /* active 项：accent 软填充 + ink 文字，带底色光晕 */
 .nav-card-active {
