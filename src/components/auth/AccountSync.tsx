@@ -6,6 +6,7 @@ import { saveAccountSnapshot } from "@/lib/account/account-storage";
 import { getSupabase } from "@/lib/supabase/client";
 import { useAssetStore } from "@/stores/asset-store";
 import { useAuthStore } from "@/stores/auth-store";
+import { useAvatarStore } from "@/stores/avatar-store";
 import { useCartStore } from "@/stores/cart-store";
 import { useOrderStore } from "@/stores/order-store";
 import { useShareStore } from "@/stores/share-store";
@@ -13,6 +14,7 @@ import type { MockUser, ShippingProfile } from "@/types/user";
 import type { Order } from "@/types/order";
 import type { Badge } from "@/types/asset";
 import type { Coupon } from "@/types/asset";
+import type { AvatarState } from "@/types/avatar";
 
 type Assets = {
   coins: number;
@@ -71,10 +73,11 @@ async function loadCloudState(supabaseUser: User) {
   if (!supabase) return;
   const uid = supabaseUser.id;
 
-  const [profileRes, stateRes, ordersRes] = await Promise.all([
+  const [profileRes, stateRes, ordersRes, avatarRes] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", uid).maybeSingle(),
     supabase.from("account_state").select("*").eq("user_id", uid).maybeSingle(),
     supabase.from("orders").select("*").eq("user_id", uid),
+    supabase.from("avatars").select("*").eq("user_id", uid).maybeSingle(),
   ]);
 
   const profile = (profileRes.data ?? null) as Record<string, unknown> | null;
@@ -82,6 +85,24 @@ async function loadCloudState(supabaseUser: User) {
   const cloudOrders = ((ordersRes.data ?? []) as { id: string; payload: Order }[])
     .map((row) => row.payload)
     .filter(Boolean) as Order[];
+
+  // 分身：云端有则灌入（云端为准，避免本地与云端形体冲突）；无则保持本地
+  const cloudAvatar = (avatarRes.data ?? null) as Record<string, unknown> | null;
+  if (cloudAvatar) {
+    useAvatarStore.setState({
+      name: (cloudAvatar.name as string) ?? "小多",
+      color: (cloudAvatar.color as string) ?? "#FF3D81",
+      hunger: Number(cloudAvatar.hunger ?? 30),
+      satiety: Number(cloudAvatar.satiety ?? 70),
+      calories: Number(cloudAvatar.calories ?? 0),
+      weight: Number(cloudAvatar.weight ?? 1),
+      mood: (cloudAvatar.mood as AvatarState["mood"]) ?? "content",
+      wardrobe: (cloudAvatar.wardrobe as string[]) ?? [],
+      lastFedAt: (cloudAvatar.last_fed_at as string) ?? "",
+      lastInteractedAt: (cloudAvatar.last_interacted_at as string) ?? "",
+      created: true,
+    });
+  }
 
   // 合并资产：币/XP 取较大值；勋章按 id 并集；券按 code 并集；库存按 slug 取较大值；收藏/浏览并集并保留客户端 cap
   const a = useAssetStore.getState();

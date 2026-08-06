@@ -1,12 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { selectLevel, useAssetStore } from "@/stores/asset-store";
 import { useAuthStore } from "@/stores/auth-store";
 import { useOrderStore } from "@/stores/order-store";
+import { useAvatarStore } from "@/stores/avatar-store";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ProfileForm } from "./ProfileForm";
 import { ShareButton } from "@/components/share/ShareButton";
+import { AvatarBody } from "@/components/avatar/AvatarBody";
 
 export function ProfileDashboard() {
   const router = useRouter();
@@ -15,6 +18,7 @@ export function ProfileDashboard() {
   const coins = useAssetStore((state) => state.coins);
   const xp = useAssetStore((state) => state.xp);
   const orders = useOrderStore((state) => state.orders);
+  const avatar = useAvatarStore((state) => state);
   const level = selectLevel(xp);
 
   if (!user || user.isAnonymous) {
@@ -38,6 +42,17 @@ export function ProfileDashboard() {
           <div className="rounded-2xl bg-white/15 p-3 sm:rounded-3xl sm:p-5"><p className="text-xs text-white/70 sm:text-sm">等级</p><p className="font-display text-2xl sm:text-4xl">Lv.{level.level}</p></div>
           <div className="rounded-2xl bg-white/15 p-3 sm:rounded-3xl sm:p-5"><p className="text-xs text-white/70 sm:text-sm">订单</p><p className="font-display text-2xl sm:text-4xl">{orders.length}</p></div>
         </div>
+        {/* 分身入口：小 SVG + 当前心情，跳 /avatar */}
+        <Link href="/avatar" className="mt-6 flex items-center gap-4 rounded-2xl bg-white/15 p-4 transition hover:bg-white/20 sm:mt-8 sm:rounded-3xl sm:p-5">
+          <div className="shrink-0">
+            <AvatarBody weight={avatar.created ? avatar.weight : 1} mood={avatar.created ? avatar.mood : "content"} color={avatar.created ? avatar.color : (user.avatarColor ?? "#FF3D81")} size={64} />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs text-white/70 sm:text-sm">AI 分身</p>
+            <p className="font-display truncate text-xl sm:text-2xl">{avatar.created ? avatar.name : "未创建"}</p>
+            <p className="mt-0.5 text-xs text-white/70">{avatar.created ? `卡路里 ${avatar.calories} · 体型 ${avatar.weight > 1.1 ? "圆润" : avatar.weight < 0.95 ? "清瘦" : "标准"}` : "点这里建一个 →"}</p>
+          </div>
+        </Link>
         {user.shipping && <div className="mt-6 rounded-2xl bg-white/15 p-4 text-sm leading-7 text-white/80 sm:mt-8 sm:rounded-3xl sm:p-5"><p>收货人：{user.shipping.receiverName}</p><p>电话：{user.shipping.phone}</p><p>地址：{user.shipping.address}</p><p>偏好：{user.shipping.deliveryPreference}</p><p>签收模式：{user.shipping.deliveryCompletion === "signed" ? "可送达并一键签收" : "永不签收"}</p></div>}
         <ShareButton className="mt-6 w-full" type="profile" title={`${user.username} 邀你进入 Dopahub 多巴胺仓`} text={`我已经在多巴胺仓虚拟下单 ${orders.length} 次，实际支付 ¥0。`} />
         <Button variant="ghost" className="mt-3 w-full border-white/30 text-white" onClick={() => { logout(); router.push("/"); }}>退出登录</Button>

@@ -8,6 +8,7 @@ export const storageKeys = {
   auth: "dopahub.auth.v1",
   accounts: "dopahub.accounts.v1",
   shares: "dopahub.shares.v1",
+  avatar: "dopahub.avatar.v1",
 };
 
 export function safeLocalStorage() {

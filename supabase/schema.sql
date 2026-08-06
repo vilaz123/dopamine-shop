@@ -44,6 +44,24 @@ create table if not exists public.orders (
 );
 
 -- ----------------------------------------------------------------------------
+-- avatars：AI 分身状态（饥饿/饱腹/卡路里/形态/心情/衣橱，单用户单行）
+-- ----------------------------------------------------------------------------
+create table if not exists public.avatars (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  name text default '小多',
+  color text default '#FF3D81',
+  hunger integer default 30,
+  satiety integer default 70,
+  calories integer default 0,
+  weight real default 1.0,
+  mood text default 'content',
+  wardrobe text[] default '{}'::text[],
+  last_fed_at timestamptz,
+  last_interacted_at timestamptz,
+  updated_at timestamptz default now()
+);
+
+-- ----------------------------------------------------------------------------
 -- 社区：帖子 / 评论 / 点赞（共享读，写仅本人）
 -- ----------------------------------------------------------------------------
 create table if not exists public.community_posts (
@@ -150,6 +168,7 @@ alter table public.profiles          enable row level security;
 alter table public.account_state     enable row level security;
 alter table public.orders            enable row level security;
 alter table public.user_events       enable row level security;
+alter table public.avatars           enable row level security;
 alter table public.community_posts   enable row level security;
 alter table public.community_comments enable row level security;
 alter table public.community_likes   enable row level security;
@@ -166,6 +185,10 @@ create policy account_state_self on public.account_state
 
 drop policy if exists orders_self on public.orders;
 create policy orders_self on public.orders
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+drop policy if exists avatars_self on public.avatars;
+create policy avatars_self on public.avatars
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
 drop policy if exists user_events_self on public.user_events;
