@@ -401,6 +401,13 @@ textarea {
 }
 .slide-down { animation: slide-down 0.3s ease-out both; }
 
+/* 状态解说弹层从底部滑入 */
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.slide-up { animation: slide-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
 /* ====== 导航卡片化（Header · 延用 home 3色）====== */
 /* active 项：accent 软填充 + ink 文字，带底色光晕 */
 .nav-card-active {

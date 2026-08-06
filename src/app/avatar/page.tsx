@@ -9,6 +9,7 @@ import { useAssetStore } from "@/stores/asset-store";
 import { getProduct, products } from "@/lib/data/products";
 import { isFeedable, isWearable, virtualCalories } from "@/lib/data/avatar-calories";
 import { pickLine } from "@/lib/avatar/avatar-mood";
+import { statInfo, type StatKey } from "@/lib/avatar/stat-info";
 import { playPop } from "@/lib/utils/sfx";
 import { AvatarBody } from "@/components/avatar/AvatarBody";
 import { Button, ButtonLink } from "@/components/ui/Button";
@@ -45,6 +46,7 @@ export default function AvatarPage() {
   const [editName, setEditName] = useState("");
   const [editColor, setEditColor] = useState("#FF3D81");
   const [editShape, setEditShape] = useState<AvatarShape>("human");
+  const [statModal, setStatModal] = useState<StatKey | null>(null);
 
   // 进页/聚焦时重算饥饿（随时间衰减）
   useEffect(() => {
@@ -173,13 +175,13 @@ export default function AvatarPage() {
             </div>
             {/* 状态环 */}
             <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-4">
-              <Stat label="饱腹" value={avatar.satiety} />
-              <Stat label="饥饿" value={avatar.hunger} />
-              <Stat label="多巴胺" value={avatar.dopamine} accent />
-              <Stat label="内啡肽" value={avatar.endorphin} accent />
-              <Stat label="精神" value={avatar.spirit} danger={avatar.spirit < 30} />
-              <Stat label="卡路里" value={avatar.calories} raw />
-              <Stat label="体型" value={avatar.weight > 1.1 ? "圆润" : avatar.weight < 0.95 ? "清瘦" : "标准"} raw />
+              <Stat statKey="satiety" label="饱腹" value={avatar.satiety} onInfo={setStatModal} />
+              <Stat statKey="hunger" label="饥饿" value={avatar.hunger} onInfo={setStatModal} />
+              <Stat statKey="dopamine" label="多巴胺" value={avatar.dopamine} accent onInfo={setStatModal} />
+              <Stat statKey="endorphin" label="内啡肽" value={avatar.endorphin} accent onInfo={setStatModal} />
+              <Stat statKey="spirit" label="精神" value={avatar.spirit} danger={avatar.spirit < 30} onInfo={setStatModal} />
+              <Stat statKey="calories" label="卡路里" value={avatar.calories} raw onInfo={setStatModal} />
+              <Stat statKey="weight" label="体型" value={avatar.weight > 1.1 ? "圆润" : avatar.weight < 0.95 ? "清瘦" : "标准"} raw onInfo={setStatModal} />
             </div>
             <div className="mt-5 grid grid-cols-2 gap-2.5">
               <Button variant="ghost" onClick={openEdit}>✏️ 编辑分身</Button>
@@ -260,18 +262,28 @@ export default function AvatarPage() {
           </div>
         </div>
       </div>
+
+      {/* 状态解说弹层 */}
+      {statModal && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center" role="dialog" aria-modal>
+          <div className="absolute inset-0 bg-black/45 backdrop-blur-sm" onClick={() => setStatModal(null)} aria-hidden />
+          <div className="relative w-full max-w-md slide-up sm:mx-auto">
+            <StatModal statKey={statModal} onClose={() => setStatModal(null)} />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
 
-function Stat({ label, value, accent, danger, raw = false }: { label: string; value: string | number; accent?: boolean; danger?: boolean; raw?: boolean }) {
+function Stat({ statKey, label, value, accent, danger, raw = false, onInfo }: { statKey: StatKey; label: string; value: string | number; accent?: boolean; danger?: boolean; raw?: boolean; onInfo: (k: StatKey) => void }) {
   // 0-100 的状态值显示成进度条 + 数字；raw 直接显示文本/大数
   const num = typeof value === "number" ? value : Number(value);
   const isNumeric = !raw && !Number.isNaN(num);
   const v = isNumeric ? num : null;
   const color = danger ? "var(--danger)" : accent ? "var(--hot)" : "var(--page-ink)";
   return (
-    <div className="rounded-2xl bg-white/70 p-2.5 text-center sm:p-3">
+    <button onClick={() => onInfo(statKey)} className="rounded-2xl bg-white/70 p-2.5 text-center transition hover:bg-white/90 active:scale-95 sm:p-3">
       <p className="text-[10px] sm:text-[11px]" style={{ color: "var(--page-soft)" }}>{label}</p>
       {isNumeric && v != null ? (
         <>
@@ -282,6 +294,34 @@ function Stat({ label, value, accent, danger, raw = false }: { label: string; va
         </>
       ) : (
         <p className="font-display text-lg sm:text-xl" style={{ color }}>{value}</p>
+      )}
+    </button>
+  );
+}
+
+function StatModal({ statKey, onClose }: { statKey: StatKey; onClose: () => void }) {
+  const info = statInfo[statKey];
+  return (
+    <div className="rounded-t-[1.5rem] bg-white p-6 shadow-2xl sm:rounded-[1.5rem]" style={{ color: "var(--page-ink)" }}>
+      <div className="flex items-center justify-between">
+        <h3 className="font-display flex items-center gap-2 text-xl"><span className="text-2xl">{info.emoji}</span>{info.title}</h3>
+        <button onClick={onClose} className="rounded-full border border-black/10 bg-white/70 px-3 py-1.5 text-sm" style={{ color: "var(--page-ink)" }}>关闭</button>
+      </div>
+      <p className="mt-4 text-sm leading-7" style={{ color: "var(--page-soft)" }}>{info.what}</p>
+      <div className="mt-4">
+        <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--hot)" }}>如何提升</p>
+        <ul className="mt-2 space-y-1.5">
+          {info.how.map((h, i) => (
+            <li key={i} className="flex gap-2 text-sm leading-6" style={{ color: "var(--page-ink)" }}>
+              <span style={{ color: "var(--hot)" }}>•</span><span>{h}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {info.note && (
+        <div className="mt-4 rounded-2xl bg-[color-mix(in_srgb,var(--page-accent)_18%,white)] p-4 text-xs leading-6" style={{ color: "var(--page-ink)" }}>
+          {info.note}
+        </div>
       )}
     </div>
   );
