@@ -33,6 +33,8 @@ const initialAvatar: AvatarState = {
 type AvatarStore = AvatarState & {
   /** 建分身（首次）。 */
   createAvatar: (name: string, color: string, shape: AvatarState["shape"]) => void;
+  /** 编辑已有分身（名字/颜色/形象）。 */
+  updateAvatar: (patch: Pick<AvatarState, "name" | "color" | "shape">) => void;
   /** 喂食：仅食物。返回本次卡路里（供 UI 飞金币）。 */
   feed: (product: Product) => number;
   /** 穿戴：仅服饰。 */
@@ -104,6 +106,19 @@ export const useAvatarStore = create<AvatarStore>()(
           };
           syncAvatarToCloud(state);
           return state;
+        }),
+
+      updateAvatar: (patch) =>
+        set((state) => {
+          if (!state.created) return state;
+          const next: AvatarState = {
+            ...state,
+            name: patch.name?.trim() ? patch.name.trim() : state.name,
+            color: patch.color || state.color,
+            shape: patch.shape || state.shape,
+          };
+          syncAvatarToCloud(next);
+          return next;
         }),
 
       feed: (product) => {
