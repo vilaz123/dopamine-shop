@@ -185,7 +185,7 @@ export default function AvatarPage() {
         <div className="mt-8 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
           {/* 左：分身 + 状态 */}
           <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-6 backdrop-blur sm:rounded-[2rem]">
-            <div className="flex justify-center"><AvatarBody weight={avatar.weight} mood={avatar.mood} color={avatar.color} shape={avatar.shape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} size={220} /></div>
+            <div className="flex justify-center"><AvatarBody weight={avatar.weight} mood={avatar.mood} color={avatar.color} shape={avatar.shape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} dopamine={avatar.dopamine} endorphin={avatar.endorphin} size={220} /></div>
             {/* 穿戴角标 */}
             {avatar.wardrobe.length > 0 && (
               <div className="mt-2 flex justify-center gap-1.5">
@@ -276,7 +276,7 @@ export default function AvatarPage() {
                 <p className="font-display text-lg">✏️ 编辑分身</p>
                 <button onClick={() => setEditing(false)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1.5 text-sm" style={{ color: "var(--page-ink)" }}>关闭</button>
               </div>
-              <div className="flex justify-center"><AvatarBody mood={avatar.mood} color={editColor} shape={editShape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} size={120} /></div>
+              <div className="flex justify-center"><AvatarBody mood={avatar.mood} color={editColor} shape={editShape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} dopamine={avatar.dopamine} endorphin={avatar.endorphin} size={120} /></div>
               <div className="mt-4 space-y-4">
                 <div>
                   <p className="mb-2 text-sm font-semibold">形象</p>

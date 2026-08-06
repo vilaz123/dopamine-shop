@@ -17,6 +17,8 @@ export function AvatarBody({
   satiety = 70,
   calories = 0,
   spirit = 80,
+  dopamine = 50,
+  endorphin = 50,
   size = 220,
   // wardrobe 现写实形象上不硬叠，仅占位以兼容旧调用；穿戴以角标 chip 在页面上标注。
   wardrobe: _wardrobe = [],
@@ -28,11 +30,13 @@ export function AvatarBody({
   satiety?: number;
   calories?: number;
   spirit?: number;
+  dopamine?: number;
+  endorphin?: number;
   size?: number;
   wardrobe?: string[];
 }) {
   const [failed, setFailed] = useState(false);
-  const look = avatarLook(shape, weight, satiety, calories, spirit);
+  const look = avatarLook(shape, weight, satiety, calories, spirit, dopamine, endorphin, mood);
 
   if (!failed) {
     return (
