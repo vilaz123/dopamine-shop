@@ -29,7 +29,7 @@ const shapes = {
   bunny: "a cute chibi bunny character, an adorable fluffy rabbit standing upright",
 };
 
-// 身体状态描述（含 emaciated 干瘦 / thin 微饿 / normal / stuffed 太撑 / chubby 胖 / fat 超胖 / pig 变猪）
+// 身体状态描述（含 emaciated 干瘦 / thin 微饿 / normal / stuffed 太撑 / chubby 胖 / fat 超胖 / obese 极胖 / muscular 健壮 / sick 难受）
 const bodies = {
   emaciated: "very thin and emaciated, sunken cheeks, pale sallow yellowish skin, bony, looks starving and weak, sad expression",
   thin: "slightly thin, a bit hungry looking, slim but okay",
@@ -37,28 +37,50 @@ const bodies = {
   stuffed: "stuffed and bloated, very full round belly, holding its swollen tummy, uncomfortable overfed expression",
   chubby: "chubby and plump, pleasantly round and soft",
   fat: "very fat and round, big round belly, heavy",
+  obese: "extremely obese and huge, enormous round belly, very heavy, barely able to stand",
+  muscular: "fit and muscular, toned athletic body, strong and healthy from exercise",
+  sick: "looking unwell, greenish queasy face, sweating, nauseous, holding stomach, sick expression",
   pig: "transformed into a round chubby cartoon pig, pink piggy, snout and floppy ears, very fat",
 };
 const spirits = {
   energetic: "bright energetic eyes, beaming, full of energy and vitality",
   ok: "calm neutral expression",
   tired: "droopy tired eyes, sleepy and exhausted, dark circles, low energy",
+  happy: "big joyful smile, laughing happily, sparkling eyes, ecstatic",
+  sad: "sad teary eyes, frowning, downcast, melancholy expression",
+  sleeping: "fast asleep, eyes closed peacefully, little Zzz, snoozing, cozy",
 };
 
-// 生图清单：降维——spirit 仅在 normal body 区分；pig 不分 shape 统一一张。
-// 清单 = (shape×各body×ok) + (shape×normal×{energetic,tired}) + pig
+// 生图清单：扩大状态覆盖。pig 不分 shape 统一一张；其余按"高影响组合"生图，
+// 不是全笛卡尔积(会爆炸)，挑每个 shape 下最有戏的 body×spirit 组合。
 const list = [];
+// 每个 shape：所有 body 各一张默认精神；再加精神差异组合
+const bodyDefault = { emaciated: "sad", thin: "ok", normal: "energetic", stuffed: "ok", chubby: "happy", fat: "ok", obese: "tired", muscular: "energetic", sick: "sad" };
+const extraSpirits = [
+  ["normal", "happy"], ["normal", "tired"], ["normal", "ok"], ["normal", "sleeping"], ["normal", "sad"],
+  ["chubby", "happy"], ["chubby", "tired"], ["chubby", "sleeping"],
+  ["fat", "happy"], ["fat", "tired"],
+  ["stuffed", "happy"], ["stuffed", "sad"],
+  ["emaciated", "sad"], ["emaciated", "sleeping"],
+  ["thin", "ok"], ["thin", "tired"],
+  ["muscular", "energetic"], ["muscular", "happy"],
+  ["sick", "sad"], ["sick", "sleeping"],
+  ["obese", "tired"], ["obese", "sad"],
+];
 for (const [sh, shp] of Object.entries(shapes)) {
-  for (const [bk, bv] of Object.entries(bodies)) {
-    if (bk === "pig") continue; // pig 单独加
-    const sp = bk === "normal" ? "energetic" : "ok"; // normal 默认 energetic，其他 ok
-    list.push({ file: `${sh}-${bk}-${sp}`, prompt: `${shp}, ${bv}, ${spirits[sp]}, ${STYLE}` });
+  for (const [bk, sp] of Object.entries(bodyDefault)) {
+    if (bk === "pig") continue;
+    list.push({ file: `${sh}-${bk}-${sp}`, prompt: `${shp}, ${bodies[bk]}, ${spirits[sp]}, ${STYLE}` });
   }
-  // normal 的 tired/ok 两种精神差异
-  list.push({ file: `${sh}-normal-ok`, prompt: `${shp}, ${bodies.normal}, ${spirits.ok}, ${STYLE}` });
-  list.push({ file: `${sh}-normal-tired`, prompt: `${shp}, ${bodies.normal}, ${spirits.tired}, ${STYLE}` });
+  for (const [bk, sp] of extraSpirits) {
+    const file = `${sh}-${bk}-${sp}`;
+    if (list.some((it) => it.file === file)) continue; // 默认已覆盖则跳过
+    list.push({ file, prompt: `${shp}, ${bodies[bk]}, ${spirits[sp]}, ${STYLE}` });
+  }
 }
 list.push({ file: "pig-ok", prompt: `${bodies.pig}, ${spirits.ok}, ${STYLE}` });
+list.push({ file: "pig-happy", prompt: `${bodies.pig}, ${spirits.happy}, ${STYLE}` });
+list.push({ file: "pig-tired", prompt: `${bodies.pig}, ${spirits.tired}, ${STYLE}` });
 
 async function submit(prompt) {
   const res = await fetch(`${BASE}/services/aigc/text2image/image-synthesis`, {
