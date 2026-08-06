@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { AvatarMood, AvatarShape } from "@/types/avatar";
-import { avatarLook } from "@/lib/avatar/avatar-look";
+import { avatarLook, colorToFilter } from "@/lib/avatar/avatar-look";
 
 /**
  * 可爱写实分身形象卡：优先加载通义万相生成的静态图（形状×身体×精神），
@@ -37,19 +37,23 @@ export function AvatarBody({
 }) {
   const [failed, setFailed] = useState(false);
   const look = avatarLook(shape, weight, satiety, calories, spirit, dopamine, endorphin, mood);
+  const colorFilter = colorToFilter(color);
+  // 显示用缩略图(快 4 倍)，src 形如 .../avatars/x.webp → .../avatars/x-thumb.webp
+  const displaySrc = look.src.replace(/\.webp$/, "-thumb.webp");
 
   if (!failed) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={look.src}
+        src={displaySrc}
         alt={look.alt}
         width={size}
         height={Math.round((size * 1216) / 832)}
-        loading="lazy"
+        loading="eager"
+        fetchPriority="high"
         decoding="async"
         className="rounded-[1.25rem] object-cover shadow-lg"
-        style={{ width: size, height: "auto", maxWidth: "100%" }}
+        style={{ width: size, height: "auto", maxWidth: "100%", filter: colorFilter || undefined }}
         onError={() => setFailed(true)}
       />
     );
