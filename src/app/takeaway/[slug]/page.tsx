@@ -4,7 +4,7 @@ import { getTakeawayShop, takeawayShops, takeawayBucket, formatMonthlySales, sho
 import { getProduct } from "@/lib/data/products";
 import { MediaGallery } from "@/components/common/MediaGallery";
 import { CollapsibleStory } from "@/components/common/CollapsibleStory";
-import { TakeawayMealCard } from "@/components/takeaway/TakeawayMealCard";
+import { TakeawayMenuButton } from "@/components/takeaway/TakeawayMenuButton";
 import { TakeawayActionBar } from "@/components/takeaway/TakeawayActionBar";
 import { DetailHeatBar } from "@/components/product/DetailHeatBar";
 import { RiderMapMock } from "@/components/order/RiderMapMock";
@@ -89,14 +89,10 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
         </div>
       )}
 
-      <section className="mt-14 border-t border-white/15 pt-12 sm:mt-16">
-        <h2 className="font-display mb-6 text-3xl text-white sm:text-4xl">本店菜单</h2>
-        <p className="mb-8 text-white/70 sm:mb-10">选规格可展开口味/辣度等选项，加入购物车后仍可在购物车里改。</p>
-        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
-          {meals.map((product) => (
-            <TakeawayMealCard key={product.slug} product={product} />
-          ))}
-        </div>
+      <section className="mt-12 border-t border-white/15 pt-8 sm:mt-16 sm:pt-12">
+        <h2 className="font-display text-base text-white sm:text-lg">本店菜单</h2>
+        <p className="mt-2 text-sm text-white/70">翻开菜单像点菜一样逐页选，加购后仍可在购物车里改。</p>
+        <TakeawayMenuButton meals={meals} />
       </section>
 
       {flagship && <ReviewSection productSlug={flagship.slug} />}
