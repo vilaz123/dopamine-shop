@@ -46,7 +46,7 @@ export function DetailActionBar({ product }: { product: Product }) {
     <>
       <div className="fixed inset-x-0 bottom-0 z-40 md:hidden">
         <div
-          className="container-shell pb-[max(0.75rem,env(safe-area-inset-bottom)] pt-3"
+          className="px-4 pb-[max(0.75rem,env(safe-area-inset-bottom)] pt-3"
           style={{ background: "color-mix(in srgb, var(--page-bg) 92%, transparent)", borderTop: "1px solid color-mix(in srgb, var(--page-accent) 60%, transparent)", backdropFilter: "blur(10px)" }}
         >
           <div className="flex items-center gap-2">

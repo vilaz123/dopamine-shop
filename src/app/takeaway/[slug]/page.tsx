@@ -38,31 +38,37 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
           </MediaGallery>
         </div>
         <div className="lg:pt-6">
-          <p className="text-xs uppercase tracking-[0.32em] text-[var(--page-highlight)]">{takeawayBucket(shop.category)}</p>
-          <h1 className="font-display mt-3 text-3xl leading-tight text-white sm:text-4xl md:text-5xl">{shop.name}</h1>
-          {/* 评分行 + 本月人气条（手机整行、桌面右侧贴条） */}
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-base text-white/85 sm:text-lg">
-            <span className="font-semibold text-[var(--gold)]">★ {shop.rating.toFixed(1)}</span>
-            <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>
-            <span>{shop.distanceKm}km 幻想距离</span>
-          </div>
-          <div className="mt-4 max-w-xs">
-            <DetailHeatBar value={shop.monthlySales / 12000} label="本月人气" saturation={shop.saturation} accent={shop.accent} />
-          </div>
+          {/* 店名卡：聚合标题 + 评分 + 信息，层次更清晰 */}
+          <div className="rounded-[1.25rem] border border-white/20 bg-white/10 p-5 backdrop-blur sm:rounded-[1.5rem] sm:p-6">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--page-highlight)]">{takeawayBucket(shop.category)}</p>
+            <h1 className="font-display mt-2 text-2xl leading-tight text-white sm:mt-3 sm:text-3xl md:text-4xl">{shop.name}</h1>
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-white/85 sm:text-base">
+              <span className="font-semibold text-[var(--gold)]">★ {shop.rating.toFixed(1)}</span>
+              <span className="text-white/40">·</span>
+              <span>虚拟月售 {formatMonthlySales(shop.monthlySales)}</span>
+              <span className="text-white/40">·</span>
+              <span>{shop.distanceKm}km 幻想距离</span>
+            </div>
+            <div className="mt-4">
+              <DetailHeatBar value={shop.monthlySales / 12000} label="本月人气" saturation={shop.saturation} accent={shop.accent} />
+            </div>
 
-          {/* 起送/配送/时间：手机横向滚动 */}
-          <div className="mt-5 flex gap-3 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
-            <span className="shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur">起送 ¥{shop.minOrder}</span>
-            <span className="shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur">配送 ¥{shop.deliveryFee}</span>
-            <span className="shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm text-white backdrop-blur">预计 {shop.deliveryTimeMin} 分钟</span>
+            {/* 起送/配送/时间：手机横向滚动 */}
+            <div className="mt-4 flex gap-2.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+              <span className="shrink-0 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs text-white backdrop-blur">起送 ¥{shop.minOrder}</span>
+              <span className="shrink-0 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs text-white backdrop-blur">配送 ¥{shop.deliveryFee}</span>
+              <span className="shrink-0 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs text-white backdrop-blur">预计 {shop.deliveryTimeMin} 分钟</span>
+            </div>
+            {/* 满减：手机横向滚动 */}
+            {shop.discounts.length > 0 && (
+              <div className="mt-3 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+                {shop.discounts.map((discount) => (
+                  <span key={discount} className="shrink-0 rounded-full border border-[var(--gold)]/50 bg-[var(--gold)]/15 px-3 py-1 text-xs text-[var(--gold)]">{discount}</span>
+                ))}
+              </div>
+            )}
           </div>
-          {/* 满减：手机横向滚动 */}
-          <div className="mt-4 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
-            {shop.discounts.map((discount) => (
-              <span key={discount} className="shrink-0 rounded-full border border-[var(--gold)]/50 bg-[var(--gold)]/15 px-3 py-1 text-xs text-[var(--gold)]">{discount}</span>
-            ))}
-          </div>
-          <div className="mt-6">
+          <div className="mt-5">
             <RiderMapMock etaMinutes={shop.deliveryTimeMin} />
           </div>
         </div>
@@ -96,8 +102,10 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
       {flagship && <ReviewSection productSlug={flagship.slug} />}
       </div>
 
-      {/* 手机底部固定操作栏 */}
+      {/* 手机底部固定操作栏：全宽贴边 */}
       <TakeawayActionBar shop={shop} />
+      {/* 底部栏占位，避免盖住页面末尾内容 */}
+      <div className="h-20 md:hidden" aria-hidden />
     </section>
   );
 }

@@ -88,7 +88,9 @@ export function MediaGallery({ images, alt, aspect, children, auto = false }: Me
     return () => clearInterval(t);
   }, [auto, images.length, inView, paused]);
 
-  const aspectClass = aspect === "4/5" ? "aspect-[4/5]" : "aspect-[4/3]";
+  // 手机竖屏：方形（aspect-square）比 4/5 更省屏，不会整屏被图占满；桌面恢复 4/5。
+  const aspectClass =
+    aspect === "4/5" ? "aspect-square sm:aspect-[4/5]" : "aspect-[4/3]";
 
   return (
     <div ref={ref} className="relative">
