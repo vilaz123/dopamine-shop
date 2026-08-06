@@ -28,7 +28,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     <section className="theme-shop relative overflow-hidden">
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
       <div className="container-shell py-8 sm:py-14">
-      <Link href="/shop" className="text-sm text-[var(--muted)] hover:text-black">← 返回赛博进货部</Link>
+      <div className="flex items-center justify-between gap-3">
+        <Link href="/shop" className="text-sm text-[var(--muted)] hover:text-black">← 返回赛博进货部</Link>
+        <Link href={`/menu/${product.slug}`} className="rounded-full bg-[var(--hot)] px-3 py-1.5 text-xs font-semibold text-white">菜单点菜版预览 →</Link>
+      </div>
       <div className="mt-6 grid gap-6 sm:gap-12 lg:grid-cols-[1fr_.9fr] lg:gap-10">
         {/* 主图：手机方形省屏、桌面 4/5；自动轮播 + 缩略图首屏提速 */}
         <div className="relative">

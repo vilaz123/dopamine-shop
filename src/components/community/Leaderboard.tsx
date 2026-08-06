@@ -54,7 +54,7 @@ export function Leaderboard() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-[var(--hot)]">Self-Discipline Rank</p>
-          <h2 className="font-display mt-2 text-2xl sm:text-3xl" style={{ color: "var(--page-ink)" }}>自律省钱榜</h2>
+          <h2 className="font-display mt-1.5 text-base sm:text-xl" style={{ color: "var(--page-ink)" }}>自律省钱榜</h2>
           <p className="mt-1 text-xs text-[var(--muted)] sm:text-sm">虚拟下单 = ¥0 真实支付，每一单都是忍住的冲动。{activeMetric.desc}</p>
         </div>
         {/* 今日 / 累计 */}

@@ -30,9 +30,9 @@ export function ProfileForm() {
   }
 
   return (
-    <form onSubmit={submit} className="rounded-[1.75rem] border border-white/60 bg-white/85 p-5 shadow-sm sm:rounded-[2.5rem] sm:p-8">
-      <h2 className="font-display text-3xl sm:text-5xl" style={{ color: "var(--page-ink)" }}>设置你的仓主资料</h2>
-      <div className="mt-8 space-y-4">
+    <form onSubmit={submit} className="rounded-[1rem] border border-white/60 bg-white/85 p-4 shadow-sm sm:rounded-[1.5rem] sm:p-6">
+      <h2 className="font-display text-base sm:text-xl" style={{ color: "var(--page-ink)" }}>设置你的仓主资料</h2>
+      <div className="mt-5 space-y-3.5">
         <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="用户名" required />
         <label className="flex items-center gap-2 text-sm" style={{ color: "var(--page-soft)" }}><input type="checkbox" checked={addShipping} onChange={(e) => setAddShipping(e.target.checked)} /> 添加虚拟收货信息</label>
       </div>
