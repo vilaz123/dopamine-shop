@@ -14,6 +14,7 @@ const navItems: NavItem[] = [
   { href: "/blindbox", label: "赌一把盲盒", emoji: "🎲" },
   { href: "/takeaway", label: "卡路里投影区", emoji: "🛵" },
   { href: "/assets", label: "我的资产", emoji: "💰" },
+  { href: "/avatar", label: "我的分身", emoji: "🧍" },
   { href: "/community", label: "多巴胺广场", emoji: "🎤" },
   { href: "/orders", label: "我的订单", emoji: "📦" },
   { href: "/profile", label: "我的账号", emoji: "🙂" },
