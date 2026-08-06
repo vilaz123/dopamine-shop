@@ -29,6 +29,7 @@ export default function CheckoutPage() {
   const items = useCartStore((state) => state.items);
   const clear = useCartStore((state) => state.clear);
   const addOrder = useOrderStore((state) => state.addOrder);
+  const addPendingDelivery = useOrderStore((state) => state.addPendingDelivery);
   const asset = useAssetStore();
   const user = useAuthStore((state) => state.user);
   const setLastReward = useUiStore((state) => state.setLastReward);
@@ -69,6 +70,12 @@ export default function CheckoutPage() {
       profile: { virtualAddress, giftWrap, deliveryCompletion: user?.shipping?.deliveryCompletion ?? "never", couponCode: coupon?.code, couponLabel: coupon?.label, note },
     };
     addOrder(order);
+    // 下单 1 分钟后弹收货确认：食物订单额外问是否喂分身
+    addPendingDelivery({
+      orderId: order.id,
+      deliverAt: new Date(Date.now() + 60_000).toISOString(),
+      items: lines.map(({ item, product }) => ({ slug: product.slug, name: product.name, category: product.category, quantity: item.quantity })),
+    });
     clear();
     setLastReward({ id: order.id, coins: coinsEarned, xp: xpEarned, badge: badges[0]?.name });
     router.push(`/orders?order=${order.id}&success=1`);

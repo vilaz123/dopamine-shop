@@ -168,7 +168,17 @@ export default function AvatarPage() {
         <div className="mt-8 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
           {/* 左：分身 + 状态 */}
           <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-6 backdrop-blur sm:rounded-[2rem]">
-            <div className="flex justify-center"><AvatarBody weight={avatar.weight} mood={avatar.mood} color={avatar.color} shape={avatar.shape} wardrobe={avatar.wardrobe} size={220} /></div>
+            <div className="flex justify-center"><AvatarBody weight={avatar.weight} mood={avatar.mood} color={avatar.color} shape={avatar.shape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} size={220} /></div>
+            {/* 穿戴角标 */}
+            {avatar.wardrobe.length > 0 && (
+              <div className="mt-2 flex justify-center gap-1.5">
+                {avatar.wardrobe.map((slug) => {
+                  const p = products.find((x) => x.slug === slug);
+                  if (!p) return null;
+                  return <span key={slug} className="rounded-full bg-white/70 px-2 py-0.5 text-[10px]" style={{ color: "var(--page-ink)" }}>穿着 {p.name}</span>;
+                })}
+              </div>
+            )}
             {/* 反馈气泡 */}
             <div key={lineKey} className="card-enter mt-4 rounded-2xl bg-white/80 px-4 py-3 text-center text-sm font-medium" style={{ color: "var(--page-ink)" }}>
               “{line}”
@@ -197,7 +207,7 @@ export default function AvatarPage() {
                   <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>编辑分身</p>
                   <button onClick={() => setEditing(false)} className="text-sm" style={{ color: "var(--page-soft)" }}>取消</button>
                 </div>
-                <div className="flex justify-center"><AvatarBody mood={avatar.mood} color={editColor} shape={editShape} wardrobe={avatar.wardrobe} size={140} /></div>
+                <div className="flex justify-center"><AvatarBody mood={avatar.mood} color={editColor} shape={editShape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} size={140} /></div>
                 <div className="mt-4 space-y-4">
                   <div>
                     <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>形象</p>
