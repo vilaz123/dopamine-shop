@@ -12,8 +12,14 @@ import { pickLine } from "@/lib/avatar/avatar-mood";
 import { playPop } from "@/lib/utils/sfx";
 import { AvatarBody } from "@/components/avatar/AvatarBody";
 import { Button, ButtonLink } from "@/components/ui/Button";
+import type { AvatarShape } from "@/types/avatar";
 
 const COLORS = ["#FF3D81", "#6C5CE7", "#FF8A00", "#06B6D4", "#22C55E", "#F43F5E"];
+const SHAPES: { id: AvatarShape; label: string; emoji: string }[] = [
+  { id: "human", label: "人形", emoji: "🧍" },
+  { id: "cat", label: "猫", emoji: "🐱" },
+  { id: "bunny", label: "兔", emoji: "🐰" },
+];
 
 export default function AvatarPage() {
   const user = useAuthStore((s) => s.user);
@@ -30,6 +36,7 @@ export default function AvatarPage() {
 
   const [name, setName] = useState(user?.username ? `${user.username}的分身` : "小多");
   const [color, setColor] = useState(user?.avatarColor ?? "#FF3D81");
+  const [shape, setShape] = useState<AvatarShape>("human");
   const [line, setLine] = useState("建个分身，开始投喂吧");
   const [lineKey, setLineKey] = useState(0);
 
@@ -97,9 +104,20 @@ export default function AvatarPage() {
           <div className="mx-auto max-w-md rounded-[1.5rem] border border-white/60 bg-white/75 p-6 backdrop-blur sm:rounded-[2.5rem] sm:p-8">
             <p className="text-xs uppercase tracking-[0.32em]" style={{ color: "var(--hot)" }}>Avatar</p>
             <h1 className="font-display mt-3 text-3xl sm:text-4xl" style={{ color: "var(--page-ink)" }}>建个分身</h1>
-            <p className="mt-3 text-sm leading-7" style={{ color: "var(--page-soft)" }}>给它起个名、挑个色。你买的食物能喂它、服饰能给它穿，它会变胖变饿、跟你吐槽。</p>
-            <div className="mt-6 flex justify-center"><AvatarBody mood="happy" color={color} size={180} /></div>
+            <p className="mt-3 text-sm leading-7" style={{ color: "var(--page-soft)" }}>选个形象、起个名、挑个色。你买的食物能喂它、服饰能给它穿，它会变胖变饿、跟你吐槽。</p>
+            <div className="mt-6 flex justify-center"><AvatarBody mood="happy" color={color} shape={shape} size={180} /></div>
             <div className="mt-6 space-y-4">
+              <div>
+                <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>形象</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {SHAPES.map((s) => (
+                    <button key={s.id} onClick={() => setShape(s.id)} className={`flex flex-col items-center gap-1 rounded-2xl border px-2 py-3 transition ${shape === s.id ? "border-[var(--hot)] bg-[var(--hot)]/10" : "border-black/10 bg-white/60 hover:border-black/30"}`}>
+                      <span className="text-2xl">{s.emoji}</span>
+                      <span className="text-xs" style={{ color: "var(--page-ink)" }}>{s.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div>
                 <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>名字</p>
                 <input value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-full border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[var(--hot)]" placeholder="小多" />
@@ -113,7 +131,7 @@ export default function AvatarPage() {
                 </div>
               </div>
             </div>
-            <Button className="mt-8 w-full" onClick={() => createAvatar(name, color)}>创建分身</Button>
+            <Button className="mt-8 w-full" onClick={() => createAvatar(name, color, shape)}>创建分身</Button>
           </div>
         </div>
       </section>
@@ -130,17 +148,20 @@ export default function AvatarPage() {
         <div className="mt-8 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
           {/* 左：分身 + 状态 */}
           <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-6 backdrop-blur sm:rounded-[2rem]">
-            <div className="flex justify-center"><AvatarBody weight={avatar.weight} mood={avatar.mood} color={avatar.color} size={220} /></div>
+            <div className="flex justify-center"><AvatarBody weight={avatar.weight} mood={avatar.mood} color={avatar.color} shape={avatar.shape} wardrobe={avatar.wardrobe} size={220} /></div>
             {/* 反馈气泡 */}
             <div key={lineKey} className="card-enter mt-4 rounded-2xl bg-white/80 px-4 py-3 text-center text-sm font-medium" style={{ color: "var(--page-ink)" }}>
               “{line}”
             </div>
             {/* 状态环 */}
-            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <Stat label="饱腹" value={`${avatar.satiety}`} />
-              <Stat label="饥饿" value={`${avatar.hunger}`} />
-              <Stat label="卡路里" value={`${avatar.calories}`} />
-              <Stat label="体型" value={avatar.weight > 1.1 ? "圆润" : avatar.weight < 0.95 ? "清瘦" : "标准"} />
+            <div className="mt-5 grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+              <Stat label="饱腹" value={avatar.satiety} />
+              <Stat label="饥饿" value={avatar.hunger} />
+              <Stat label="多巴胺" value={avatar.dopamine} accent />
+              <Stat label="内啡肽" value={avatar.endorphin} accent />
+              <Stat label="精神" value={avatar.spirit} danger={avatar.spirit < 30} />
+              <Stat label="卡路里" value={avatar.calories} raw />
+              <Stat label="体型" value={avatar.weight > 1.1 ? "圆润" : avatar.weight < 0.95 ? "清瘦" : "标准"} raw />
             </div>
             <Button variant="ghost" className="mt-5 w-full" onClick={() => { resetShape(); }}>重置形体（零负担）</Button>
           </div>
@@ -187,11 +208,25 @@ export default function AvatarPage() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, accent, danger, raw = false }: { label: string; value: string | number; accent?: boolean; danger?: boolean; raw?: boolean }) {
+  // 0-100 的状态值显示成进度条 + 数字；raw 直接显示文本/大数
+  const num = typeof value === "number" ? value : Number(value);
+  const isNumeric = !raw && !Number.isNaN(num);
+  const v = isNumeric ? num : null;
+  const color = danger ? "var(--danger)" : accent ? "var(--hot)" : "var(--page-ink)";
   return (
-    <div className="rounded-2xl bg-white/70 p-3 text-center">
-      <p className="text-[11px]" style={{ color: "var(--page-soft)" }}>{label}</p>
-      <p className="font-display text-xl" style={{ color: "var(--page-ink)" }}>{value}</p>
+    <div className="rounded-2xl bg-white/70 p-2.5 text-center sm:p-3">
+      <p className="text-[10px] sm:text-[11px]" style={{ color: "var(--page-soft)" }}>{label}</p>
+      {isNumeric && v != null ? (
+        <>
+          <p className="font-display text-lg sm:text-xl" style={{ color }}>{v}</p>
+          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full" style={{ background: "color-mix(in srgb, var(--muted) 18%, transparent)" }}>
+            <span className="block h-full rounded-full" style={{ width: `${v}%`, background: danger ? "var(--danger)" : accent ? "var(--hot)" : "var(--page-ink)" }} />
+          </div>
+        </>
+      ) : (
+        <p className="font-display text-lg sm:text-xl" style={{ color }}>{value}</p>
+      )}
     </div>
   );
 }

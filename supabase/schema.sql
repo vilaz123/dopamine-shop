@@ -44,22 +44,31 @@ create table if not exists public.orders (
 );
 
 -- ----------------------------------------------------------------------------
--- avatars：AI 分身状态（饥饿/饱腹/卡路里/形态/心情/衣橱，单用户单行）
+-- avatars：AI 分身状态（饥饿/饱腹/卡路里/形态/心情/衣橱/多巴胺/内啡肽/精神/形状，单用户单行）
 -- ----------------------------------------------------------------------------
 create table if not exists public.avatars (
   user_id uuid primary key references auth.users(id) on delete cascade,
   name text default '小多',
   color text default '#FF3D81',
+  shape text default 'human',
   hunger integer default 30,
   satiety integer default 70,
   calories integer default 0,
   weight real default 1.0,
+  dopamine integer default 50,
+  endorphin integer default 50,
+  spirit integer default 80,
   mood text default 'content',
   wardrobe text[] default '{}'::text[],
   last_fed_at timestamptz,
   last_interacted_at timestamptz,
   updated_at timestamptz default now()
 );
+-- 幂等补列：已建表的旧安装补上新列（新安装上面已含，重复无害）
+alter table public.avatars add column if not exists shape text default 'human';
+alter table public.avatars add column if not exists dopamine integer default 50;
+alter table public.avatars add column if not exists endorphin integer default 50;
+alter table public.avatars add column if not exists spirit integer default 80;
 
 -- ----------------------------------------------------------------------------
 -- 社区：帖子 / 评论 / 点赞（共享读，写仅本人）
