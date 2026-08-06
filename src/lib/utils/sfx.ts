@@ -179,3 +179,24 @@ export function playFav() {
   tone(c, 880.0, now, 0.16, "sine", 0.14);
   tone(c, 1174.66, now + 0.06, 0.2, "sine", 0.12);
 }
+
+/** 翻书页：短促的高频噪声"唰"，模拟纸张翻动。带 bandpass 滤波更像纸声。 */
+export function playFlip() {
+  const c = ensureCtx();
+  if (!c) return;
+  const now = c.currentTime;
+  const src = c.createBufferSource();
+  src.buffer = getNoise(c);
+  const bp = c.createBiquadFilter();
+  bp.type = "bandpass";
+  bp.frequency.setValueAtTime(2400, now);
+  bp.frequency.exponentialRampToValueAtTime(900, now + 0.18);
+  bp.Q.value = 0.8;
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.linearRampToValueAtTime(0.16, now + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+  src.connect(bp).connect(g).connect(c.destination);
+  src.start(now);
+  src.stop(now + 0.22);
+}
