@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useAvatarStore } from "@/stores/avatar-store";
 import { useAuthStore } from "@/stores/auth-store";
 import { useOrderStore } from "@/stores/order-store";
@@ -219,7 +220,10 @@ export default function AvatarPage() {
           {/* 右：喂食 + 衣橱 */}
           <div className="space-y-6">
             <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-5 backdrop-blur sm:rounded-[2rem]">
-              <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>🍽️ 喂它（从你的订单）</p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>🍽️ 喂它（从你的订单）</p>
+                <Link href="/takeaway" className="shrink-0 rounded-full bg-[var(--hot)] px-3 py-1.5 text-xs font-semibold text-white transition active:scale-95">去卡路里区 →</Link>
+              </div>
               {feedRows.length === 0 ? (
                 <p className="mt-3 text-sm" style={{ color: "var(--page-soft)" }}>还没有虚拟食物订单，去卡路里投影区点些餐再来喂它。</p>
               ) : (
@@ -246,7 +250,10 @@ export default function AvatarPage() {
             </div>
 
             <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-5 backdrop-blur sm:rounded-[2rem]">
-              <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>👕 给它穿（从你的订单）</p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>👕 给它穿（从你的订单）</p>
+                <Link href="/shop" className="shrink-0 rounded-full bg-[var(--page-ink)] px-3 py-1.5 text-xs font-semibold text-white transition active:scale-95">去进货部 →</Link>
+              </div>
               {wearables.length === 0 ? (
                 <p className="mt-3 text-sm" style={{ color: "var(--page-soft)" }}>还没有虚拟服饰订单，去赛博进货部买几件再来给它穿。</p>
               ) : (

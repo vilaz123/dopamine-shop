@@ -38,7 +38,30 @@ export function spiritFromState(body: BodyState, spirit: number, dopamine: numbe
   return "ok";
 }
 
-/** 图文件名映射 + 缺失回退到最近已生图（避免 404 直接走 SVG，能用图就先用图）。 */
+/** 把选的分身主色映射成 CSS filter，给写实图整体上色（近似，让调色有效果）。
+ *  基础图偏粉，用 hue-rotate 偏移到目标色相，saturate 提饱和。 */
+export function colorToFilter(color: string): string {
+  const hex = color.replace("#", "");
+  if (hex.length !== 6) return "";
+  const r = parseInt(hex.slice(0, 2), 16) / 255;
+  const g = parseInt(hex.slice(2, 4), 16) / 255;
+  const b = parseInt(hex.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let hue = 0;
+  if (max !== min) {
+    const d = max - min;
+    if (max === r) hue = ((g - b) / d) % 6;
+    else if (max === g) hue = (b - r) / d + 2;
+    else hue = (r - g) / d + 4;
+    hue *= 60;
+    if (hue < 0) hue += 360;
+  }
+  // 图基色偏粉(~330°)，rotate 到目标色相需 (targetHue - 330)
+  const rotate = Math.round(hue - 330);
+  return `hue-rotate(${rotate}deg) saturate(1.15)`;
+}
+
 // 已生图 stem 全集（按 shape），由 scripts/gen-avatar-ai.mjs 生成；未命中时按精神/body 回退。
 const LOOKS_BY_SHAPE: Record<AvatarShape, Set<string>> = {
   human: new Set(["human-emaciated-ok","human-emaciated-sad","human-emaciated-sleeping","human-thin-ok","human-thin-tired","human-normal-energetic","human-normal-happy","human-normal-ok","human-normal-sad","human-normal-sleeping","human-normal-tired","human-stuffed-ok","human-stuffed-happy","human-stuffed-sad","human-chubby-ok","human-chubby-happy","human-chubby-tired","human-chubby-sleeping","human-fat-ok","human-fat-happy","human-fat-tired","human-obese-sad","human-obese-tired","human-muscular-energetic","human-muscular-happy","human-sick-sad","human-sick-sleeping"]),
