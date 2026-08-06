@@ -29,6 +29,8 @@ export type AvatarState = {
   mood: AvatarMood;
   /** 已穿戴/拥有的服饰 slug（去重）。 */
   wardrobe: string[];
+  /** 已喂过的订单项（`orderId:slug` 去重），一单一喂、不可重复。 */
+  fedItems: string[];
   /** 最近一次喂食 ISO 时间。 */
   lastFedAt: string;
   /** 最近一次互动（喂/穿）ISO 时间。 */

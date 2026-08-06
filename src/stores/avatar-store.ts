@@ -25,6 +25,7 @@ const initialAvatar: AvatarState = {
   spirit: 80,
   mood: "content",
   wardrobe: [],
+  fedItems: [],
   lastFedAt: "",
   lastInteractedAt: "",
   created: false,
@@ -35,8 +36,8 @@ type AvatarStore = AvatarState & {
   createAvatar: (name: string, color: string, shape: AvatarState["shape"]) => void;
   /** 编辑已有分身（名字/颜色/形象）。 */
   updateAvatar: (patch: Pick<AvatarState, "name" | "color" | "shape">) => void;
-  /** 喂食：仅食物。返回本次卡路里（供 UI 飞金币）。 */
-  feed: (product: Product) => number;
+  /** 喂食：仅食物。orderId 用于一单一喂去重；返回本次卡路里（0=已喂过/非食物，不喂）。 */
+  feed: (product: Product, orderId?: string) => number;
   /** 穿戴：仅服饰。 */
   wear: (slug: string) => void;
   /** 重置形体/卡路里，保留分身。 */
@@ -68,6 +69,7 @@ function syncAvatarToCloud(state: AvatarState) {
         spirit: state.spirit,
         mood: state.mood,
         wardrobe: state.wardrobe,
+        fed_items: state.fedItems,
         last_fed_at: state.lastFedAt || null,
         last_interacted_at: state.lastInteractedAt || null,
       },
@@ -121,11 +123,14 @@ export const useAvatarStore = create<AvatarStore>()(
           return next;
         }),
 
-      feed: (product) => {
+      feed: (product, orderId) => {
         const cal = virtualCalories(product);
         if (cal <= 0) return 0;
         const prev = get();
         if (!prev.created) return 0;
+        // 一单一喂去重：同 orderId+slug 已喂过则不喂
+        const fedKey = orderId ? `${orderId}:${product.slug}` : "";
+        if (fedKey && prev.fedItems.includes(fedKey)) return 0;
         const now = new Date().toISOString();
         const { satiety: decayedSat, spirit: decayedSpirit, dopamine: decayedDop } = derive(prev);
         const satiety = clamp(decayedSat + 28); // 一份约 +28 饱腹
@@ -143,6 +148,7 @@ export const useAvatarStore = create<AvatarStore>()(
           dopamine,
           spirit,
           mood: computeMood({ ...prev, satiety, hunger, calories, weight, dopamine, spirit }, "feed"),
+          fedItems: fedKey ? [...prev.fedItems, fedKey] : prev.fedItems,
           lastFedAt: now,
           lastInteractedAt: now,
         };

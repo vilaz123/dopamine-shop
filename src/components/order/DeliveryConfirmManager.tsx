@@ -51,6 +51,7 @@ export function DeliveryConfirmManager() {
 
   const foodItems = delivery.items.filter((it) => it.category === "food-delivery" || it.category === "snacks");
   const hasFood = foodItems.length > 0;
+  const orderId = delivery.orderId;
 
   function confirm() {
     signOrder(current!);
@@ -64,19 +65,27 @@ export function DeliveryConfirmManager() {
   }
 
   function doFeed(btn: HTMLButtonElement) {
+    // 一单一喂：feed(product, orderId) 自身按 orderId:slug 去重；只喂还没喂过的
     let coins = 0;
+    let fed = 0;
     for (const it of foodItems) {
       const p = getProduct(it.slug);
       if (!p || !isFeedable(p)) continue;
-      feed(p); // 每件喂一次
-      coins += 2;
+      const cal = feed(p, orderId);
+      if (cal > 0) { fed++; coins += 2; }
     }
-    useAssetStore.getState().grantCoins(coins);
-    setLastReward({ id: `feed-delivery-${Date.now()}`, coins });
-    playPop();
-    const r = btn.getBoundingClientRect();
-    triggerFly({ fromX: r.left + r.width / 2, fromY: r.top + r.height / 2, coins, color: "var(--gold)" });
-    setStep("done");
+    if (fed > 0) {
+      useAssetStore.getState().grantCoins(coins);
+      setLastReward({ id: `feed-delivery-${Date.now()}`, coins });
+      playPop();
+      const r = btn.getBoundingClientRect();
+      triggerFly({ fromX: r.left + r.width / 2, fromY: r.top + r.height / 2, coins, color: "var(--gold)" });
+      setStep("done");
+    } else {
+      // 全已喂过：直接收掉
+      setCurrent(null);
+      setStep("deliver");
+    }
   }
 
   return (

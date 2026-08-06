@@ -60,6 +60,7 @@ create table if not exists public.avatars (
   spirit integer default 80,
   mood text default 'content',
   wardrobe text[] default '{}'::text[],
+  fed_items text[] default '{}'::text[],
   last_fed_at timestamptz,
   last_interacted_at timestamptz,
   updated_at timestamptz default now()
@@ -69,6 +70,7 @@ alter table public.avatars add column if not exists shape text default 'human';
 alter table public.avatars add column if not exists dopamine integer default 50;
 alter table public.avatars add column if not exists endorphin integer default 50;
 alter table public.avatars add column if not exists spirit integer default 80;
+alter table public.avatars add column if not exists fed_items text[] default '{}'::text[];
 
 -- ----------------------------------------------------------------------------
 -- 社区：帖子 / 评论 / 点赞（共享读，写仅本人）

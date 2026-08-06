@@ -63,14 +63,31 @@ export default function AvatarPage() {
     setLineKey((k) => k + 1);
   }, [avatar.mood, avatar.created]);
 
-  // 从订单反查可喂/可穿物品池（按 slug 去重，不另建库存）
-  const pool = useMemo(() => {
+  // 可穿物品池（按 slug 去重展示）
+  const wearables = useMemo(() => {
     const slugs = new Set<string>();
     for (const o of orders) for (const it of o.items) slugs.add(it.slug);
-    return [...slugs].map(getProduct).filter((p): p is NonNullable<typeof p> => Boolean(p));
+    return [...slugs].map(getProduct).filter((p): p is NonNullable<typeof p> => Boolean(p)).filter(isWearable);
   }, [orders]);
-  const feedables = pool.filter(isFeedable);
-  const wearables = pool.filter(isWearable);
+
+  // 可喂物品：保留每单每件，带 orderId，用于一单一喂去重
+  const feedables = useMemo(() => {
+    const out: { orderId: string; slug: string }[] = [];
+    for (const o of orders) for (const it of o.items) if (isFeedable(getProduct(it.slug)!)) out.push({ orderId: o.id, slug: it.slug });
+    return out;
+  }, [orders]);
+
+  // 去重展示用：同订单+slug 只显一个按钮（多件合并），但记单数
+  const feedRows = useMemo(() => {
+    const map = new Map<string, { orderId: string; slug: string; qty: number }>();
+    for (const f of feedables) {
+      const key = `${f.orderId}:${f.slug}`;
+      const e = map.get(key);
+      if (e) e.qty++;
+      else map.set(key, { ...f, qty: 1 });
+    }
+    return [...map.values()];
+  }, [feedables]);
 
   function openEdit() {
     setEditName(avatar.name);
@@ -84,11 +101,11 @@ export default function AvatarPage() {
     setEditing(false);
   }
 
-  function doFeed(slug: string, btn: HTMLButtonElement) {
+  function doFeed(orderId: string, slug: string, btn: HTMLButtonElement) {
     const p = products.find((x) => x.slug === slug);
     if (!p) return;
-    const cal = feed(p);
-    if (cal <= 0) return;
+    const cal = feed(p, orderId); // 一单一喂去重
+    if (cal <= 0) return; // 已喂过
     playPop();
     grantCoins(2); // 喂食小奖励
     setLastReward({ id: `feed-${slug}-${Date.now()}`, coins: 2 });
@@ -199,55 +216,31 @@ export default function AvatarPage() {
             </div>
           </div>
 
-          {/* 右：编辑(展开时) + 喂食 + 衣橱 */}
+          {/* 右：喂食 + 衣橱 */}
           <div className="space-y-6">
-            {editing && (
-              <div className="slide-down rounded-[1.5rem] border border-[var(--hot)]/40 bg-white/80 p-5 backdrop-blur sm:rounded-[2rem]">
-                <div className="mb-4 flex items-center justify-between">
-                  <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>编辑分身</p>
-                  <button onClick={() => setEditing(false)} className="text-sm" style={{ color: "var(--page-soft)" }}>取消</button>
-                </div>
-                <div className="flex justify-center"><AvatarBody mood={avatar.mood} color={editColor} shape={editShape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} size={140} /></div>
-                <div className="mt-4 space-y-4">
-                  <div>
-                    <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>形象</p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {SHAPES.map((s) => (
-                        <button key={s.id} onClick={() => setEditShape(s.id)} className={`flex flex-col items-center gap-1 rounded-2xl border px-2 py-3 transition ${editShape === s.id ? "border-[var(--hot)] bg-[var(--hot)]/10" : "border-black/10 bg-white/60 hover:border-black/30"}`}>
-                          <span className="text-2xl">{s.emoji}</span>
-                          <span className="text-xs" style={{ color: "var(--page-ink)" }}>{s.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>名字</p>
-                    <input value={editName} onChange={(e) => setEditName(e.target.value)} className="w-full rounded-full border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[var(--hot)]" />
-                  </div>
-                  <div>
-                    <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>主色</p>
-                    <div className="flex gap-2">
-                      {COLORS.map((c) => (
-                        <button key={c} onClick={() => setEditColor(c)} aria-label={`选色 ${c}`} className={`h-9 w-9 rounded-full transition ${editColor === c ? "ring-2 ring-offset-2 ring-[var(--page-ink)]" : ""}`} style={{ background: c }} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <Button className="mt-5 w-full" onClick={saveEdit}>保存</Button>
-              </div>
-            )}
             <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-5 backdrop-blur sm:rounded-[2rem]">
               <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>🍽️ 喂它（从你的订单）</p>
-              {feedables.length === 0 ? (
+              {feedRows.length === 0 ? (
                 <p className="mt-3 text-sm" style={{ color: "var(--page-soft)" }}>还没有虚拟食物订单，去卡路里投影区点些餐再来喂它。</p>
               ) : (
                 <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {feedables.map((p) => (
-                    <button key={p.slug} onClick={(e) => doFeed(p.slug, e.currentTarget)} className="rounded-2xl border border-black/10 bg-white/70 p-3 text-left transition hover:border-[var(--hot)]/40 active:scale-95">
-                      <p className="truncate text-sm font-semibold" style={{ color: "var(--page-ink)" }}>{p.name}</p>
-                      <p className="text-[11px]" style={{ color: "var(--page-soft)" }}>+{virtualCalories(p)} 卡</p>
-                    </button>
-                  ))}
+                  {feedRows.map((row) => {
+                    const p = products.find((x) => x.slug === row.slug);
+                    if (!p) return null;
+                    const fedKey = `${row.orderId}:${row.slug}`;
+                    const fed = avatar.fedItems.includes(fedKey);
+                    return (
+                      <button
+                        key={fedKey}
+                        disabled={fed}
+                        onClick={(e) => doFeed(row.orderId, row.slug, e.currentTarget)}
+                        className={`rounded-2xl border p-3 text-left transition active:scale-95 ${fed ? "border-black/5 bg-white/40 opacity-60" : "border-black/10 bg-white/70 hover:border-[var(--hot)]/40"}`}
+                      >
+                        <p className="truncate text-sm font-semibold" style={{ color: "var(--page-ink)" }}>{p.name}{row.qty > 1 ? ` ×${row.qty}` : ""}</p>
+                        <p className="text-[11px]" style={{ color: "var(--page-soft)" }}>{fed ? "已喂过 ✓" : `+${virtualCalories(p)} 卡`}</p>
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -272,6 +265,48 @@ export default function AvatarPage() {
           </div>
         </div>
       </div>
+
+      {/* 编辑分身弹层 */}
+      {editing && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center" role="dialog" aria-modal>
+          <div className="absolute inset-0 bg-black/45 backdrop-blur-sm" onClick={() => setEditing(false)} aria-hidden />
+          <div className="relative w-full max-w-md slide-up sm:mx-auto">
+            <div className="max-h-[88vh] overflow-y-auto rounded-t-[1.5rem] bg-white p-5 shadow-2xl sm:rounded-[1.5rem] sm:p-6" style={{ color: "var(--page-ink)" }}>
+              <div className="mb-3 flex items-center justify-between">
+                <p className="font-display text-lg">✏️ 编辑分身</p>
+                <button onClick={() => setEditing(false)} className="rounded-full border border-black/10 bg-white/70 px-3 py-1.5 text-sm" style={{ color: "var(--page-ink)" }}>关闭</button>
+              </div>
+              <div className="flex justify-center"><AvatarBody mood={avatar.mood} color={editColor} shape={editShape} satiety={avatar.satiety} calories={avatar.calories} spirit={avatar.spirit} size={120} /></div>
+              <div className="mt-4 space-y-4">
+                <div>
+                  <p className="mb-2 text-sm font-semibold">形象</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {SHAPES.map((s) => (
+                      <button key={s.id} onClick={() => setEditShape(s.id)} className={`flex flex-col items-center gap-1 rounded-2xl border px-2 py-2.5 transition ${editShape === s.id ? "border-[var(--hot)] bg-[var(--hot)]/10" : "border-black/10 bg-white/60 hover:border-black/30"}`}>
+                        <span className="text-2xl">{s.emoji}</span>
+                        <span className="text-xs">{s.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="mb-2 text-sm font-semibold">名字</p>
+                  <input value={editName} onChange={(e) => setEditName(e.target.value)} className="w-full rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--hot)]" />
+                </div>
+                <div>
+                  <p className="mb-2 text-sm font-semibold">主色</p>
+                  <div className="flex flex-wrap gap-2">
+                    {COLORS.map((c) => (
+                      <button key={c} onClick={() => setEditColor(c)} aria-label={`选色 ${c}`} className={`h-8 w-8 rounded-full transition ${editColor === c ? "ring-2 ring-offset-2 ring-[var(--page-ink)]" : ""}`} style={{ background: c }} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <Button className="mt-5 w-full" onClick={saveEdit}>保存</Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 状态解说弹层 */}
       {statModal && (

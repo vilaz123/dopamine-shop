@@ -102,6 +102,7 @@ async function loadCloudState(supabaseUser: User) {
       spirit: Number(cloudAvatar.spirit ?? 80),
       mood: (cloudAvatar.mood as AvatarState["mood"]) ?? "content",
       wardrobe: (cloudAvatar.wardrobe as string[]) ?? [],
+      fedItems: (cloudAvatar.fed_items as string[]) ?? [],
       lastFedAt: (cloudAvatar.last_fed_at as string) ?? "",
       lastInteractedAt: (cloudAvatar.last_interacted_at as string) ?? "",
       created: true,
