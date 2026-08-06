@@ -26,6 +26,7 @@ export default function AvatarPage() {
   const avatar = useAvatarStore((s) => s);
   const orders = useOrderStore((s) => s.orders);
   const createAvatar = useAvatarStore((s) => s.createAvatar);
+  const updateAvatar = useAvatarStore((s) => s.updateAvatar);
   const feed = useAvatarStore((s) => s.feed);
   const wear = useAvatarStore((s) => s.wear);
   const resetShape = useAvatarStore((s) => s.resetShape);
@@ -39,6 +40,11 @@ export default function AvatarPage() {
   const [shape, setShape] = useState<AvatarShape>("human");
   const [line, setLine] = useState("建个分身，开始投喂吧");
   const [lineKey, setLineKey] = useState(0);
+  // 编辑面板（已建分身改形象/名字/颜色用）
+  const [editing, setEditing] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editColor, setEditColor] = useState("#FF3D81");
+  const [editShape, setEditShape] = useState<AvatarShape>("human");
 
   // 进页/聚焦时重算饥饿（随时间衰减）
   useEffect(() => {
@@ -63,6 +69,18 @@ export default function AvatarPage() {
   }, [orders]);
   const feedables = pool.filter(isFeedable);
   const wearables = pool.filter(isWearable);
+
+  function openEdit() {
+    setEditName(avatar.name);
+    setEditColor(avatar.color);
+    setEditShape(avatar.shape);
+    setEditing(true);
+  }
+
+  function saveEdit() {
+    updateAvatar({ name: editName, color: editColor, shape: editShape });
+    setEditing(false);
+  }
 
   function doFeed(slug: string, btn: HTMLButtonElement) {
     const p = products.find((x) => x.slug === slug);
@@ -163,11 +181,49 @@ export default function AvatarPage() {
               <Stat label="卡路里" value={avatar.calories} raw />
               <Stat label="体型" value={avatar.weight > 1.1 ? "圆润" : avatar.weight < 0.95 ? "清瘦" : "标准"} raw />
             </div>
-            <Button variant="ghost" className="mt-5 w-full" onClick={() => { resetShape(); }}>重置形体（零负担）</Button>
+            <div className="mt-5 grid grid-cols-2 gap-2.5">
+              <Button variant="ghost" onClick={openEdit}>✏️ 编辑分身</Button>
+              <Button variant="ghost" onClick={() => { resetShape(); }}>重置形体</Button>
+            </div>
           </div>
 
-          {/* 右：喂食 + 衣橱 */}
+          {/* 右：编辑(展开时) + 喂食 + 衣橱 */}
           <div className="space-y-6">
+            {editing && (
+              <div className="slide-down rounded-[1.5rem] border border-[var(--hot)]/40 bg-white/80 p-5 backdrop-blur sm:rounded-[2rem]">
+                <div className="mb-4 flex items-center justify-between">
+                  <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>编辑分身</p>
+                  <button onClick={() => setEditing(false)} className="text-sm" style={{ color: "var(--page-soft)" }}>取消</button>
+                </div>
+                <div className="flex justify-center"><AvatarBody mood={avatar.mood} color={editColor} shape={editShape} wardrobe={avatar.wardrobe} size={140} /></div>
+                <div className="mt-4 space-y-4">
+                  <div>
+                    <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>形象</p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {SHAPES.map((s) => (
+                        <button key={s.id} onClick={() => setEditShape(s.id)} className={`flex flex-col items-center gap-1 rounded-2xl border px-2 py-3 transition ${editShape === s.id ? "border-[var(--hot)] bg-[var(--hot)]/10" : "border-black/10 bg-white/60 hover:border-black/30"}`}>
+                          <span className="text-2xl">{s.emoji}</span>
+                          <span className="text-xs" style={{ color: "var(--page-ink)" }}>{s.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>名字</p>
+                    <input value={editName} onChange={(e) => setEditName(e.target.value)} className="w-full rounded-full border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-[var(--hot)]" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-semibold" style={{ color: "var(--page-ink)" }}>主色</p>
+                    <div className="flex gap-2">
+                      {COLORS.map((c) => (
+                        <button key={c} onClick={() => setEditColor(c)} aria-label={`选色 ${c}`} className={`h-9 w-9 rounded-full transition ${editColor === c ? "ring-2 ring-offset-2 ring-[var(--page-ink)]" : ""}`} style={{ background: c }} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <Button className="mt-5 w-full" onClick={saveEdit}>保存</Button>
+              </div>
+            )}
             <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-5 backdrop-blur sm:rounded-[2rem]">
               <p className="text-sm font-semibold" style={{ color: "var(--page-ink)" }}>🍽️ 喂它（从你的订单）</p>
               {feedables.length === 0 ? (
