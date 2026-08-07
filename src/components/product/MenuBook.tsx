@@ -76,58 +76,57 @@ export function MenuBook({ products, theme = "shop", title = "菜单" }: { produ
   if (!product) return null;
 
   return (
-    <div className={`fixed inset-0 z-[100] theme-${theme}`} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <div className={`fixed inset-0 z-[100] flex flex-col theme-${theme}`} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <div className="page-paint absolute inset-0 -z-10" aria-hidden />
 
       {/* 顶栏 */}
-      <div className="container-shell flex h-14 items-center justify-between">
+      <div className="container-shell flex h-14 shrink-0 items-center justify-between">
         <button onClick={() => router.back()} className="rounded-full bg-white/70 px-3 py-2 text-sm" style={{ color: "var(--page-ink)" }}>✕ 关闭</button>
         <span className="font-display text-sm" style={{ color: "var(--page-ink)" }}>{title} · {page + 1}/{products.length}</span>
         <span className="w-16" />
       </div>
 
-      {/* 书本主体 */}
-      <div className="container-shell flex flex-1 flex-col px-3">
-        <div className="menu-book relative flex-1">
-          {/* 左右翻页大箭头（常驻提示） */}
-          <button onClick={() => flip(-1)} aria-label="上一页" className="menu-flip-arrow absolute left-0 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-white/70 text-2xl shadow-md sm:h-14 sm:w-14" style={{ color: "var(--page-ink)" }}>‹</button>
-          <button onClick={() => flip(1)} aria-label="下一页" className="menu-flip-arrow absolute right-0 top-1/2 z-20 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-white/70 text-2xl shadow-md sm:h-14 sm:w-14" style={{ color: "var(--page-ink)" }}>›</button>
+      {/* 书本主体：卷轴式，左侧卷筒书脊 + 右侧展开页面 */}
+      <div className="container-shell flex min-h-0 flex-1 flex-col px-3 pb-2">
+        <div className="menu-book relative flex min-h-0 flex-1 items-stretch">
+          {/* 左侧卷筒书脊（像卷起的册子） */}
+          <div className="menu-scroll-spine" aria-hidden>
+            <div className="menu-scroll-cap" />
+            <div className="menu-scroll-cap menu-scroll-cap--bottom" />
+          </div>
 
-          {/* 书页：硬封皮 + 中央书脊 + 页面区 + 翻页折角 */}
-          <div className="menu-book-cover relative h-full min-h-[60vh] p-3 sm:p-4">
-            {/* 中央书脊 */}
-            <div className="menu-book-spine" aria-hidden />
-            {/* 页面区（白纸） */}
-            <div className="menu-book-page relative h-full overflow-hidden p-4 sm:p-6">
-              {/* 翻页层：盖在页面上，翻页时整页折起 */}
-              <div className={`menu-page absolute inset-0 p-4 sm:p-6 ${flipDir ? `flip-${flipDir}` : ""}`} key={product.slug}>
-                {/* 固定页：轮播图 + 名 + 价 + 操作（手机一屏可见，不滚） */}
-                <div className="flex h-full flex-col items-center gap-3">
-                  <div className="relative aspect-square w-full max-w-[58vw] overflow-hidden rounded-xl shadow-md">
-                    <MediaGallery images={productImages(product)} alt={product.name} aspect="4/5" auto>
-                      <div className="absolute right-2 top-2"><FavoriteButton slug={product.slug} /></div>
-                    </MediaGallery>
-                  </div>
-                  <p className="text-[10px] uppercase tracking-[0.24em]" style={{ color: "var(--hot)" }}>{product.badge}</p>
-                  <h2 className="font-display text-center text-lg leading-tight sm:text-xl" style={{ color: "var(--page-ink)" }}>{product.name}</h2>
-                  <p className="font-display text-xl sm:text-2xl" style={{ color: "var(--page-ink)" }}>{formatCurrency(product.price)}<span className="ml-1 align-top text-xs font-sans" style={{ color: "var(--page-soft)" }}>虚拟</span></p>
-                  <button onClick={() => setShowDetail(true)} className="rounded-full border border-[color-mix(in_srgb,var(--page-accent)_55%,transparent)] bg-white/70 px-5 py-2 text-sm font-semibold transition active:scale-95" style={{ color: "var(--page-ink)" }}>详情 / 选规格</button>
+          {/* 右侧展开的页面区 */}
+          <div className="menu-book-page relative min-h-0 flex-1 overflow-hidden p-4 sm:p-6">
+            {/* 翻页层 */}
+            <div className={`menu-page absolute inset-0 p-4 sm:p-6 ${flipDir ? `flip-${flipDir}` : ""}`} key={product.slug}>
+              <div className="flex h-full flex-col items-center justify-start gap-3">
+                <div className="w-full max-w-[58vw] shrink-0">
+                  <MediaGallery images={productImages(product)} alt={product.name} aspect="4/5" auto>
+                    <div className="absolute right-2 top-2"><FavoriteButton slug={product.slug} /></div>
+                  </MediaGallery>
                 </div>
-                {/* 右下折角提示可翻 */}
-                <span className="menu-page-corner" aria-hidden />
+                <p className="text-[10px] uppercase tracking-[0.24em]" style={{ color: "var(--hot)" }}>{product.badge}</p>
+                <h2 className="font-display text-center text-lg leading-tight sm:text-xl" style={{ color: "var(--page-ink)" }}>{product.name}</h2>
+                <p className="font-display text-xl sm:text-2xl" style={{ color: "var(--page-ink)" }}>{formatCurrency(product.price)}<span className="ml-1 align-top text-xs font-sans" style={{ color: "var(--page-soft)" }}>虚拟</span></p>
+                <button onClick={() => setShowDetail(true)} className="rounded-full border border-[color-mix(in_srgb,var(--page-accent)_55%,transparent)] bg-white/70 px-5 py-2 text-sm font-semibold transition active:scale-95" style={{ color: "var(--page-ink)" }}>详情 / 选规格</button>
               </div>
+              <span className="menu-page-corner" aria-hidden />
             </div>
           </div>
 
-          {/* 底部翻页提示 + 圆点 */}
-          <div className="mt-3 flex items-center justify-center gap-3">
-            <span className="text-[11px]" style={{ color: "var(--page-soft)" }}>← 左右滑动或点箭头翻页 →</span>
-          </div>
-          <div className="mt-1.5 flex items-center justify-center gap-1.5 pb-[max(1rem,env(safe-area-inset-bottom)]">
-            {products.slice(0, 12).map((p, i) => (
-              <span key={p.slug} className="h-1.5 rounded-full transition-all" style={{ width: i === page ? 16 : 6, background: i === page ? "var(--page-ink)" : "color-mix(in srgb, var(--page-ink) 35%, transparent)" }} />
-            ))}
-          </div>
+          {/* 左右翻页大箭头 */}
+          <button onClick={() => flip(-1)} aria-label="上一页" className="menu-flip-arrow absolute left-2 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/80 text-2xl shadow-md sm:h-14 sm:w-14" style={{ color: "var(--page-ink)" }}>‹</button>
+          <button onClick={() => flip(1)} aria-label="下一页" className="menu-flip-arrow absolute right-2 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/80 text-2xl shadow-md sm:h-14 sm:w-14" style={{ color: "var(--page-ink)" }}>›</button>
+        </div>
+
+        {/* 底部翻页提示 + 圆点 */}
+        <div className="shrink-0 pt-2 text-center">
+          <span className="text-[11px]" style={{ color: "var(--page-soft)" }}>← 左右滑动或点箭头翻页 →</span>
+        </div>
+        <div className="flex shrink-0 items-center justify-center gap-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom)] pt-1.5">
+          {products.slice(0, 12).map((p, i) => (
+            <span key={p.slug} className="h-1.5 rounded-full transition-all" style={{ width: i === page ? 16 : 6, background: i === page ? "var(--page-ink)" : "color-mix(in srgb, var(--page-ink) 35%, transparent)" }} />
+          ))}
         </div>
       </div>
 
