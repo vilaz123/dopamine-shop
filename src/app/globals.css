@@ -435,7 +435,29 @@ textarea {
 /* 翻菜单书：仿真卷轴/册子——左侧卷筒书脊 + 右侧展开页面 + 翻页折角动画 */
 .menu-book { perspective: 2000px; }
 
-/* 左侧卷筒书脊：一根竖直的卷轴（圆柱质感），上下两个卷轴头 */
+/* 入场：拿起一本书打开。整体从小、带 3D 仰角翻开的姿态放大归位。 */
+.menu-book.book-opening {
+  animation: book-open 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: bottom center;
+}
+@keyframes book-open {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.78) rotateX(48deg);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.02) rotateX(-4deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+    filter: blur(0);
+  }
+}
+/* 左侧卷筒书脊：像卷起的册子 */
 .menu-scroll-spine {
   position: relative;
   width: 26px;
@@ -469,23 +491,26 @@ textarea {
   transform-style: preserve-3d;
 }
 
-/* 翻页层：盖在页面区上，整页从右侧折起翻向左侧（next），反之 prev */
+/* 翻页层：盖在页面区上，整页从右侧折起翻向左侧（next），反之 prev。
+   翻页中途叠一层渐变模拟纸张弯折的光影，更像实体书翻页。 */
 .menu-page {
   transform-origin: left center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform;
 }
-.menu-page.flip-next { animation: page-flip 0.55s cubic-bezier(0.35, 0.05, 0.2, 1) both; }
-.menu-page.flip-prev { animation: page-flip-rev 0.55s cubic-bezier(0.35, 0.05, 0.2, 1) both; }
+.menu-page.flip-next { animation: page-flip 0.6s cubic-bezier(0.35, 0.05, 0.2, 1) both; }
+.menu-page.flip-prev { animation: page-flip-rev 0.6s cubic-bezier(0.35, 0.05, 0.2, 1) both; }
 @keyframes page-flip {
   0% { transform: rotateY(0deg); box-shadow: none; }
-  45% { transform: rotateY(-90deg); box-shadow: -16px 0 28px rgba(36,26,77,.25); }
+  40% { transform: rotateY(-70deg); box-shadow: -26px 0 34px rgba(36,26,77,.28); }
+  55% { transform: rotateY(-100deg); box-shadow: -30px 0 38px rgba(36,26,77,.32); }
   100% { transform: rotateY(-180deg); box-shadow: none; }
 }
 @keyframes page-flip-rev {
   0% { transform: rotateY(-180deg); box-shadow: none; }
-  55% { transform: rotateY(-90deg); box-shadow: -16px 0 28px rgba(36,26,77,.25); }
+  45% { transform: rotateY(-100deg); box-shadow: -30px 0 38px rgba(36,26,77,.32); }
+  60% { transform: rotateY(-70deg); box-shadow: -26px 0 34px rgba(36,26,77,.28); }
   100% { transform: rotateY(0deg); box-shadow: none; }
 }
 .menu-page.flip-next > *, .menu-page.flip-prev > * { opacity: 0; }
