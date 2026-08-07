@@ -200,3 +200,24 @@ export function playFlip() {
   src.start(now);
   src.stop(now + 0.22);
 }
+
+/** 打开一本书：稍长的低频"咚"+ 一声翻纸唰，像拿起一本厚书翻开。 */
+export function playBookOpen() {
+  const c = ensureCtx();
+  if (!c) return;
+  const now = c.currentTime;
+  // 厚纸/封皮的低频闷响
+  const osc = c.createOscillator();
+  const g = c.createGain();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(180, now);
+  osc.frequency.exponentialRampToValueAtTime(90, now + 0.18);
+  g.gain.setValueAtTime(0.0001, now);
+  g.gain.linearRampToValueAtTime(0.2, now + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+  osc.connect(g).connect(c.destination);
+  osc.start(now);
+  osc.stop(now + 0.28);
+  // 紧接一声翻纸唰
+  window.setTimeout(() => playFlip(), 180);
+}

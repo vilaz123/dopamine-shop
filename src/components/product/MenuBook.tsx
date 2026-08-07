@@ -9,7 +9,7 @@ import { useCartStore } from "@/stores/cart-store";
 import { useUiStore } from "@/stores/ui-store";
 import { useAssetStore } from "@/stores/asset-store";
 import { formatCurrency } from "@/lib/utils/format";
-import { playPop, playChip, playFlip } from "@/lib/utils/sfx";
+import { playPop, playChip, playFlip, playBookOpen } from "@/lib/utils/sfx";
 import { MediaGallery } from "@/components/common/MediaGallery";
 import { FavoriteButton } from "@/components/product/FavoriteButton";
 
@@ -32,6 +32,15 @@ export function MenuBook({ products, theme = "shop", title = "菜单" }: { produ
 
   const last = Math.max(0, products.length - 1);
   const product = products[page];
+
+  const [opening, setOpening] = useState(true);
+
+  // 入场：拿起书打开动画 + 开书音效，动画播完摘掉 class（避免后续变换冲突）
+  useEffect(() => {
+    playBookOpen();
+    const t = window.setTimeout(() => setOpening(false), 750);
+    return () => window.clearTimeout(t);
+  }, []);
 
   // 自动翻页
   useEffect(() => {
@@ -88,7 +97,7 @@ export function MenuBook({ products, theme = "shop", title = "菜单" }: { produ
 
       {/* 书本主体：卷轴式，左侧卷筒书脊 + 右侧展开页面 */}
       <div className="container-shell flex min-h-0 flex-1 flex-col px-3 pb-2">
-        <div className="menu-book relative flex min-h-0 flex-1 items-stretch">
+        <div className={`menu-book relative flex min-h-0 flex-1 items-stretch ${opening ? "book-opening" : ""}`}>
           {/* 左侧卷筒书脊（像卷起的册子） */}
           <div className="menu-scroll-spine" aria-hidden>
             <div className="menu-scroll-cap" />
