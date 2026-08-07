@@ -27,7 +27,7 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
       <div className="container-shell py-8 sm:py-14">
       <Link href="/takeaway" className="text-sm text-white/70 hover:text-white">← 返回卡路里投影区</Link>
       <div className="mt-6 grid gap-6 sm:gap-10 lg:grid-cols-[1fr_.9fr] lg:gap-10">
-        <div className="relative">
+        <div className="relative mx-auto w-full max-w-[min(92vw,520px)] lg:mr-0">
           {/* 主图自动轮播 + 缩略图首屏提速 */}
           <MediaGallery images={shopImages(shop)} alt={shop.name} aspect="4/3" auto>
             {shop.promo && (
@@ -36,11 +36,22 @@ export default async function TakeawayShopPage({ params }: { params: Promise<{ s
               </div>
             )}
           </MediaGallery>
+          {/* 门店氛围标牌：渐变色块 + slogan */}
+          <div className="mt-4 flex items-center gap-3 rounded-[1rem] border border-white/20 p-3 backdrop-blur" style={{ background: `linear-gradient(135deg, ${shop.saturation}33, ${shop.accent}22)` }}>
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl text-xl" style={{ background: `linear-gradient(135deg, ${shop.saturation}, ${shop.accent})` }}>{shop.category === "米其林餐厅" ? "👑" : "🔥"}</span>
+            <div className="min-w-0">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/70">{takeawayBucket(shop.category)} · 热门店</p>
+              <p className="mt-0.5 text-sm text-white/90">骑手已出发，热量永远差一公里抵达。</p>
+            </div>
+          </div>
         </div>
-        <div className="lg:pt-6">
+        <div className="lg:pt-4">
           {/* 店名卡：聚合标题 + 评分 + 信息，层次更清晰 */}
-          <div className="rounded-[1.25rem] border border-white/20 bg-white/10 p-5 backdrop-blur sm:rounded-[1.5rem] sm:p-6">
-            <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--page-highlight)]">{takeawayBucket(shop.category)}</p>
+          <div className="rounded-[1.25rem] border border-white/20 bg-white/10 p-5 backdrop-blur sm:rounded-[1.5rem] sm:p-6" style={{ boxShadow: `0 18px 50px ${shop.accent}33` }}>
+            <div className="flex items-center gap-2">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--page-highlight)]">{takeawayBucket(shop.category)}</p>
+              {shop.tags.slice(0, 1).map((t) => <span key={t} className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] text-white/80">#{t}</span>)}
+            </div>
             <h1 className="font-display mt-2 text-2xl leading-tight text-white sm:mt-3 sm:text-3xl md:text-4xl">{shop.name}</h1>
             <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-white/85 sm:text-base">
               <span className="font-semibold text-[var(--gold)]">★ {shop.rating.toFixed(1)}</span>

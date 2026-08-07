@@ -33,8 +33,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <Link href="/shop" className="rounded-full bg-[var(--hot)] px-3 py-1.5 text-xs font-semibold text-white">📖 去进货部翻菜单</Link>
       </div>
       <div className="mt-6 grid gap-6 sm:gap-12 lg:grid-cols-[1fr_.9fr] lg:gap-10">
-        {/* 主图：手机方形省屏、桌面 4/5；自动轮播 + 缩略图首屏提速 */}
-        <div className="relative">
+        {/* 主图：手机限宽居中(避免过大/裁切)、桌面 4/5；自动轮播 + 缩略图首屏提速 */}
+        <div className="relative mx-auto w-full max-w-[min(92vw,440px)] lg:mr-0">
           <MediaGallery images={productImages(product)} alt={product.name} aspect="4/5" auto>
             <div className="absolute left-4 top-4 right-4 flex items-start justify-end">
               <FavoriteButton slug={product.slug} />
