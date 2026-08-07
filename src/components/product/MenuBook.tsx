@@ -33,21 +33,21 @@ export function MenuBook({ products, theme = "shop", title = "菜单" }: { produ
   const last = Math.max(0, products.length - 1);
   const product = products[page];
 
-  const [opening, setOpening] = useState(true);
+  const [coverOpening, setCoverOpening] = useState(true);
 
-  // 入场：拿起书打开动画 + 开书音效，动画播完摘掉 class（避免后续变换冲突）
+  // 入场：电子书式——合上的封面缓缓翻开(像翻一页)，露出内页；播开书声。
   useEffect(() => {
     playBookOpen();
-    const t = window.setTimeout(() => setOpening(false), 750);
+    const t = window.setTimeout(() => setCoverOpening(false), 1150);
     return () => window.clearTimeout(t);
   }, []);
 
-  // 自动翻页
+  // 自动翻页（封面翻开期间不自动翻）
   useEffect(() => {
-    if (autoPaused || products.length <= 1) return;
+    if (coverOpening || autoPaused || products.length <= 1) return;
     const t = setInterval(() => flip(1), AUTO_FLIP_MS);
     return () => clearInterval(t);
-  }, [autoPaused, products.length]);
+  }, [coverOpening, autoPaused, products.length]);
 
   // 键盘
   useEffect(() => {
@@ -97,7 +97,7 @@ export function MenuBook({ products, theme = "shop", title = "菜单" }: { produ
 
       {/* 书本主体：卷轴式，左侧卷筒书脊 + 右侧展开页面 */}
       <div className="container-shell flex min-h-0 flex-1 flex-col px-3 pb-2">
-        <div className={`menu-book relative flex min-h-0 flex-1 items-stretch ${opening ? "book-opening" : ""}`}>
+        <div className="menu-book relative flex min-h-0 flex-1 items-stretch">
           {/* 左侧卷筒书脊（像卷起的册子） */}
           <div className="menu-scroll-spine" aria-hidden>
             <div className="menu-scroll-cap" />
@@ -106,6 +106,14 @@ export function MenuBook({ products, theme = "shop", title = "菜单" }: { produ
 
           {/* 右侧展开的页面区 */}
           <div className="menu-book-page relative min-h-0 flex-1 overflow-hidden p-4 sm:p-6">
+            {/* 电子书封面：盖在内页上，入场缓缓翻开 */}
+            {coverOpening && (
+              <div className={`menu-cover ${coverOpening ? "menu-cover--opening" : ""}`}>
+                <span className="text-4xl">📖</span>
+                <p className="font-display text-xl sm:text-2xl">{title}</p>
+                <p className="text-xs text-white/70">共 {products.length} 道虚拟好物 · 正在翻开…</p>
+              </div>
+            )}
             {/* 翻页层 */}
             <div className={`menu-page absolute inset-0 p-4 sm:p-6 ${flipDir ? `flip-${flipDir}` : ""}`} key={product.slug}>
               <div className="flex h-full flex-col items-center justify-start gap-3">
