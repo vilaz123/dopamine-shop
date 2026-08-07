@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[37774,["/dopamine-shop/_next/static/chunks/1fcrfeswi9y1g.js","/dopamine-shop/_next/static/chunks/3n4o4h3xtn8gq.js","/dopamine-shop/_next/static/chunks/14mrh2-p_w84d.js","/dopamine-shop/_next/static/chunks/21dqa5zz-f7cx.js","/dopamine-shop/_next/static/chunks/0b8e93pvt8bdx.js"],"HomeFeed"]
+3:I[97367,["/dopamine-shop/_next/static/chunks/1fcrfeswi9y1g.js","/dopamine-shop/_next/static/chunks/3n4o4h3xtn8gq.js","/dopamine-shop/_next/static/chunks/14mrh2-p_w84d.js","/dopamine-shop/_next/static/chunks/21dqa5zz-f7cx.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/dopamine-shop/_next/static/chunks/0b8e93pvt8bdx.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"FtGm27bYmAQ_pDhSuajHA"}
+5:null
