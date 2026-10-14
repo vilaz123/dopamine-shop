@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="clip"><rect width="512" height="512" rx="133" ry="133"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip)">
+    <rect width="512" height="512" fill="#FFF9C4"/>
+    <polygon points="0,0 512,0 0,512" fill="#F8BBD0"/>
+    <polygon points="512,0 512,512 0,512" fill="#FFCCBC" opacity="0.9"/>
+    <circle cx="399.36" cy="122.88" r="153.6" fill="#FFD23F" opacity="0.5"/>
+    <circle cx="102.4" cy="409.6" r="133.12" fill="#AD5380" opacity="0.35"/>
+  </g>
+  <text x="50%" y="55%" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'PingFang SC', serif" font-size="225" font-weight="700" fill="#241A4D">DH</text>
+</svg>
